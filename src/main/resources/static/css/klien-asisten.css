@@ -156,7 +156,7 @@ td > button {
     cursor: pointer;
 }
 
-/* Button: Tambah Asisten */
+/* Button: Tambah Klien */
 .main-section > button:nth-of-type(2) {
     width: 20%;
     margin-top: 0.5em;
@@ -176,8 +176,8 @@ td > button {
 }
 
 
-/* Tambah Asisten */
-.tambah-asisten {
+/* Tambah Klien */
+.tambah-klien {
   position: fixed;
   top: 0;
   left: 0;
@@ -189,24 +189,24 @@ td > button {
   align-items: center;
 }
 
-form {
+.tambah-klien form {
   background: #ffffff;
   padding: 2em;
   border-radius: 1em;
   width: 50rem;
-  height: 25rem;
+  height: 20rem;
   display: flex;
   flex-direction: column;
   gap: 1.5em;
 }
 
-form > input {
+.tambah-klien form > input {
     padding: 0.5em;
     border: 1px solid;
     border-radius: 0.5em;
 }
 
-form > div {
+.tambah-klien form > div {
     margin-top: 1em;
     text-align: end;
     word-spacing: 1em;
@@ -231,8 +231,8 @@ form > div {
 }
 
 
-/* Edit Asisten */
-.edit-asisten {
+/* Edit Klien */
+.edit-klien {
   position: fixed;
   top: 0;
   left: 0;
@@ -244,24 +244,24 @@ form > div {
   align-items: center;
 }
 
-.edit-asisten>form {
+#formEditKlien {
   background: #ffffff;
   padding: 2em;
   border-radius: 1em;
   width: 50rem;
-  height: 25rem;
+  height: 20rem;
   display: flex;
   flex-direction: column;
   gap: 1.5em;
 }
 
-.edit-asisten > form > input {
+#formEditKlien > input {
     padding: 0.5em;
     border: 1px solid;
     border-radius: 0.5em;
 }
 
-.edit-asisten > form > div {
+#formEditKlien > div {
     margin-top: 1em;
     text-align: end;
     word-spacing: 1em;
@@ -287,7 +287,7 @@ form > div {
 
 
 /* Hapus Asisten */
-.hapus-asisten {
+.hapus-klien {
   position: fixed;
   top: 0;
   left: 0;
@@ -299,7 +299,7 @@ form > div {
   align-items: center;
 }
 
-.hapus-asisten .popup-content {
+.hapus-klien .popup-content {
   background: #ffffff;
   padding: 2em;
   border-radius: 1em;
@@ -310,7 +310,7 @@ form > div {
   gap: 1.5em;
 }
 
-.hapus-asisten .popup-content div {
+.hapus-klien .popup-content div {
     text-align: end;
     word-spacing: 1em;
 }
