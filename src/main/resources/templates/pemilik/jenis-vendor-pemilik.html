@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Selaras Organizer</title>
+    <link rel="stylesheet" th:href="@{/css/jenis-vendor-pemilik.css}"/>
+    <script th:src="@{/js/jenisVendorPemilik.js}" defer></script>
+</head>
+<body>
+    <header>
+        <nav>
+            <img th:src="@{/img/selaras-logo.png}" alt="logo selaras organizer"/>
+            <ul>
+                <li><a th:href="@{dashboard-pemilik.html}">Dashboard</a></li>
+                <li><a th:href="@{asisten-pemilik.html}">Asisten</a></li>
+                <li><a th:href="@{vendor-pemilik.html}">Vendor</a></li>
+                <li>Jenis Vendor</li>
+                <li><a th:href="@{laporan-pemilik.html}">Laporan</a></li>
+            </ul>
+            <div class="icon">
+                <img th:src="@{/img/notification-icon.png}" alt="notif icon"/>
+                <img th:src="@{/img/profile-icon.png}" alt="profile icon" />
+            </div>
+        </nav>
+    </header>
+
+    <section class="main-section">
+        <button>Back</button>
+        <h1>Daftar Jenis Vendor</h1>
+        
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Kisaran Minimal</th>
+                        <th scope="col">Kisaran Maksimal</th>
+                        <th scope="col">Jenis Vendor</th>
+                        <th scope="col"></th>
+                        <th scope="col"></th>
+                    </tr>    
+                </thead>
+                
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>Rp 500.000</td>
+                        <td>Rp 5.500.000</td>
+                        <td>Transportasi</td>
+                        <td><button class="edit">Edit</button></td>
+                        <td><button class="hapus">Hapus</button></td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Rp 1.200.000</td>
+                        <td>Rp 6.500.000</td>
+                        <td>Hiburan</td>
+                        <td><button class="edit">Edit</button></td>
+                        <td><button class="hapus">Hapus</button></td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>Rp 1.000.000</td>
+                        <td>Rp 12.000.000</td>
+                        <td>Catering</td>
+                        <td><button class="edit">Edit</button></td>
+                        <td><button class="hapus">Hapus</button></td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>Rp 750.000</td>
+                        <td>Rp 3.000.000</td>
+                        <td>Dekorasi</td>
+                        <td><button class="edit">Edit</button></td>
+                        <td><button class="hapus">Hapus</button></td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td>Rp 200.000</td>
+                        <td>Rp 2.500.000</td>
+                        <td>Percetakan</td>
+                        <td><button class="edit">Edit</button></td>
+                        <td><button class="hapus">Hapus</button></td>
+                    </tr>
+                    <tr>
+                        <td>6</td>
+                       <td>Rp 200.000</td>
+                        <td>Rp 2.500.000</td>
+                        <td>Percetakan</td>
+                        <td><button class="edit">Edit</button></td>
+                        <td><button class="hapus">Hapus</button></td>
+                    </tr>
+                    <tr>
+                        <td>7</td>
+                        <td>Rp 200.000</td>
+                        <td>Rp 2.500.000</td>
+                        <td>Percetakan</td>
+                        <td><button class="edit">Edit</button></td>
+                        <td><button class="hapus">Hapus</button></td>
+                    </tr>
+                    <tr>
+                        <td>8</td>
+                        <td>Rp 200.000</td>
+                        <td>Rp 2.500.000</td>
+                        <td>Percetakan</td>
+                        <td><button class="edit">Edit</button></td>
+                        <td><button class="hapus">Hapus</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <button id="btnTambah">Tambah Jenis Vendor</button>
+
+         <!-- PopUp Tambah Asisten -->
+        <div class="tambah-jenis-vendor">
+            <div class="popup-content">
+                <form id="formTambahJenisVendor" action="" method="">
+                    <h3>Tambah Jenis Vendor</h3>
+                    <input type="number" name="kisaran-minimal" placeholder="Kisaran Minimal" required>
+                    <input type="number" name="kisaran-maksimal" placeholder="Kisaran Maksimal" required>
+                    <input type="text" name="jenis-vendor" placeholder="Jenis Vendor" required>
+                    <div>
+                        <input type="button" id="btnCloseTambah" value="Tutup">
+                        <input type="submit" id="btnSimpanTambah" value="Simpan">
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- PopUp Edit Asisten -->
+        <div class="edit-jenis-vendor">
+            <div class="popup-content">
+                <form id="formEditJenisVendor" action="" method="">
+                    <h3>Edit Jenis Vendor</h3>
+                    <input type="number" id="kisaranMinimal" name="kisaran-minimal" required>
+                    <input type="number" id="kisaranMaksimal" name="kisaran-maksimal" required>
+                    <input type="text" id="jenisVendor" name="jenis-vendor" required>
+                    <div>
+                        <input type="button" id="btnCloseEdit" value="Tutup">
+                        <input type="submit" id="btnSimpanEdit" value="Simpan">
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <!-- PopUp Hapus Jenis Vendor-->
+        <div class="hapus-jenis-vendor">
+            <div class="popup-content">
+                <h3>Konfirmasi Hapus</h3>
+                <p>Apakah Anda yakin ingin menghapus data ini?</p>
+                <div>
+                    <input type="button" id="btnCloseHapus" value="Tutup">
+                    <input type="button" id="btnConfirmHapus" value="Ya">
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+</html>

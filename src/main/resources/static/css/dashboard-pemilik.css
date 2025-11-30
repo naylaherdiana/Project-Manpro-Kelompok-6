@@ -1,0 +1,204 @@
+:root {
+    --navbar-color: #41959D;
+    --hero-color: #C0DEE5;
+    --btn-color: #07575B;
+}
+
+* {
+    margin: 0; padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    display: grid;
+    grid-template-areas: 
+        "header"
+        "main";
+    grid-template-rows: 5em 1fr;
+    width: 100%;
+    height: 100vh;
+    font-family: Arial, Helvetica, sans-serif;
+    overflow: hidden;
+    background-color: #F5F5F5;
+}
+
+header {
+    grid-area: header;
+    background-color: var(--navbar-color);
+    position: sticky;
+    z-index: 1;
+}
+
+nav {
+    margin-left: 20px;
+    margin-right: 20px;
+    padding: 5px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    color: white;
+}
+
+nav>img:first-of-type {
+    width: 4em;
+    height: 4em;
+}
+
+.icon {
+    display: flex;
+    gap: 3em;
+}
+
+.icon>img {
+    width: 2.5em;
+    padding: 0.3em;
+}
+
+.icon>img:hover {
+    cursor: pointer;
+    background-color: #2a858a;
+}
+
+ul {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    list-style: none;
+    gap: 4em;
+}
+
+li {
+    cursor: pointer;
+    padding: 0.5em;
+    font-size: 1.3em;
+    margin: 0.5em;
+}
+
+li:hover {
+    background-color: #188187;
+    transition: 0.5s;
+}
+
+li:first-of-type {
+    background-color: #188187;
+}
+
+a {
+    all: unset;
+}
+
+/* section info */
+.main-section {
+    width: 100%;
+    height: 100vh;
+    display: grid;
+    grid-template-areas: 
+        "a a a a"
+        "b b b b"
+    ;
+    grid-template-rows: 0.1fr 1fr;
+    gap: 2em;
+}
+
+.info-card { 
+    margin-top: 3em;
+    grid-area: a; 
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.info-card > div {
+    width: 20rem;
+    height: 100%;
+    padding: 1em;
+    background-color: #ffffff;
+    border-radius: 1em;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1em;
+}
+
+.dashboard-wrap {
+    grid-area: b;
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: start;
+}
+
+.dashboard-wrap > div {
+    height: 27rem;
+    width: 28rem;
+    border-radius: 1em;
+    background-color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: start;
+}
+
+#event-terdekat {
+    padding: 1em;
+}
+
+caption {
+    font-size: 2em;
+    font-weight: bold;
+    margin-bottom: 0.5em;
+}
+
+#event-terdekat table {
+  table-layout: fixed;
+  width: 100%;
+  height: 90%;
+  text-align: center;
+}
+
+
+
+#analisis-vendor { 
+    padding: 1em;
+}
+
+
+#jadwal-event { 
+    padding: 1em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.calender {
+    color: var(--navbar-color);
+    padding: 1em;
+    margin-top: 1em;
+    width: 100%;
+    height: 85%;
+    border-radius: 1em;
+    background-color: #F5F5F5;
+}
+
+.month ul li{
+    background-color: aqua;
+    font-weight: 700;
+    background-color: #F5F5F5;
+    margin: 1px;
+}
+
+.weekdays {
+    width: 100%;
+}
+.weekdays ul {
+    display: flex;
+    color: #ffffff;
+    background-color:#ddd;
+}
+
+.weekdays ul li {
+    color: #666;
+    text-align: center;
+}
+
+

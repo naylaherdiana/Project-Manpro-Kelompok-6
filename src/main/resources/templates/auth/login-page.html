@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login - Selaras Organizer</title>
+    <link rel="stylesheet" th:href="@{/css/login-page.css}" />
+</head>
+<body>
+    <header>
+        <nav>
+            <img th:src="@{/img/selaras-logo.png}" alt="logo selaras organizer" />
+            <ul>
+                <li><a th:href="@{/}">Home</a></li>
+                <li>Profile</li>
+                <li>Contact</li>
+            </ul>
+            <button id="btn-started">Let's Get Started</button>
+        </nav>
+    </header>
+
+    <section>
+        <div class="hero-container">
+            <img th:src="@{/img/selaras-logo.png}" alt="logo selaras organizer" />
+
+            <!-- Form Login -->
+            <form th:action="@{/login}" th:object="${loginRequest}" method="post">
+                <!-- Pesan error global (misal: username/password salah) -->
+                <div th:if="${error}" class="error-message" th:text="${error}" style="color: red; margin-bottom: 10px;"></div>
+
+                <!-- Username -->
+                <input
+                    type="text"
+                    th:field="*{username}"
+                    id="username"
+                    placeholder="Masukkan Username"
+                />
+                <!-- Error validasi username -->
+                <div th:if="${#fields.hasErrors('username')}" class="error-message" 
+                     th:errors="*{username}" style="color: red; font-size: 0.85em; margin-bottom: 10px;"></div>
+
+                <!-- Password -->
+                <input
+                    type="password"
+                    th:field="*{password}"
+                    id="password"
+                    placeholder="Masukkan Password"
+                />
+                <!-- Error validasi password -->
+                <div th:if="${#fields.hasErrors('password')}" class="error-message" 
+                     th:errors="*{password}" style="color: red; font-size: 0.85em; margin-bottom: 15px;"></div>
+
+                <!-- Tombol Login -->
+                <button type="submit">Login</button>
+            </form>
+
+            <!-- Link Register -->
+            <p>
+                Don't have an account? <a th:href="@{/register}">Register</a>
+            </p>
+        </div>
+    </section>
+</body>
+</html>

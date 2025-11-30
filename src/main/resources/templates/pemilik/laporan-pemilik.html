@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Selaras Organizer</title>
+    <link rel="stylesheet" th:href="@{/css/laporan-pemilik.css}" />
+</head>
+<body>
+    <header>
+        <nav>
+            <img th:src="@{/img/selaras-logo.png}" alt="logo selaras organizer"/>
+            <ul>
+                <li><a th:href="@{dashboard-pemilik.html}">Dashboard</a></li>
+                <li><a th:href="@{asisten-pemilik.html}">Asisten</a></li>
+                <li><a th:href="@{vendor-pemilik.html}">Vendor</a></li>
+                <li><a th:href="@{jenis-vendor-pemilik.html}">Jenis Vendor</a></li>
+                <li>Laporan</li>
+            </ul>
+            <div class="icon">
+                <img th:src="@{/img/notification-icon.png}" alt="notif icon"/>
+                <img th:src="@{/img/profile-icon.png}" alt="profile icon"/>
+            </div>
+        </nav>
+    </header>
+
+    <section class="main-section">
+        <button>Back</button>
+        <h1>Laporan</h1>
+        
+        <h3>Vendor Paling Aktif</h3>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th scope="col">ID Vendor</th>
+                        <th scope="col">Nama Vendor</th>
+                        <th scope="col">Nama Pemilik</th>
+                        <th scope="col">Jumlah Event</th>
+                    </tr>    
+                </thead>
+                
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>Badoet</td>
+                        <td>Djjawhari Manuel</td>
+                        <td>12</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Badoet</td>
+                        <td>Djjawhari Manuel</td>
+                        <td>12</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>Badoet</td>
+                        <td>Djjawhari Manuel</td>
+                        <td>12</td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>Tata Katering</td>
+                        <td>Jennifer Thania</td>
+                        <td>8</td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td>Tata Katering</td>
+                        <td>Jennifer Thania</td>
+                        <td>8</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <h3>Event Berlangsung dan Terdekat</h3>
+        <div class="table-container">
+            <table>    
+                <thead>
+                    <tr>
+                        <th scope="col">ID Event</th>
+                        <th scope="col">Nama</th>
+                        <th scope="col">Tanggal</th>
+                        <th scope="col">Asisten</th>
+                        <th scope="col">Klien</th>
+                    </tr>       
+                </thead>
+                
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>Sweet 17 Vevila</td>
+                        <td>2025-11-04</td>
+                        <td>Agatha Tasya</td>
+                        <td>Vevila Angelia</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Sweet 17 Vevila</td>
+                        <td>2025-11-04</td>
+                        <td>Agatha Tasya</td>
+                        <td>Vevila Angelia</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Sweet 17 Vevila</td>
+                        <td>2025-11-04</td>
+                        <td>Agatha Tasya</td>
+                        <td>Vevila Angelia</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Sweet 17 Vevila</td>
+                        <td>2025-11-04</td>
+                        <td>Agatha Tasya</td>
+                        <td>Vevila Angelia</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+</body>
+</html>

@@ -1,0 +1,133 @@
+:root {
+    --navbar-color: #41959D;
+    --hero-color: #C0DEE5;
+    --btn-color: #07575B;
+}
+
+* {
+    margin: 0; padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    width: 100%;
+    height: 100vh;
+    font-family: Arial, Helvetica, sans-serif;
+    overflow: hidden;
+}
+
+header {
+    margin: 20px;
+    background-color: var(--navbar-color);
+    border-radius: 50px;
+    position: sticky;
+    z-index: 1;
+}
+
+nav {
+    margin-left: 20px;
+    margin-right: 20px;
+    padding: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: white;
+}
+
+nav>img {
+    width: 60px;
+    height: 60px;
+}
+
+ul {
+    width: 500px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    list-style: none;
+}
+
+li {
+    cursor: pointer;
+    padding: 10px;
+    font-size: 1.5em;
+    
+}
+
+li:hover {
+    background-color: #07575B;
+    transition: 0.5s;
+}
+
+li>a {
+   all: unset; 
+}
+
+#btn-started {
+    width: 7em;
+    height: 3.5em;
+    border-radius: 3em;
+    color: white;
+    background-color: var(--btn-color);
+    cursor: pointer;
+    overflow: hidden;
+    font-size: 1em;
+}
+
+#btn-started:hover {
+    background-color: var(--hero-color);
+    color: black;
+    transition: 0.5s;
+}
+
+section {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+}
+
+.hero-container {
+    width: 28rem;
+    height: 35rem;
+    border-radius: 20px;
+    background-color: var(--hero-color);
+    position: absolute;
+    top: 9rem;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1em;
+    box-shadow: 10px 10px 15px;
+}
+
+.hero-container>img {
+    width: 10em;
+}
+
+input {
+    border-radius: 1em;
+    width: 80%;
+    height: 3em;
+    padding: 20px;
+    border-style: none;
+}
+
+button {
+    padding: 10px;
+    margin: 10px;
+    width: 80%;
+    font-size: 1.5em;
+    color: white;
+    background-color: var(--btn-color);
+    border-radius: 10em;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #41959D;
+    transition: 0.5s;
+}
+

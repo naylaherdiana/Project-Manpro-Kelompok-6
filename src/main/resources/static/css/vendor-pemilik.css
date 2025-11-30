@@ -1,0 +1,348 @@
+:root {
+    --navbar-color: #41959D;
+    --hero-color: #C0DEE5;
+    --btn-color: #07575B;
+}
+
+/* Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Layout */
+body {
+    display: grid;
+    grid-template-areas:
+        "header"
+        "main";
+    grid-template-rows: 5em 1fr;
+    width: 100%;
+    height: 100vh;
+    font-family: Arial, Helvetica, sans-serif;
+    overflow: hidden;
+    background-color: #F5F5F5;
+}
+
+header {
+    grid-area: header;
+    position: sticky;
+    z-index: 1;
+    background-color: var(--navbar-color);
+}
+
+/* Navbar */
+nav {
+    margin: 0 20px;
+    padding: 5px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    color: white;
+}
+
+nav > img:first-of-type {
+    width: 4em;
+    height: 4em;
+}
+
+ul {
+    display: flex;
+    align-items: center;
+    list-style: none;
+    gap: 4em;
+}
+
+li {
+    padding: 0.5em;
+    margin: 0.5em;
+    font-size: 1.3em;
+    cursor: pointer;
+}
+
+li:hover {
+    background-color: #188187;
+    transition: 0.5s;
+}
+
+li:nth-of-type(3) {
+    background-color: #188187;
+}
+
+a {
+    all: unset;
+}
+
+.icon {
+    display: flex;
+    gap: 3em;
+}
+
+.icon > img {
+    width: 2.5em;
+    padding: 0.3em;
+}
+
+.icon > img:hover {
+    cursor: pointer;
+    background-color: #2a858a;
+}
+
+
+/* Main Section */
+.main-section {
+    grid-area: main;
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    margin: 2em;
+}
+
+.main-section > button:first-of-type {
+    width: 8%;
+    padding: 0.3em;
+    font-size: 1em;
+    color: #ffffff;
+    cursor: pointer;
+    border: none;
+    border-radius: 0.5em;
+    background-color: var(--navbar-color);
+}
+
+.main-section > button:first-of-type:hover {
+    background-color: #36b9c5;
+    transition: 0.5s;
+}
+
+.main-section > h1 {
+    margin-top: 0.2em;
+    font-size: 2em;
+    font-weight: bold;
+}
+
+/* Table */
+.table-container {
+    max-height: 400px;       
+    overflow-x: auto;     
+    border: 1px solid #ddd;
+    border-radius: 1em;
+}
+
+table thead th {
+    position: sticky;
+    top: 0;
+    background: white;
+    z-index: 0;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: center;
+}
+
+table th, table td {
+    padding: 1em;
+    border-bottom: 1px solid #eee;
+}
+
+td > button {
+    width: 5em;
+    padding: 0.2em;
+    border: 1px solid #61A4AB;
+    border-radius: 0.3em;
+    color: #61A4AB;
+    cursor: pointer;
+}
+
+/* Button: Tambah Asisten */
+.main-section > button:nth-of-type(2) {
+    width: 20%;
+    margin-top: 0.5em;
+    padding: 0.5em;
+    font-size: 1.5em;
+    color: #ffffff;
+    cursor: pointer;
+    border: none;
+    border-radius: 0.5em;
+    background-color: var(--navbar-color);
+    align-self: flex-end;
+}
+
+.main-section > button:nth-of-type(2):hover {
+    background-color: #36b9c5;
+    transition: 0.5s;
+}
+
+
+/* Fitur Tambah Vendor */
+.tambah-vendor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+  display: none;
+  justify-content: center;
+  align-items: center;
+}
+
+form {
+  background: #ffffff;
+  padding: 2em;
+  border-radius: 1em;
+  width: 50rem;
+  height: 28rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5em;
+}
+
+form > input {
+    padding: 0.5em;
+    border: 1px solid;
+    border-radius: 0.5em;
+}
+
+form>div {
+    margin-top: 1em;
+    text-align: end;
+    word-spacing: 1em;
+}
+
+#btnCloseTambah,
+#btnSimpanTambah {
+    width: 15%;
+    padding: 0.5em;
+    color: #ffffff;
+    font-size: large;
+    background-color: var(--btn-color);
+    border: none;
+    border-radius: 1em;
+    cursor: pointer;
+}
+
+#btnCloseTambah:hover,
+#btnSimpanTambah:hover {
+    transition: 0.5s;
+    background-color: #36b9c5;
+}
+
+
+/* Fitur Edit Vendor */
+.edit-vendor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+  display: none;
+  justify-content: center;
+  align-items: center;
+}
+
+.edit-vendor>form {
+  background: #ffffff;
+  padding: 2em;
+  border-radius: 1em;
+  width: 50rem;
+  height: 25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5em;
+}
+
+.edit-vendor > form > input {
+    padding: 0.5em;
+    border: 1px solid;
+    border-radius: 0.5em;
+}
+
+.edit-vendor > form > div {
+    margin-top: 1em;
+    text-align: end;
+    word-spacing: 1em;
+}
+
+#btnCloseEdit, 
+#btnSimpanEdit {
+    width: 15%;
+    padding: 0.5em;
+    color: #ffffff;
+    font-size: large;
+    background-color: var(--btn-color);
+    border: none;
+    border-radius: 1em;
+    cursor: pointer;
+}
+
+#btnCloseEdit:hover, 
+#btnSimpanEdit:hover {
+    transition: 0.5s;
+    background-color: #36b9c5;
+}
+
+
+/* Fitur Hapus Asisten */
+.hapus-vendor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+  display: none;
+  justify-content: center;
+  align-items: center;
+}
+
+.hapus-vendor .popup-content {
+  background: #ffffff;
+  padding: 2em;
+  border-radius: 1em;
+  width: 50rem;
+  height: 12rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5em;
+}
+
+.hapus-vendor .popup-content div {
+    text-align: end;
+    word-spacing: 1em;
+}
+
+#btnCloseHapus {
+    width: 15%;
+    padding: 0.5em;
+    color: #ffffff;
+    font-size: large;
+    background-color: var(--btn-color);
+    border: none;
+    border-radius: 1em;
+    cursor: pointer;
+}
+
+#btnCloseHapus:hover {
+    transition: 0.5s;
+    background-color: #36b9c5;
+}
+
+#btnConfirmHapus {
+    width: 15%;
+    padding: 0.5em;
+    color: #ffffff;
+    font-size: large;
+    background-color: red;
+    border: none;
+    border-radius: 1em;
+    cursor: pointer;
+}
+
+#btnConfirmHapus:hover {
+    transition: 0.5s;
+    background-color: #9c0e0e;
+}
