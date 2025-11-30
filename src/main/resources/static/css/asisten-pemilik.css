@@ -206,7 +206,7 @@ form > input {
     border-radius: 0.5em;
 }
 
-form>div {
+form > div {
     margin-top: 1em;
     text-align: end;
     word-spacing: 1em;

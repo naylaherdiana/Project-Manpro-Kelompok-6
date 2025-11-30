@@ -56,7 +56,6 @@ function attachEditEvents(){
             document.getElementById('editNama').value = cells[1].textContent;
             document.getElementById('editAlamat').value = cells[2].textContent;
             document.getElementById('editKontak').value = cells[3].textContent;
-            document.getElementById('editEmail').value = cells[4].textContent;
 
             popupEdit.style.display = 'flex'; // tampilkan popup
         });
@@ -87,7 +86,7 @@ btnClose.onclick = () => {
 
 /* Edit Asisten */
 const btnEdit = document.querySelectorAll('.edit');
-const popupEdit = document.querySelector('.edit-asisten');
+const popupEdit = document.querySelector('.edit-klien');
 const btnCloseEdit = document.querySelector('#btnCloseEdit');
 const btnSimpanEdit = document.querySelector('#btnSimpanEdit');
 
@@ -104,7 +103,6 @@ btnEdit.forEach(button => {
         document.getElementById('editNama').value = cells[1].textContent;
         document.getElementById('editAlamat').value = cells[2].textContent;
         document.getElementById('editKontak').value = cells[3].textContent;
-        document.getElementById('editEmail').value = cells[4].textContent;
 
         popupEdit.style.display = 'flex'; // tampilkan popup
     });
@@ -121,7 +119,6 @@ formEditKlien.addEventListener('submit', (e) => {
         cells[1].textContent = document.getElementById('editNama').value;
         cells[2].textContent = document.getElementById('editAlamat').value;
         cells[3].textContent = document.getElementById('editKontak').value;
-        cells[4].textContent = document.getElementById('editEmail').value;
     }
 
     popupEdit.style.display = 'none'; // tutup kembali popup
@@ -134,7 +131,7 @@ btnCloseEdit.onclick = () => {
 
 /* Hapus Asisten */
 const btnHapus = document.querySelectorAll('.hapus')
-const popupHapus = document.querySelector('.hapus-asisten')
+const popupHapus = document.querySelector('.hapus-klien')
 const btnCloseHapus = document.getElementById('btnCloseHapus');
 const btnConfirmHapus = document.getElementById('btnConfirmHapus')
 let rowToDelete = null;

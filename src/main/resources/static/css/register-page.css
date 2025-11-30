@@ -10,23 +10,30 @@
 }
 
 body {
-    width: 100%;
     height: 100vh;
     font-family: Arial, Helvetica, sans-serif;
     overflow: hidden;
+    display: grid;
+    grid-template-areas: 
+        "header"
+        "main";
+    grid-template-rows: 10% 1fr;
 }
 
 header {
-    margin: 20px;
+    grid-area: header;
+    margin: 1em;
+    height: 100%;
     background-color: var(--navbar-color);
     border-radius: 50px;
-    position: sticky;
-    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 nav {
-    margin-left: 20px;
-    margin-right: 20px;
+    margin-left: 1em;
+    margin-right: 1em;
     padding: 5px;
     display: flex;
     justify-content: space-between;
@@ -59,7 +66,7 @@ li:hover {
     transition: 0.5s;
 }
 
-li>a {
+li > a {
    all: unset; 
 }
 
@@ -80,54 +87,79 @@ li>a {
     transition: 0.5s;
 }
 
-section {
+main {
+    grid-area: main;
     width: 100%;
-    height: 100vh;
+    height: 100%;
     display: flex;
     justify-content: center;
+    align-items: center;
 }
 
 .hero-container {
-    width: 28rem;
-    height: 35rem;
-    border-radius: 20px;
+    width: 40%;
+    height: 60%;
+    border-radius: 1em;
     background-color: var(--hero-color);
-    position: absolute;
-    top: 9rem;
-    z-index: 2;
     display: flex;
-    flex-direction: column;
+    align-items: center;
+    box-shadow: 5px 5px 5px;
+}
+
+#img-container {
+    width: 50%;
+    height: 100%;
+    display: flex;
     justify-content: center;
     align-items: center;
-    gap: 1em;
-    box-shadow: 10px 10px 15px;
 }
 
-.hero-container>img {
-    width: 10em;
+#img-container img {
+    width: 70%;
+    height: 60%;
 }
 
-input {
+#form-container {
+    width: 50%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+#form-register {
+    width: 100%;
+    height: 80%;
     border-radius: 1em;
-    width: 80%;
-    height: 3em;
-    padding: 20px;
-    border-style: none;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    gap: 0.5em;
 }
 
-button {
-    padding: 10px;
-    margin: 10px;
+#form-register h1 {
+    width: 75%;
+    text-align: center;
+    margin-top: 0.5em;
+}
+
+#form-register input {
+    width: 75%;
+    padding: 0.5em;
+    border: 1px solid;
+    border-radius: 0.5em;
+}
+
+input[type="submit"] {
     width: 80%;
-    font-size: 1.5em;
+    font-size: 1em;
     color: white;
     background-color: var(--btn-color);
     border-radius: 10em;
     cursor: pointer;
 }
 
-button:hover {
+input[type="submit"]:hover {
     background-color: #41959D;
     transition: 0.5s;
 }
-
