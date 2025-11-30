@@ -4,19 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Selaras Organizer</title>
-    <link rel="stylesheet" href="../styles/klien-asisten.css">
-    <script src="../script/klienAsisten.js" defer></script>
+    <link rel="stylesheet" href="../styles/asisten-pemilik.css">
+    <script src="../script/asistenPemilik.js" defer></script>
 </head>
 <body>
     <header>
         <nav>
             <img src="../assets/img/selaras-logo.png" alt="logo selaras organizer">
             <ul>
-                <li><a href="dashboard-asisten.html">Dashboard</a></li>
-                <li><a href="">Klien</a></li>
-                <li><a href="event-asisten.html">Event</a></li>
-                <li><a href="budgeting-asisten.html">Budgeting</a></li>
-                <li><a href="laporan-asisten.html">Laporan</a></li>
+                <li><a href="dashboard-pemilik.html">Dashboard</a></li>
+                <li>Asisten</li>
+                <li><a href="vendor-pemilik.html">Vendor</a></li>
+                <li><a href="jenis-vendor-pemilik.html">Jenis Vendor</a></li>
+                <li><a href="laporan-pemilik.html">Laporan</a></li>
             </ul>
             <div class="icon">
                 <img src="../assets/img/notification-icon.png" alt="notif icon">
@@ -27,7 +27,7 @@
 
     <section class="main-section">
         <button>Back</button>
-        <h1>Daftar Klien</h1>
+        <h1>Daftar Asisten</h1>
         
         <div class="table-container">
             <table> 
@@ -37,6 +37,7 @@
                         <th scope="col">Nama</th>
                         <th scope="col">Alamat</th>
                         <th scope="col">Kontak</th>
+                        <th scope="col">Email</th>
                         <th scope="col"></th>
                         <th scope="col"></th>
                     </tr>    
@@ -48,6 +49,7 @@
                         <td>Abigail Maharani</td>
                         <td>Jl Taman Kopo Indah</td>
                         <td>0812345678</td>
+                        <td>abigail@gmail.com</td>
                         <td><button class="edit">Edit</button></td>
                         <td><button class="hapus">Hapus</button></td>
                     </tr>
@@ -56,6 +58,7 @@
                         <td>Max Indrawan</td>
                         <td>Jl Bukit Indah</td>
                         <td>0812345678</td>
+                        <td>indrawan@gmail.com</td>
                         <td><button class="edit">Edit</button></td>
                         <td><button class="hapus">Hapus</button></td>
                     </tr>
@@ -64,6 +67,7 @@
                         <td>Michael Christian</td>
                         <td>Jl Ranca Bentang 17</td>
                         <td>0812345678</td>
+                        <td>michael@gmail.com</td>
                         <td><button class="edit">Edit</button></td>
                         <td><button class="hapus">Hapus</button></td>
                     </tr>
@@ -72,6 +76,7 @@
                         <td>Agatha Tasya</td>
                         <td>Jl Ciumbuleuit</td>
                         <td>0812345678</td>
+                        <td>tasya@gmail.com</td>
                         <td><button class="edit">Edit</button></td>
                         <td><button class="hapus">Hapus</button></td>
                     </tr>
@@ -80,6 +85,7 @@
                         <td>Abigail Maharani</td>
                         <td>Jl Taman Kopo Indah</td>
                         <td>0812345678</td>
+                        <td>abigail@gmail.com</td>
                         <td><button class="edit">Edit</button></td>
                         <td><button class="hapus">Hapus</button></td>
                     </tr>
@@ -88,6 +94,7 @@
                         <td>Abigail Maharani</td>
                         <td>Jl Taman Kopo Indah</td>
                         <td>0812345678</td>
+                        <td>abigail@gmail.com</td>
                         <td><button class="edit">Edit</button></td>
                         <td><button class="hapus">Hapus</button></td>
                     </tr>
@@ -95,16 +102,17 @@
             </table>
         </div>
         
-        <button id="btnTambah">Tambah Klien</button>
+        <button id="btnTambah">Tambah Asisten</button>
 
-        <!-- PopUp Tambah Klien -->
-        <div class="tambah-klien">
+        <!-- PopUp Tambah Asisten -->
+        <div class="tambah-asisten">
             <div class="popup-content">
-                <form id="formTambahKlien" action="" method="">
-                    <h3>Tambah Klien</h3>
-                    <input type="text" name="nama-klien" placeholder="Nama Klien" required>
+                <form id="formTambah" action="" method="">
+                    <h3>Tambah Asisten</h3>
+                    <input type="text" name="nama-asisten" placeholder="Nama Asisten" required>
                     <input type="text" name="alamat" placeholder="Alamat" required>
                     <input type="number" name="kontak" placeholder="Kontak" required>
+                    <input type="email" name="email" placeholder="Email" required>
                     <div>
                         <input type="button" id="btnCloseTambah" value="Tutup">
                         <input type="submit" id="btnSimpanTambah" value="Simpan">
@@ -113,14 +121,15 @@
             </div>
         </div>
 
-        <!-- PopUp Edit Klien -->
-        <div class="edit-klien">
+        <!-- PopUp Edit Asisten -->
+        <div class="edit-asisten">
             <div class="popup-content">
-                <form id="formEditKlien" action="" method="">
-                    <h3>Edit Klien</h3>
-                    <input type="text" id="editNama" name="nama-klien" required>
+                <form id="formEdit" action="" method="">
+                    <h3>Edit Asisten</h3>
+                    <input type="text" id="editNama" name="nama-asisten" required>
                     <input type="text" id="editAlamat" required>
-                    <input type="number" id="editKontak" required>
+                    <input type="text" id="editKontak" required>
+                    <input type="email" id="editEmail" required>
                     <div>
                         <input type="button" id="btnCloseEdit" value="Tutup">
                         <input type="submit" id="btnSimpanEdit" value="Simpan">
@@ -129,8 +138,8 @@
             </div>
         </div>
         
-        <!-- PopUp Hapus Klien -->
-        <div class="hapus-klien">
+        <!-- PopUp Hapus Asisten -->
+        <div class="hapus-asisten">
             <div class="popup-content">
                 <h3>Konfirmasi Hapus</h3>
                 <p>Apakah Anda yakin ingin menghapus data ini?</p>

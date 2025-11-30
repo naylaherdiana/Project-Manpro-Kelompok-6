@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Selaras Organizer</title>
-    <link rel="stylesheet" href="../styles/dashboard-asisten.css">
+    <link rel="stylesheet" href="../styles/dashboard-pemilik.css">
 </head>
 <body>
     <header>
@@ -12,10 +12,10 @@
             <img src="../assets/img/selaras-logo.png" alt="logo selaras organizer">
             <ul>
                 <li><a href="">Dashboard</a></li>
-                <li><a href="klien-asisten.html">Klien</a></li>
-                <li><a href="event-asisten.html">Event</a></li>
-                <li><a href="budgeting-asisten.html">Budgeting</a></li>
-                <li><a href="laporan-asisten.html">Laporan</a></li>
+                <li><a href="asisten-pemilik.html">Asisten</a></li>
+                <li><a href="vendor-pemilik.html">Vendor</a></li>
+                <li><a href="jenis-vendor-pemilik.html">Jenis Vendor</a></li>
+                <li><a href="laporan-pemilik.html">Laporan</a></li>
             </ul>
             <div class="icon">
                 <img src="../assets/img/notification-icon.png" alt="notif icon">
@@ -28,15 +28,19 @@
         <div class="info-card">
             <div id="klien-aktif">
                 <h1>18</h1>
-                <p>Event Ditangani</p>
+                <p>Klien Aktif</p>
             </div>
             <div id="klien-aktif">
                 <h1>4</h1>
-                <p>Klien</p>
+                <p>Event Terdekat</p>
             </div>
             <div>
                 <h1>12</h1>
-                <p>Event Tuntas</p>
+                <p>Vendor Terdaftar</p>
+            </div>
+            <div>
+                <h1>Tata Katering</h1>
+                <p>Vendor Paling Sering Dipakai</p>
             </div>
         </div>
         
@@ -83,14 +87,33 @@
             </div>
 
             <div id="analisis-vendor">
-                <h1>Analisis Jenis Vendor</h1>
+                <h1>Analisis Vendor</h1>
             </div>
 
             <div id="jadwal-event">
                 <h1>Jadwal Event</h1>
                 
-                
-                
+                <div class="calender">
+                    <div class="month">
+                        <ul>
+                            <li>August <span>2021</span></li>
+                            <li class="prev">&#10094;</li>
+                            <li class="next">&#10095;</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="weekdays">
+                        <ul>
+                            <li>SUN</li>
+                            <li>MON</li>
+                            <li>TUE</li>
+                            <li>WED</li>
+                            <li>THU</li>
+                            <li>FRI</li>
+                            <li>SAT</li>
+                        </ul>
+                    </div>
+                </div>
             </div>
         </div>
         

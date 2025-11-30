@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Selaras Organizer</title>
+    <link rel="stylesheet" href="../styles/event-asisten.css">
+    <script src="../script/eventAsisten.js" defer ></script>
+</head>
+<body>
+    <header>
+        <nav>
+            <img src="../assets/img/selaras-logo.png" alt="logo selaras organizer">
+            <ul>
+                <li><a href="dashboard-asisten.html">Dashboard</a></li>
+                <li><a href="klien-asisten.html">Klien</a></li>
+                <li><a href="">Event</a></li>
+                <li><a href="budgeting-asisten.html">Budgeting</a></li>
+                <li><a href="laporan-asisten.html">Laporan</a></li>
+            </ul>
+            <div class="icon">
+                <img src="../assets/img/notification-icon.png" alt="notif icon">
+                <img src="../assets/img/profile-icon.png" alt="profile icon">
+            </div>
+        </nav>
+    </header>
+
+    <section class="main-section">
+        <button>Back</button>
+        <h1>Daftar Event</h1>
+        
+        <h3>Event Tuntas</h3>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Nama Event</th>
+                        <th scope="col">Jenis</th>
+                        <th scope="col">Tanggal</th>
+                        <th scope="col">Jumlah Undangan</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Klien</th>
+                    </tr>    
+                </thead>
+                
+                <tbody>
+                    <tr>
+                        <td>10</td>
+                        <td>Wedding Beila</td>
+                        <td>Wedding</td>
+                        <td>23 October 2025</td>
+                        <td>400</td>
+                        <td>Tuntas</td>
+                        <td>Bella</td>
+                    </tr>
+                    <tr>
+                        <td>10</td>
+                        <td>Wedding Beila</td>
+                        <td>Wedding</td>
+                        <td>23 October 2025</td>
+                        <td>400</td>
+                        <td>Tuntas</td>
+                        <td>Bella</td>
+                    </tr>
+                    <tr>
+                        <td>10</td>
+                        <td>Wedding Beila</td>
+                        <td>Wedding</td>
+                        <td>23 October 2025</td>
+                        <td>400</td>
+                        <td>Tuntas</td>
+                        <td>Bella</td>
+                    </tr>
+                    <tr>
+                        <td>10</td>
+                        <td>Wedding Beila</td>
+                        <td>Wedding</td>
+                        <td>23 October 2025</td>
+                        <td>400</td>
+                        <td>Tuntas</td>
+                        <td>Bella</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <h3>Event Berlangsung</h3>
+        <div class="table-container">
+            <table>    
+                <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Nama Event</th>
+                        <th scope="col">Jenis</th>
+                        <th scope="col">Tanggal</th>
+                        <th scope="col">Jumlah Undangan</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Klien</th>
+                    </tr>     
+                </thead>
+                
+                <tbody>
+                   <tr>
+                        <td>10</td>
+                        <td>Wedding Beila</td>
+                        <td>Wedding</td>
+                        <td>23 October 2025</td>
+                        <td>400</td>
+                        <td>Tuntas</td>
+                        <td>Bella</td>
+                    </tr>
+                    <tr>
+                        <td>10</td>
+                        <td>Wedding Beila</td>
+                        <td>Wedding</td>
+                        <td>23 October 2025</td>
+                        <td>400</td>
+                        <td>Tuntas</td>
+                        <td>Bella</td>
+                    </tr>
+                    <tr>
+                        <td>10</td>
+                        <td>Wedding Beila</td>
+                        <td>Wedding</td>
+                        <td>23 October 2025</td>
+                        <td>400</td>
+                        <td>Tuntas</td>
+                        <td>Bella</td>
+                    </tr>
+                    <tr>
+                        <td>10</td>
+                        <td>Wedding Beila</td>
+                        <td>Wedding</td>
+                        <td>23 October 2025</td>
+                        <td>400</td>
+                        <td>Tuntas</td>
+                        <td>Bella</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <button id="btnTambah">Tambah Event</button>
+    </section>
+
+    <!-- PopUp Tambah Event -->
+        <div class="tambah-event">
+            <div class="popup-content">
+                <form id="formTambahEvent" action="" method="">
+                    <h3>Tambah Event</h3>
+                    <input type="text" name="namaEvent" placeholder="Nama Event" required>
+                    <input type="text" name="jenisEvent" placeholder="Jenis Event" required>
+                    <input type="date" name="tanggalEvent" placeholder="Tanggal Event" required>
+                    <input type="number" name="jumlahUndangan" placeholder="Jumlah Undangan" required>
+                    <input type="text" name="statusEvent" placeholder="Status Event" required>
+                    <input type="text" name="klien" placeholder="Klien" required>
+                    <div>
+                        <input type="button" id="btnCloseTambah" value="Tutup">
+                        <input type="submit" id="btnSimpanTambah" value="Simpan">
+                    </div>
+                </form>
+            </div>
+        </div>
+</body>
+</html>

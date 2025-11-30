@@ -4,19 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Selaras Organizer</title>
-    <link rel="stylesheet" href="../styles/klien-asisten.css">
-    <script src="../script/klienAsisten.js" defer></script>
+    <link rel="stylesheet" href="../styles/vendor-pemilik.css">
+    <script src="../script/vendorPemilik.js" defer></script>
 </head>
 <body>
     <header>
         <nav>
             <img src="../assets/img/selaras-logo.png" alt="logo selaras organizer">
             <ul>
-                <li><a href="dashboard-asisten.html">Dashboard</a></li>
-                <li><a href="">Klien</a></li>
-                <li><a href="event-asisten.html">Event</a></li>
-                <li><a href="budgeting-asisten.html">Budgeting</a></li>
-                <li><a href="laporan-asisten.html">Laporan</a></li>
+                <li><a href="dashboard-pemilik.html">Dashboard</a></li>
+                <li><a href="asisten-pemilik.html">Asisten</a></li>
+                <li>Vendor</li>
+                <li><a href="jenis-vendor-pemilik.html">Jenis Vendor</a></li>
+                <li><a href="laporan-pemilik.html">Laporan</a></li>
             </ul>
             <div class="icon">
                 <img src="../assets/img/notification-icon.png" alt="notif icon">
@@ -27,16 +27,18 @@
 
     <section class="main-section">
         <button>Back</button>
-        <h1>Daftar Klien</h1>
+        <h1>Daftar Vendor</h1>
         
         <div class="table-container">
-            <table> 
+            <table>
                 <thead>
                     <tr>
                         <th scope="col">ID</th>
-                        <th scope="col">Nama</th>
+                        <th scope="col">Nama Pemilik</th>
+                        <th scope="col">Nama Vendor</th>
                         <th scope="col">Alamat</th>
                         <th scope="col">Kontak</th>
+                        <th scope="col">Jenis</th>
                         <th scope="col"></th>
                         <th scope="col"></th>
                     </tr>    
@@ -46,48 +48,70 @@
                     <tr>
                         <td>1</td>
                         <td>Abigail Maharani</td>
+                        <td>MatTrans</td>
                         <td>Jl Taman Kopo Indah</td>
                         <td>0812345678</td>
+                        <td>Transportasi</td>
                         <td><button class="edit">Edit</button></td>
                         <td><button class="hapus">Hapus</button></td>
                     </tr>
                     <tr>
                         <td>2</td>
-                        <td>Max Indrawan</td>
-                        <td>Jl Bukit Indah</td>
+                        <td>Abigail Maharani</td>
+                        <td>Fun With You</td>
+                        <td>Jl Taman Kopo Indah</td>
                         <td>0812345678</td>
+                        <td>Hiburan</td>
                         <td><button class="edit">Edit</button></td>
                         <td><button class="hapus">Hapus</button></td>
                     </tr>
                     <tr>
                         <td>3</td>
-                        <td>Michael Christian</td>
-                        <td>Jl Ranca Bentang 17</td>
+                        <td>Abigail Maharani</td>
+                        <td>Tata Catering</td>
+                        <td>Jl Taman Kopo Indah</td>
                         <td>0812345678</td>
+                        <td>Catering</td>
                         <td><button class="edit">Edit</button></td>
                         <td><button class="hapus">Hapus</button></td>
                     </tr>
                     <tr>
                         <td>4</td>
-                        <td>Agatha Tasya</td>
-                        <td>Jl Ciumbuleuit</td>
+                        <td>Abigail Maharani</td>
+                        <td>Badoet</td>
+                        <td>Jl Taman Kopo Indah</td>
                         <td>0812345678</td>
+                        <td>Dekorasi</td>
                         <td><button class="edit">Edit</button></td>
                         <td><button class="hapus">Hapus</button></td>
                     </tr>
                     <tr>
                         <td>5</td>
                         <td>Abigail Maharani</td>
+                        <td>Jojo Print</td>
                         <td>Jl Taman Kopo Indah</td>
                         <td>0812345678</td>
+                        <td>Percetakan</td>
                         <td><button class="edit">Edit</button></td>
                         <td><button class="hapus">Hapus</button></td>
                     </tr>
                     <tr>
                         <td>6</td>
                         <td>Abigail Maharani</td>
+                        <td>Tata Catering</td>
                         <td>Jl Taman Kopo Indah</td>
                         <td>0812345678</td>
+                        <td>Transportasi</td>
+                        <td><button class="edit">Edit</button></td>
+                        <td><button class="hapus">Hapus</button></td>
+                    </tr>
+                    <tr>
+                        <td>7</td>
+                        <td>Abigail Maharani</td>
+                        <td>Tata Catering</td>
+                        <td>Jl Taman Kopo Indah</td>
+                        <td>0812345678</td>
+                        <td>Transportasi</td>
                         <td><button class="edit">Edit</button></td>
                         <td><button class="hapus">Hapus</button></td>
                     </tr>
@@ -95,16 +119,18 @@
             </table>
         </div>
         
-        <button id="btnTambah">Tambah Klien</button>
+        <button id="btnTambah">Tambah Vendor</button>
 
-        <!-- PopUp Tambah Klien -->
-        <div class="tambah-klien">
+        <!-- PopUp Tambah Vendor -->
+        <div class="tambah-vendor">
             <div class="popup-content">
-                <form id="formTambahKlien" action="" method="">
-                    <h3>Tambah Klien</h3>
-                    <input type="text" name="nama-klien" placeholder="Nama Klien" required>
+                <form id="formTambah" action="" method="">
+                    <h3>Tambah Vendor</h3>
+                    <input type="text" name="nama-pemilik" placeholder="Nama Pemilik" required>
+                    <input type="text" name="nama-vendor" placeholder="Nama Vendor" required>
                     <input type="text" name="alamat" placeholder="Alamat" required>
                     <input type="number" name="kontak" placeholder="Kontak" required>
+                    <input type="text" name="jenis-vendor" placeholder="Jenis Vendor" required>
                     <div>
                         <input type="button" id="btnCloseTambah" value="Tutup">
                         <input type="submit" id="btnSimpanTambah" value="Simpan">
@@ -113,14 +139,16 @@
             </div>
         </div>
 
-        <!-- PopUp Edit Klien -->
-        <div class="edit-klien">
+        <!-- PopUp Edit Vendor -->
+        <div class="edit-vendor">
             <div class="popup-content">
-                <form id="formEditKlien" action="" method="">
-                    <h3>Edit Klien</h3>
-                    <input type="text" id="editNama" name="nama-klien" required>
-                    <input type="text" id="editAlamat" required>
-                    <input type="number" id="editKontak" required>
+                <form id="formEditVendor" action="" method="">
+                    <h3>Edit Vendor</h3>
+                    <input type="text" id="namaPemilik" name="nama-pemilik" required>
+                    <input type="text" id="namaVendor" name="nama-vendor" required>
+                    <input type="text" id="alamat" name="alamat" required>
+                    <input type="number" id="kontak" name="kontak" required>
+                    <input type="text" id="jenisVendor" name="jenis-vendor" required>
                     <div>
                         <input type="button" id="btnCloseEdit" value="Tutup">
                         <input type="submit" id="btnSimpanEdit" value="Simpan">
@@ -129,8 +157,8 @@
             </div>
         </div>
         
-        <!-- PopUp Hapus Klien -->
-        <div class="hapus-klien">
+        <!-- PopUp Hapus Vendor -->
+        <div class="hapus-vendor">
             <div class="popup-content">
                 <h3>Konfirmasi Hapus</h3>
                 <p>Apakah Anda yakin ingin menghapus data ini?</p>
@@ -140,7 +168,6 @@
                 </div>
             </div>
         </div>
-
 
     </section>
 </body>
