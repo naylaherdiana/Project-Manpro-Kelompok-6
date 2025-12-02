@@ -1,17 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Selaras Organizer</title>
-    <link rel="stylesheet" href="../styles/register-page.css">
+    <link rel="stylesheet" th:href="@{/css/register-page.css}"/>
 </head>
 <body>
     <header>
         <nav>
-            <img src="../assets/img/selaras-logo.png" alt="logo selaras organizer">
+            <img th:src="@{/img/selaras-logo.png}" alt="logo selaras organizer" />
             <ul>
-                <li><a href="home-page.html">Home</a></li>
+                <li><a th:href="@{/}">Home</a></li>
                 <li>Profile</li>
                 <li>Contact</li>
             </ul>
@@ -19,24 +19,23 @@
         </nav>
     </header>
     <main>
-        <section class="hero-container">
+        <div class="hero-container">
             <div id="img-container">
-                <img src="../assets/img/selaras-logo.png" alt="">
+                <img th:src="@{/img/selaras-logo.png}" alt="logo selaras organizer" />
             </div>
             <div id="form-container">
-                <form id="form-register" action="">
+                <form th:action="@{/register}" th:object="${registerRequest}" method="post" id="form-register">
                     <h1>Register</h1>
-                    <input type="text"  name="nama" id="nama" placeholder="Masukkan Nama">
-                    <input type="text"  name="alamat" id="alamat" placeholder="Masukkan Alamat">
-                    <input type="tel"  name="kontak" id="kontak" placeholder="Masukkan Kontak">
-                    <input type="text"  name="username" id="username" placeholder="Masukkan Username">
-                    <input type="email" name="email" id="email" placeholder="Masukkan Email">
-                    <input type="password" name="password" id="password" placeholder="Masukkan Password">
-                    <input type="submit" value="Register">
+                    <input type="text" th:field="*{nama}" placeholder="Masukkan Nama" required />
+                    <input type="text" th:field="*{alamat}" placeholder="Masukkan Alamat" required />
+                    <input type="tel" th:field="*{kontak}" placeholder="Masukkan Kontak" required />
+                    <input type="text" th:field="*{username}" placeholder="Masukkan Username" required />
+                    <input type="email" th:field="*{email}" placeholder="Masukkan Email {nama}@selarasorganizer.com" required />
+                    <input type="password" th:field="*{password}" placeholder="Masukkan Password" required />
+                    <input type="submit" value="Register" />
                 </form>
-                <p>Already have an account? <a href="login-page.html">Login</a></p>
-            </div>
-        </section>
+                <p>Already have an account? <a th:href="@{/login}">Login</a></p>
+        </div>
     </main>
 </body>
 </html>
