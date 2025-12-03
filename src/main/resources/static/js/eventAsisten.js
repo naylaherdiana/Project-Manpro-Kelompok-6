@@ -49,5 +49,3 @@ formTambahEvent.addEventListener('submit', (e) => {
 btnClose.onclick = () => {
   popup.style.display = 'none';
 };
-
-

@@ -1,25 +1,25 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Selaras Organizer</title>
-    <link rel="stylesheet" href="../styles/laporan-asisten.css">
+    <link rel="stylesheet" th:href="@{/css/laporan-asisten.css}">
 </head>
 <body>
     <header>
         <nav>
-            <img src="../assets/img/selaras-logo.png" alt="logo selaras organizer">
+            <img th:src="@{/img/selaras-logo.png}" alt="logo selaras organizer">
             <ul>
-                <li><a href="dashboard-asisten.html">Dashboard</a></li>
-                <li><a href="klien-asisten.html">Klien</a></li>
-                <li><a href="event-asisten.html">Event</a></li>
-                <li><a href="budgeting-asisten.html">Budgeting</a></li>
-                <li><a href="">Laporan</a></li>
+                <li><a th:href="@{/dashboard-asisten}">Dashboard</a></li>
+                <li><a th:href="@{/klien-asisten}">Klien</a></li>
+                <li><a th:href="@{/event-asisten}">Event</a></li>
+                <li><a th:href="@{/budgeting-asisten}">Budgeting</a></li>
+                <li>Laporan</li>
             </ul>
             <div class="icon">
-                <img src="../assets/img/notification-icon.png" alt="notif icon">
-                <img src="../assets/img/profile-icon.png" alt="profile icon">
+                <img th:src="@{/img/notification-icon.png}" alt="notif icon">
+                <img th:src="@{/img/profile-icon.png}" alt="profile icon">
             </div>
         </nav>
     </header>
@@ -116,6 +116,5 @@
             </div>
         </div>
     </main>     
-    
 </body>
 </html>

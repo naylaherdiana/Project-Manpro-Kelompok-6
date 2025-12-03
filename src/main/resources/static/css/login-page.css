@@ -106,6 +106,15 @@ section {
     width: 10em;
 }
 
+form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 1em;
+    width: 100%;
+}
+
 input {
     border-radius: 1em;
     width: 80%;

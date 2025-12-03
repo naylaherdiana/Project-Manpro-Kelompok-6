@@ -1,26 +1,26 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Selaras Organizer</title>
-    <link rel="stylesheet" href="../styles/klien-asisten.css">
-    <script src="../script/klienAsisten.js" defer></script>
+    <link rel="stylesheet" th:href="@{/css/klien-asisten.css}"/>
+    <script th:src="@{/js/klienAsisten.js}" defer></script>
 </head>
 <body>
     <header>
         <nav>
-            <img src="../assets/img/selaras-logo.png" alt="logo selaras organizer">
+            <img th:src="@{/img/selaras-logo.png}" alt="logo selaras organizer"/>
             <ul>
-                <li><a href="dashboard-asisten.html">Dashboard</a></li>
-                <li><a href="">Klien</a></li>
-                <li><a href="event-asisten.html">Event</a></li>
-                <li><a href="budgeting-asisten.html">Budgeting</a></li>
-                <li><a href="laporan-asisten.html">Laporan</a></li>
+                <li><a th:href="@{/dashboard-asisten}">Dashboard</a></li>
+                <li>Klien</li>
+                <li><a th:href="@{/event-asisten}">Event</a></li>
+                <li><a th:href="@{/budgeting-asisten}">Budgeting</a></li>
+                <li><a th:href="@{/laporan-asisten}">Laporan</a></li>
             </ul>
             <div class="icon">
-                <img src="../assets/img/notification-icon.png" alt="notif icon">
-                <img src="../assets/img/profile-icon.png" alt="profile icon">
+                <img th:src="@{/img/notification-icon.png}" alt="notif icon"/>
+                <img th:src="@{/img/profile-icon.png}" alt="profile icon"/>
             </div>
         </nav>
     </header>
@@ -120,7 +120,7 @@
                     <h3>Edit Klien</h3>
                     <input type="text" id="editNama" name="nama-klien" required>
                     <input type="text" id="editAlamat" required>
-                    <input type="number" id="editKontak" required>
+                    <input type="text" id="editKontak" required>
                     <div>
                         <input type="button" id="btnCloseEdit" value="Tutup">
                         <input type="submit" id="btnSimpanEdit" value="Simpan">
@@ -140,8 +140,6 @@
                 </div>
             </div>
         </div>
-
-
     </section>
 </body>
 </html>
