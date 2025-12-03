@@ -18,14 +18,12 @@
             <button id="btn-started">Let's Get Started</button>
         </nav>
     </header>
-
     <section>
         <div class="hero-container">
             <img th:src="@{/img/selaras-logo.png}" alt="logo selaras organizer" />
 
             <!-- Form Login -->
             <form th:action="@{/login}" th:object="${loginRequest}" method="post">
-                <!-- Pesan error global (misal: username/password salah) -->
                 <div th:if="${error}" class="error-message" th:text="${error}" style="color: red; margin-bottom: 10px;"></div>
 
                 <!-- Username -->

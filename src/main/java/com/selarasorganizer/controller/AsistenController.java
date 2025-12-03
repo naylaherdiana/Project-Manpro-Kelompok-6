@@ -30,4 +30,37 @@ public class AsistenController {
         }
         return "asisten/klien-asisten";
     }
+
+    @GetMapping("/event-asisten")
+    public String daftarEvent(HttpSession session, Model model){
+        if (session.getAttribute("userRole") == null) {
+            return "redirect:/login";
+        }
+        if (!"ASISTEN".equals(session.getAttribute("userRole"))) {
+            return "redirect:/login";
+        }
+        return "asisten/event-asisten";
+    }
+
+    @GetMapping("/budgeting-asisten")
+    public String budgeting(HttpSession session, Model model){
+        if (session.getAttribute("userRole") == null) {
+            return "redirect:/login";
+        }
+        if (!"ASISTEN".equals(session.getAttribute("userRole"))) {
+            return "redirect:/login";
+        }
+        return "asisten/budgeting-asisten";
+    }
+
+    @GetMapping("/laporan-asisten")
+    public String laporan(HttpSession session, Model model){
+        if (session.getAttribute("userRole") == null) {
+            return "redirect:/login";
+        }
+        if (!"ASISTEN".equals(session.getAttribute("userRole"))) {
+            return "redirect:/login";
+        }
+        return "asisten/laporan-asisten";
+    }
 }

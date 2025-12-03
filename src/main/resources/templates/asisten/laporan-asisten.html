@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Selaras Organizer</title>
+    <link rel="stylesheet" th:href="@{/css/laporan-asisten.css}">
+</head>
+<body>
+    <header>
+        <nav>
+            <img th:src="@{/img/selaras-logo.png}" alt="logo selaras organizer">
+            <ul>
+                <li><a th:href="@{/dashboard-asisten}">Dashboard</a></li>
+                <li><a th:href="@{/klien-asisten}">Klien</a></li>
+                <li><a th:href="@{/event-asisten}">Event</a></li>
+                <li><a th:href="@{/budgeting-asisten}">Budgeting</a></li>
+                <li>Laporan</li>
+            </ul>
+            <div class="icon">
+                <img th:src="@{/img/notification-icon.png}" alt="notif icon">
+                <img th:src="@{/img/profile-icon.png}" alt="profile icon">
+            </div>
+        </nav>
+    </header>
+
+    <main class="container">
+        <button>Back</button>
+        <h1>Laporan Asisten</h1>
+        <div id="daftar-event-berjalan">
+            <h2>Event Yang Sedang Berjalan</h2>
+            <div class="table-container">
+                <table id="tabel-event-berjalan">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nama Event</th>
+                            <th>Tanggal</th>
+                            <th>Jumlah Undangan</th>
+                            <th>Klien</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>Wedding Axel</td>
+                            <td>7 November 2025</td>
+                            <td>400</td>
+                            <td>Axel</td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>Wedding Axel</td>
+                            <td>7 November 2025</td>
+                            <td>400</td>
+                            <td>Axel</td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>Wedding Axel</td>
+                            <td>7 November 2025</td>
+                            <td>400</td>
+                            <td>Axel</td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>Wedding Axel</td>
+                            <td>7 November 2025</td>
+                            <td>400</td>
+                            <td>Axel</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div id="daftar-riwayat-event">
+            <h2>Riwayat Event Tuntas</h2>
+            <div class="table-container">
+                <table id="tabel-riwayat-event">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nama Event</th>
+                            <th>Tanggal</th>
+                            <th>Klien</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>Wedding Axel</td>
+                            <td>7 November 2025</td>
+                            <td>Axel</td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>Wedding Axel</td>
+                            <td>7 November 2025</td>
+                            <td>Axel</td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>Wedding Axel</td>
+                            <td>7 November 2025</td>
+                            <td>Axel</td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>Wedding Axel</td>
+                            <td>7 November 2025</td>
+                            <td>Axel</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>     
+</body>
+</html>
