@@ -8,7 +8,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 import com.selarasorganizer.model.Asisten;
+import com.selarasorganizer.model.Vendor;
 import com.selarasorganizer.model.EventDashboard;
 import com.selarasorganizer.model.RegisterRequest;
 import com.selarasorganizer.repository.AsistenRepository;
@@ -148,7 +151,101 @@ public class PemilikController {
         if (!"PEMILIK".equals(role)) {
             return "redirect:/login";
         }
+        List<Vendor> vendorList = vendorRepository.findAll();
+        model.addAttribute("vendorList", vendorList);
         return "pemilik/vendor-pemilik";
+    }
+
+    @PostMapping("/vendor-pemilik")
+    public String tambahVendor(
+            @RequestParam String namapemilik,
+            @RequestParam String namavendor,
+            @RequestParam String alamatvendor,
+            @RequestParam String kontakvendor,
+            @RequestParam Long idjenisvendor,  // PERHATIKAN: Long bukan String
+            HttpSession session) {
+        
+        // DEBUG LOGGING - SANGAT PENTING
+        System.out.println("=== DEBUG TAMBAH VENDOR ===");
+        System.out.println("namapemilik: " + namapemilik);
+        System.out.println("namavendor: " + namavendor);
+        System.out.println("alamatvendor: " + alamatvendor);
+        System.out.println("kontakvendor: " + kontakvendor);
+        System.out.println("idjenisvendor: " + idjenisvendor);
+        System.out.println("Tipe idjenisvendor: " + idjenisvendor.getClass().getName());
+        
+        if (!"PEMILIK".equals(session.getAttribute("userRole"))) {
+            return "redirect:/login";
+        }
+
+        Vendor vendor = new Vendor();
+        vendor.setNamapemilik(namapemilik);
+        vendor.setNamavendor(namavendor);
+        vendor.setAlamatvendor(alamatvendor);
+        vendor.setKontakvendor(kontakvendor);
+        vendor.setIdjenisvendor(idjenisvendor);
+
+        try {
+            vendorRepository.save(vendor);
+            System.out.println("SUKSES: Vendor berhasil ditambahkan");
+        } catch (Exception e) {
+            System.out.println("ERROR: Gagal menambah vendor: " + e.getMessage());
+            e.printStackTrace();
+        }
+
+        return "redirect:/vendor-pemilik";
+    }
+
+    @PostMapping("/update-vendor")
+    public String updateVendor(
+            @RequestParam("idvendor") Long id,
+            @RequestParam String namapemilik,
+            @RequestParam String namavendor,
+            @RequestParam String alamatvendor,
+            @RequestParam String kontakvendor,
+            @RequestParam Long idjenisvendor,
+            HttpSession session,
+            RedirectAttributes redirectAttributes) { 
+        
+        System.out.println("=== DEBUG UPDATE VENDOR ===");
+        System.out.println("idvendor: " + id);
+        System.out.println("namapemilik: " + namapemilik);
+        System.out.println("namavendor: " + namavendor);
+        System.out.println("alamatvendor: " + alamatvendor);
+        System.out.println("kontakvendor: " + kontakvendor);
+        System.out.println("idjenisvendor: " + idjenisvendor);
+
+        if (!"PEMILIK".equals(session.getAttribute("userRole"))) {
+            return "redirect:/login";
+        }
+        
+        Vendor vendor = vendorRepository.findById(id);
+        if(vendor == null){
+            System.out.println("ERROR: Vendor tidak ditemukan dengan ID: " + id);
+            return "redirect:/vendor-pemilik";
+        }
+        
+        vendor.setNamapemilik(namapemilik);
+        vendor.setNamavendor(namavendor);
+        vendor.setAlamatvendor(alamatvendor);
+        vendor.setKontakvendor(kontakvendor);
+        vendor.setIdjenisvendor(idjenisvendor);
+
+        vendorRepository.update(vendor);
+
+        return "redirect:/vendor-pemilik";
+    }
+
+    @PostMapping("/delete-vendor")
+    public String deleteVendor(@RequestParam("idvendor") Long id, HttpSession session) {
+        System.out.println("DELETE vendor ID: " + id);
+        
+        if (!"PEMILIK".equals(session.getAttribute("userRole"))) {
+            return "redirect:/login";
+        }
+
+        vendorRepository.deleteById(id);
+        return "redirect:/vendor-pemilik";
     }
 
     @GetMapping("/jenis-vendor-pemilik")
