@@ -90,6 +90,41 @@ a {
 }
 
 
+/* POPUP LOGOUT */
+#popup-logout {
+    padding: 1em;
+    width: 8rem;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    gap: 1em;
+    position: absolute;
+    top: 4em;
+    right: 3.5em;
+    border-radius: 0.5em;
+    border: 1px solid #000;
+    background-color: #F5F5F5;
+}
+
+#popup-logout p {
+    color: #000;
+}
+
+#popup-logout button {
+    padding: 0.5em;
+    width: 100%;
+    border-radius: 0.5em;
+    border: 1px solid #000;
+    cursor: pointer;
+}
+
+#popup-logout button:hover {
+    color: #ffffff;
+    transition: 0.5s;
+    background-color: red;
+}
+
+
 /* Main Section */
 .main-section {
     grid-area: main;
@@ -160,8 +195,8 @@ td > button {
 }
 
 
-/* Fitur Tambah Vendor */
-.tambah-vendor {
+/* Tambah dan Edit Vendor*/
+.tambah-vendor, .edit-vendor {
   position: fixed;
   top: 0;
   left: 0;
@@ -171,33 +206,38 @@ td > button {
   display: none;
   justify-content: center;
   align-items: center;
+  z-index: 3;
 }
 
-form {
-  background: #ffffff;
+.popup-content {
+    width: 40%;
+    height: 60%;
+    display: flex;
+    flex-direction: column;
+    border-radius: 0.5em;
+    background-color: #ffffff;
+}
+
+#formTambah, #formEditVendor {
   padding: 2em;
-  border-radius: 1em;
-  width: 50rem;
-  height: 28rem;
+  height: 90%;
   display: flex;
   flex-direction: column;
-  gap: 1.5em;
+  gap: 1em;
 }
 
-form > input {
+#formTambah input, #formEditVendor input {
     padding: 0.5em;
-    border: 1px solid;
-    border-radius: 0.5em;
 }
 
-form>div {
+#formTambah > div, #formEditVendor > div {
     margin-top: 1em;
     text-align: end;
     word-spacing: 1em;
 }
 
-#btnCloseTambah,
-#btnSimpanTambah {
+#btnCloseTambah, #btnSimpanTambah,
+#btnCloseEdit, #btnSimpanEdit {
     width: 15%;
     padding: 0.5em;
     color: #ffffff;
@@ -210,61 +250,6 @@ form>div {
 
 #btnCloseTambah:hover,
 #btnSimpanTambah:hover {
-    transition: 0.5s;
-    background-color: #36b9c5;
-}
-
-
-/* Fitur Edit Vendor */
-.edit-vendor {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,0.5);
-  display: none;
-  justify-content: center;
-  align-items: center;
-}
-
-.edit-vendor>form {
-  background: #ffffff;
-  padding: 2em;
-  border-radius: 1em;
-  width: 50rem;
-  height: 25rem;
-  display: flex;
-  flex-direction: column;
-  gap: 1.5em;
-}
-
-.edit-vendor > form > input {
-    padding: 0.5em;
-    border: 1px solid;
-    border-radius: 0.5em;
-}
-
-.edit-vendor > form > div {
-    margin-top: 1em;
-    text-align: end;
-    word-spacing: 1em;
-}
-
-#btnCloseEdit, 
-#btnSimpanEdit {
-    width: 15%;
-    padding: 0.5em;
-    color: #ffffff;
-    font-size: large;
-    background-color: var(--btn-color);
-    border: none;
-    border-radius: 1em;
-    cursor: pointer;
-}
-
-#btnCloseEdit:hover, 
-#btnSimpanEdit:hover {
     transition: 0.5s;
     background-color: #36b9c5;
 }
