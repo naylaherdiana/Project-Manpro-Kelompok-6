@@ -6,6 +6,8 @@
     <title>Selaras Organizer</title>
     <link rel="stylesheet" th:href="@{/css/klien-asisten.css}"/>
     <script th:src="@{/js/klienAsisten.js}" defer></script>
+    <script th:src="@{/js/logoutScript.js}" defer></script>
+
 </head>
 <body>
     <header>
@@ -20,7 +22,13 @@
             </ul>
             <div class="icon">
                 <img th:src="@{/img/notification-icon.png}" alt="notif icon"/>
-                <img th:src="@{/img/profile-icon.png}" alt="profile icon"/>
+                <img id="user-btn" th:src="@{/img/profile-icon.png}" alt="profile icon"/>
+            </div>
+
+            <!--POP UP LOGOUT -->
+            <div id="popup-logout">
+                <p>Name</p>
+                <button id="logout-btn">Logout</button>
             </div>
         </nav>
     </header>
