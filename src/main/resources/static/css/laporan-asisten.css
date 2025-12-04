@@ -103,22 +103,6 @@ main::-webkit-scrollbar {
     display: none;
 }
 
-main button:first-of-type {
-    width: 8%;
-    padding: 0.3em;
-    font-size: 1em;
-    color: #ffffff;
-    cursor: pointer;
-    border: none;
-    border-radius: 0.5em;
-    background-color: var(--navbar-color);
-}
-
-main button:first-of-type:hover {
-    background-color: #36b9c5;
-    transition: 0.5s;
-}
-
 main div {
     padding: 1em;
     display: flex;
