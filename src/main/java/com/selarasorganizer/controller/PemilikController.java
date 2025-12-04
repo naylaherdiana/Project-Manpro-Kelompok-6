@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.selarasorganizer.model.Asisten;
+import com.selarasorganizer.model.EventBerlangsung;
 import com.selarasorganizer.model.Vendor;
+import com.selarasorganizer.model.VendorAktif;
 import com.selarasorganizer.model.EventDashboard;
 import com.selarasorganizer.model.JenisVendor;
 import com.selarasorganizer.model.RegisterRequest;
@@ -19,6 +21,7 @@ import com.selarasorganizer.repository.AsistenRepository;
 import com.selarasorganizer.repository.EventRepository;
 import com.selarasorganizer.repository.JenisVendorRepository;
 import com.selarasorganizer.repository.KlienRepository;
+import com.selarasorganizer.repository.LaporanRepository;
 import com.selarasorganizer.repository.UserRepository;
 import com.selarasorganizer.repository.VendorRepository;
 
@@ -36,14 +39,16 @@ public class PemilikController {
     private final VendorRepository vendorRepository;
     private final JenisVendorRepository jenisVendorRepository;
     private final BCryptPasswordEncoder passwordEncoder;
+    private final LaporanRepository laporanRepository;
 
-    public PemilikController(UserRepository userRepository, KlienRepository klienRepository, AsistenRepository asistenRepository, EventRepository eventRepository, VendorRepository vendorRepository, JenisVendorRepository jenisVendorRepository, BCryptPasswordEncoder passwordEncoder) {
+    public PemilikController(UserRepository userRepository, KlienRepository klienRepository, AsistenRepository asistenRepository, EventRepository eventRepository, VendorRepository vendorRepository, JenisVendorRepository jenisVendorRepository, LaporanRepository laporanRepository, BCryptPasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.klienRepository = klienRepository;
         this.asistenRepository = asistenRepository;
         this.eventRepository = eventRepository;
         this.vendorRepository = vendorRepository;
         this.jenisVendorRepository = jenisVendorRepository;
+        this.laporanRepository = laporanRepository;
         this.passwordEncoder = passwordEncoder;
     }
 
@@ -80,20 +85,55 @@ public class PemilikController {
             return "redirect:/login";
         }
         List<Asisten> asistenList = asistenRepository.findAll();
+
+        System.out.println("=== DAFTAR ASISTEN ===");
+        System.out.println("Total asisten: " + asistenList.size());
+        for (Asisten a : asistenList) {
+            System.out.println("ID: " + a.getId() + 
+                             ", Nama: " + a.getNama() + 
+                             ", Email: " + a.getEmail() + 
+                             ", UserID: " + a.getUserId());
+        }
+
         model.addAttribute("asistenList", asistenList);
-        return "pemilik/asisten-pemilik";
+
+        String error = (String) session.getAttribute("error");
+        String success = (String) session.getAttribute("success");
+        
+        if (error != null) {
+            model.addAttribute("error", error);
+            session.removeAttribute("error");
+        }
+        if (success != null) {
+            model.addAttribute("success", success);
+            session.removeAttribute("success");
+        }
+
+        return "pemilik/asisten-pemilik";   
     }
 
-    @PostMapping("/asisten-pemilik")
-    public String tambahAsisten(@RequestParam String nama, @RequestParam String alamat, @RequestParam String kontak, @RequestParam String email, HttpSession session, Model model) {
+    @PostMapping("/asisten-pemilik/tambah")
+    public String tambahAsisten(@RequestParam String nama, @RequestParam String alamat, @RequestParam String kontak, @RequestParam String email, HttpSession session) {
         if (!"PEMILIK".equals(session.getAttribute("userRole"))) {
             return "redirect:/login";
         }
 
-        String username = nama.toLowerCase().replaceAll("\\s+", "");
-        String password = generateRandomPassword(12);
-    
+        System.out.println("\n=== TAMBAH ASISTEN BARU ===");
+        System.out.println("Input dari form:");
+        System.out.println("- Nama: " + nama);
+        System.out.println("- Alamat: " + alamat);
+        System.out.println("- Kontak: " + kontak);
+        System.out.println("- Email: " + email);
+
+        String username = generateUniqueUsername(nama);
+        String password = generateRandomPassword(8);
         String hashedPassword = passwordEncoder.encode(password);
+
+        System.out.println("Generated:");
+        System.out.println("- Username: " + username);
+        System.out.println("- Password (plain): " + password);
+        System.out.println("- Password (hashed): " + hashedPassword.substring(0, 20) + "...");
+        
         RegisterRequest request = new RegisterRequest();
         request.setNama(nama);
         request.setAlamat(alamat);
@@ -103,14 +143,69 @@ public class PemilikController {
         request.setPassword(hashedPassword);
 
         boolean success = asistenRepository.saveAsisten(request);
+
+        System.out.println("Hasil saveAsisten: " + (success ? "SUKSES" : "GAGAL"));
         if (success) {
-            return "redirect:/asisten-pemilik";
+            session.setAttribute("success", "Asisten '" + nama + "' berhasil ditambahkan");
         } else {
-            model.addAttribute("error", "Gagal menambah asisten (username/email sudah ada)");
-            List<Asisten> asistenList = asistenRepository.findAll();
-            model.addAttribute("asistenList", asistenList);
-            return "pemilik/asisten-pemilik";
+            session.setAttribute("error", "Gagal menambah asisten '" + nama + "'. Username/email mungkin sudah ada.");
         }
+        
+        return "redirect:/asisten-pemilik";
+    }
+
+    @PostMapping("/asisten-pemilik/edit")
+    public String updateAsisten(@RequestParam Long id, @RequestParam String nama, @RequestParam String alamat, @RequestParam String kontak, @RequestParam String email, HttpSession session) {
+        if (!"PEMILIK".equals(session.getAttribute("userRole"))) {
+            return "redirect:/login";
+        }
+
+        Asisten asisten = asistenRepository.findByIdWithEmail(id);
+        if (asisten == null) {
+            session.setAttribute("error", "Asisten tidak ditemukan");
+            return "redirect:/asisten-pemilik";
+        }
+        
+        asisten.setNama(nama);
+        asisten.setAlamat(alamat);
+        asisten.setKontak(kontak);
+        asisten.setEmail(email);
+        
+        asistenRepository.update(asisten);
+        
+        session.setAttribute("success", "Asisten berhasil diperbarui");
+        return "redirect:/asisten-pemilik";
+    }
+
+    @PostMapping("/asisten-pemilik/hapus")
+    public String deleteAsisten(@RequestParam Long id, HttpSession session) {
+        if (!"PEMILIK".equals(session.getAttribute("userRole"))) {
+            return "redirect:/login";
+        }
+        
+        try {
+            asistenRepository.deleteById(id);
+            session.setAttribute("success", "Asisten berhasil dihapus");
+        } catch (Exception e) {
+            session.setAttribute("error", "Gagal menghapus asisten: " + e.getMessage());
+        }
+        
+        return "redirect:/asisten-pemilik";
+    }
+   
+    private String generateUniqueUsername(String nama) {
+        String base = nama.toLowerCase().split(" ")[0];
+        base = base.replaceAll("[^a-z0-9]", "");
+        if (base.isEmpty()) {
+            base = "asisten";
+        }
+        long timestamp = System.currentTimeMillis() % 10000; 
+        String username = base + timestamp;
+        if (username.length() > 50) {
+            username = username.substring(0, 50);
+        }
+        
+        return username;
     }
 
     private String generateRandomPassword(int length) {
@@ -121,31 +216,6 @@ public class PemilikController {
             sb.append(chars.charAt(random.nextInt(chars.length())));
         }
         return sb.toString();
-    }
-
-    @PostMapping("/update-asisten")
-    public String updateAsisten(@RequestParam Long id, @RequestParam String nama, @RequestParam String alamat, @RequestParam String kontak, @RequestParam String email, HttpSession session) {
-        if (!"PEMILIK".equals(session.getAttribute("userRole"))) {
-            return "redirect:/login";
-        }
-
-        Asisten asisten = asistenRepository.findByIdWithEmail(id);
-        asisten.setNama(nama);
-        asisten.setAlamat(alamat);
-        asisten.setKontak(kontak);
-        asisten.setEmail(email);
-        asistenRepository.update(asisten);
-
-        return "redirect:/asisten-pemilik";
-    }
-
-    @PostMapping("/delete-asisten")
-    public String deleteAsisten(@RequestParam Long id, HttpSession session) {
-        if (!"PEMILIK".equals(session.getAttribute("userRole"))) {
-            return "redirect:/login";
-        }
-        userRepository.deleteById(id);
-        return "redirect:/asisten-pemilik";
     }
 
     @GetMapping("/vendor-pemilik")
@@ -344,7 +414,7 @@ public class PemilikController {
     }
 
     @GetMapping("/laporan-pemilik")
-    public String laporan(HttpSession session, Model model){
+    public String laporan(HttpSession session, Model model) {
         if (session.getAttribute("userRole") == null) {
             return "redirect:/login";
         }
@@ -352,6 +422,24 @@ public class PemilikController {
         if (!"PEMILIK".equals(role)) {
             return "redirect:/login";
         }
+
+        List<VendorAktif> vendorAktifList = laporanRepository.findVendorPalingAktif();
+        List<EventBerlangsung> eventBerlangsungList = laporanRepository.findEventBerlangsung();
+    
+        int totalKlien = klienRepository.countAll();
+        int totalEvent = eventRepository.countByStatus("BERLANGSUNG");
+        int totalVendor = vendorRepository.countAll();
+        
+        System.out.println("=== LAPORAN DATA ===");
+        System.out.println("Vendor Aktif: " + vendorAktifList.size() + " records");
+        System.out.println("Event Berlangsung: " + eventBerlangsungList.size() + " records");
+        
+        model.addAttribute("vendorAktifList", vendorAktifList);
+        model.addAttribute("eventBerlangsungList", eventBerlangsungList);
+        model.addAttribute("totalKlien", totalKlien);
+        model.addAttribute("totalEvent", totalEvent);
+        model.addAttribute("totalVendor", totalVendor);
+        
         return "pemilik/laporan-pemilik";
     }
 }

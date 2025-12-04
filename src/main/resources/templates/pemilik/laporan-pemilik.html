@@ -47,35 +47,14 @@
                 </thead>
                 
                 <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>Badoet</td>
-                        <td>Djjawhari Manuel</td>
-                        <td>12</td>
+                    <tr th:each="vendor, stat : ${vendorAktifList}">
+                        <td th:text="${vendor.idvendor}">3</td>
+                        <td th:text="${vendor.namavendor}">Badoet</td>
+                        <td th:text="${vendor.namapemilik}">Dijawhari Manuel</td>
+                        <td th:text="${vendor.jumlahEvent}">12</td>
                     </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>Badoet</td>
-                        <td>Djjawhari Manuel</td>
-                        <td>12</td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>Badoet</td>
-                        <td>Djjawhari Manuel</td>
-                        <td>12</td>
-                    </tr>
-                    <tr>
-                        <td>4</td>
-                        <td>Tata Katering</td>
-                        <td>Jennifer Thania</td>
-                        <td>8</td>
-                    </tr>
-                    <tr>
-                        <td>5</td>
-                        <td>Tata Katering</td>
-                        <td>Jennifer Thania</td>
-                        <td>8</td>
+                    <tr th:if="${vendorAktifList == null or vendorAktifList.isEmpty()}">
+                        <td colspan="4" class="no-data">Belum ada data vendor</td>
                     </tr>
                 </tbody>
             </table>
@@ -95,33 +74,15 @@
                 </thead>
                 
                 <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>Sweet 17 Vevila</td>
-                        <td>2025-11-04</td>
-                        <td>Agatha Tasya</td>
-                        <td>Vevila Angelia</td>
+                    <tr th:each="event, stat : ${eventBerlangsungList}">
+                        <td th:text="${event.idevent}">1</td>
+                        <td th:text="${event.namaevent}">Sweet 17 Vevila</td>
+                        <td th:text="${event.tanggal}">2025-11-04</td>
+                        <td th:text="${event.namaAsisten}">Agatha Tasya</td>
+                        <td th:text="${event.namaKlien}">Vevila Angelia</td>
                     </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>Sweet 17 Vevila</td>
-                        <td>2025-11-04</td>
-                        <td>Agatha Tasya</td>
-                        <td>Vevila Angelia</td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>Sweet 17 Vevila</td>
-                        <td>2025-11-04</td>
-                        <td>Agatha Tasya</td>
-                        <td>Vevila Angelia</td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>Sweet 17 Vevila</td>
-                        <td>2025-11-04</td>
-                        <td>Agatha Tasya</td>
-                        <td>Vevila Angelia</td>
+                    <tr th:if="${eventBerlangsungList == null or eventBerlangsungList.isEmpty()}">
+                        <td colspan="5" class="no-data">Tidak ada event berlangsung</td>
                     </tr>
                 </tbody>
             </table>

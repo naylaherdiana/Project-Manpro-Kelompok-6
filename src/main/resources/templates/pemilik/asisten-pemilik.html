@@ -34,7 +34,14 @@
 
     <section class="main-section">
         <h1>Daftar Asisten</h1>
-        
+
+        <div th:if="${error}" class="error-message">
+            <p th:text="${error}"></p>
+        </div>
+        <div th:if="${success}" class="success-message">
+            <p th:text="${success}"></p>
+        </div>
+
         <div class="table-container">
             <table> 
                 <thead>
@@ -74,7 +81,7 @@
 
         <div class="tambah-asisten">
             <div class="popup-content">
-                <form id="formTambah" th:action="@{/asisten-pemilik}" method="post">
+                <form id="formTambah" th:action="@{/asisten-pemilik/tambah}" method="post">
                     <h3>Tambah Asisten</h3>
                     <input type="text" name="nama" placeholder="Nama Asisten" required>
                     <input type="text" name="alamat" placeholder="Alamat" required>
@@ -90,9 +97,9 @@
 
         <div class="edit-asisten">
             <div class="popup-content">
-                <form id="formEdit" th:action="@{/update-asisten}" method="post">
+                <form id="formEdit" th:action="@{/asisten-pemilik/edit}" method="post">
                     <input type="hidden" id="editId" name="id">
-                    <h3>Edit Asisten</h3>
+                    <h3>Edit Asisten</h3>   
                     <input type="text" id="editNama" name="nama" required>
                     <input type="text" id="editAlamat" name="alamat" required>
                     <input type="text" id="editKontak" name="kontak" required>
@@ -107,7 +114,7 @@
         
         <div class="hapus-asisten">
             <div class="popup-content">
-                <form id="formHapus" th:action="@{/delete-asisten}" method="post">
+                <form id="formHapus" th:action="@{/asisten-pemilik/hapus}" method="post">
                     <input type="hidden" id="hapusId" name="id">
                     <h3>Konfirmasi Hapus</h3>
                     <p>Apakah Anda yakin ingin menghapus data ini?</p>

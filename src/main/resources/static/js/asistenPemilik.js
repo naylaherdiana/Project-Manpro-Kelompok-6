@@ -1,171 +1,66 @@
-/* Tambah Asisten */
+// Versi minimalis tanpa loading indicator
 const btnTambah = document.getElementById('btnTambah');
-const popup = document.querySelector('.tambah-asisten');
-const btnClose = document.getElementById('btnCloseTambah');
-
-const formTambah = document.getElementById('formTambah');
-const btnSimpanTambah = document.getElementById('btnSimpanTambah');
-const tbody = document.querySelector('tbody');
-
-btnTambah.onclick = () => {
-  popup.style.display = 'flex';
-};
-
-// tambah asisten baru
-formTambah.addEventListener('submit', (e) => {
-    e.preventDefault();
-
-    // ambil semua input dalam form
-    const formData = new FormData(formTambah);
-    const nama = formData.get('nama-asisten');
-    const alamat = formData.get('alamat');
-    const kontak = formData.get('kontak');
-    const email = formData.get('email');
-
-    // hitung id baru
-    const newId = tbody.children.length + 1;
-
-    // tambahkan ke sel ke baris baru
-    const newTr = document.createElement('tr');
-    newTr.innerHTML = `
-            <td>${newId}</td>
-            <td>${nama}</td>
-            <td>${alamat}</td>
-            <td>${kontak}</td>
-            <td>${email}</td>
-            <td><button class="edit">Edit</td>
-            <td><button class="hapus">Hapus</td>
-    `
-    // tambahkan ke body tabel
-    tbody.appendChild(newTr);
-
-    popup.style.display = 'none';
-    formTambah.reset();
-
-    attachEditEvents();
-    attachHapusEvents();
-});
-
-// fitur edit untuk data yang baru ditambahkan
-function attachEditEvents(){
-    document.querySelectorAll('.edit').forEach((button) => {
-        button.addEventListener('click', (e) => {
-            rowToEdit = e.target.closest('tr'); // simpan baris terdekat
-
-            // ambil isi kolom (td)
-            const cells = rowToEdit.querySelectorAll('td');
-
-            document.getElementById('editNama').value = cells[1].textContent;
-            document.getElementById('editAlamat').value = cells[2].textContent;
-            document.getElementById('editKontak').value = cells[3].textContent;
-            document.getElementById('editEmail').value = cells[4].textContent;
-
-            popupEdit.style.display = 'flex'; // tampilkan popup
-        });
-    });
-}
-
-// fitur hapus untuk data yang baru ditambahkan
-function attachHapusEvents(){
-    document.querySelectorAll('.hapus').forEach((button) => {
-        button.addEventListener('click', (e) => {
-            popupHapus.style.display = 'flex';
-
-            rowToDelete = e.target.closest('tr');
-            btnConfirmHapus.addEventListener('click', () => {
-                if(rowToDelete){
-                    rowToDelete.remove();  // hapus baris dari tabel
-                }
-                popupHapus.style.display = 'none';
-            });
-        });
-    });
-};
-
-btnClose.onclick = () => {
-  popup.style.display = 'none';
-};
-
-
-/* Edit Asisten */
-const btnEdit = document.querySelectorAll('.edit');
+const popupTambah = document.querySelector('.tambah-asisten');
+const btnCloseTambah = document.getElementById('btnCloseTambah');
 const popupEdit = document.querySelector('.edit-asisten');
-const btnCloseEdit = document.querySelector('#btnCloseEdit');
-const btnSimpanEdit = document.querySelector('#btnSimpanEdit');
-
-let rowToEdit = null; // simpan baris yang akan diedit
-
-// Pop Up Edit
-btnEdit.forEach(button => {
-    button.addEventListener('click', (e) => {
-        rowToEdit = e.target.closest('tr'); // simpan baris terdekat
-
-        // ambil isi kolom (td)
-        const cells = rowToEdit.querySelectorAll('td');
-
-        document.getElementById('editNama').value = cells[1].textContent;
-        document.getElementById('editAlamat').value = cells[2].textContent;
-        document.getElementById('editKontak').value = cells[3].textContent;
-        document.getElementById('editEmail').value = cells[4].textContent;
-
-        popupEdit.style.display = 'flex'; // tampilkan popup
-    });
-});
-
-// simpan hasil edit terbaru
-const formEdit = document.getElementById('formEdit');
-formEdit.addEventListener('submit', (e) => {
-    e.preventDefault();
-
-    if(rowToEdit){
-        const cells = rowToEdit.querySelectorAll('td');
-
-        cells[1].textContent = document.getElementById('editNama').value;
-        cells[2].textContent = document.getElementById('editAlamat').value;
-        cells[3].textContent = document.getElementById('editKontak').value;
-        cells[4].textContent = document.getElementById('editEmail').value;
-    }
-
-    popupEdit.style.display = 'none'; // tutup kembali popup
-});
-
-btnCloseEdit.onclick = () => {
-  popupEdit.style.display = 'none';
-};
-
-
-/* Hapus Asisten */
-const btnHapus = document.querySelectorAll('.hapus')
-const popupHapus = document.querySelector('.hapus-asisten')
+const btnCloseEdit = document.getElementById('btnCloseEdit');
+const popupHapus = document.querySelector('.hapus-asisten');
 const btnCloseHapus = document.getElementById('btnCloseHapus');
-const btnConfirmHapus = document.getElementById('btnConfirmHapus')
-let rowToDelete = null;
 
-// fungsi untuk menyesuaikan id saat baris data tertentu dihapus
-function updateTableIds() {
-    const rows = document.querySelectorAll('tbody tr');
-    rows.forEach((row, index) => {
-        row.querySelector('td').textContent = index + 1;
-    });
+function closeAllPopups() {
+    popupTambah.style.display = 'none';
+    popupEdit.style.display = 'none';
+    popupHapus.style.display = 'none';
 }
 
-// Pop up Hapus
-btnHapus.forEach(button => {
-    button.onclick = (e) => {
+// Buka popup tambah
+btnTambah.addEventListener('click', (e) => {
+    e.preventDefault();
+    closeAllPopups();
+    popupTambah.style.display = 'flex';
+});
+
+// Tutup popup
+btnCloseTambah.addEventListener('click', closeAllPopups);
+btnCloseEdit.addEventListener('click', closeAllPopups);
+btnCloseHapus.addEventListener('click', closeAllPopups);
+
+// Handle edit & hapus button
+document.addEventListener('click', (e) => {
+    if (e.target.classList.contains('edit')) {
+        closeAllPopups();
+        
+        // Ambil data dari data-* attributes
+        const id = e.target.getAttribute('data-id');
+        const nama = e.target.getAttribute('data-nama');
+        const alamat = e.target.getAttribute('data-alamat');
+        const kontak = e.target.getAttribute('data-kontak');
+        const email = e.target.getAttribute('data-email');
+        
+        // Isi form edit
+        document.getElementById('editId').value = id;
+        document.getElementById('editNama').value = nama;
+        document.getElementById('editAlamat').value = alamat;
+        document.getElementById('editKontak').value = kontak;
+        document.getElementById('editEmail').value = email;
+        
+        popupEdit.style.display = 'flex';
+    }
+    
+    else if (e.target.classList.contains('hapus')) {
+        closeAllPopups();
+        
+        // Ambil ID dari data-id attribute
+        const id = e.target.getAttribute('data-id');
+        document.getElementById('hapusId').value = id;
+        
         popupHapus.style.display = 'flex';
+    }
+});
 
-        rowToDelete = e.target.closest('tr');
-        btnConfirmHapus.addEventListener('click', () => {
-            if(rowToDelete){
-                rowToDelete.remove();  // hapus baris dari tabel
-                updateTableIds();
-            }
-            popupHapus.style.display = 'none';
-        });
-    };
-})
-
-btnCloseHapus.onclick = () => {
-    popupHapus.style.display = 'none';
-};
-
+// Tutup popup ketika klik di luar konten
+window.addEventListener('click', (e) => {
+    if (e.target === popupTambah || e.target === popupEdit || e.target === popupHapus) {
+        closeAllPopups();
+    }
+});
