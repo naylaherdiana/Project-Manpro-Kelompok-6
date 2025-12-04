@@ -190,7 +190,7 @@ td > button {
     border-radius: 0.5em;
 }
 
-form > div {
+.formTambah > div, .formEdit > div {
     margin-top: 1em;
     text-align: end;
     word-spacing: 1em;
