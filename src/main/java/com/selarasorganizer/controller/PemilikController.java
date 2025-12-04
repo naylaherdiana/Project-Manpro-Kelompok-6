@@ -13,12 +13,16 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.selarasorganizer.model.Asisten;
 import com.selarasorganizer.model.Vendor;
 import com.selarasorganizer.model.EventDashboard;
+import com.selarasorganizer.model.JenisVendor;
 import com.selarasorganizer.model.RegisterRequest;
 import com.selarasorganizer.repository.AsistenRepository;
 import com.selarasorganizer.repository.EventRepository;
+import com.selarasorganizer.repository.JenisVendorRepository;
 import com.selarasorganizer.repository.KlienRepository;
 import com.selarasorganizer.repository.UserRepository;
 import com.selarasorganizer.repository.VendorRepository;
+
+import java.math.BigDecimal;
 import java.security.SecureRandom;
 
 import jakarta.servlet.http.HttpSession;
@@ -30,14 +34,16 @@ public class PemilikController {
     private final AsistenRepository asistenRepository;
     private final EventRepository eventRepository;
     private final VendorRepository vendorRepository;
+    private final JenisVendorRepository jenisVendorRepository;
     private final BCryptPasswordEncoder passwordEncoder;
 
-    public PemilikController(UserRepository userRepository, KlienRepository klienRepository, AsistenRepository asistenRepository, EventRepository eventRepository, VendorRepository vendorRepository, BCryptPasswordEncoder passwordEncoder) {
+    public PemilikController(UserRepository userRepository, KlienRepository klienRepository, AsistenRepository asistenRepository, EventRepository eventRepository, VendorRepository vendorRepository, JenisVendorRepository jenisVendorRepository, BCryptPasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.klienRepository = klienRepository;
         this.asistenRepository = asistenRepository;
         this.eventRepository = eventRepository;
         this.vendorRepository = vendorRepository;
+        this.jenisVendorRepository = jenisVendorRepository;
         this.passwordEncoder = passwordEncoder;
     }
 
@@ -157,15 +163,7 @@ public class PemilikController {
     }
 
     @PostMapping("/vendor-pemilik")
-    public String tambahVendor(
-            @RequestParam String namapemilik,
-            @RequestParam String namavendor,
-            @RequestParam String alamatvendor,
-            @RequestParam String kontakvendor,
-            @RequestParam Long idjenisvendor,  // PERHATIKAN: Long bukan String
-            HttpSession session) {
-        
-        // DEBUG LOGGING - SANGAT PENTING
+    public String tambahVendor(@RequestParam String namapemilik, @RequestParam String namavendor, @RequestParam String alamatvendor, @RequestParam String kontakvendor, @RequestParam Long idjenisvendor, HttpSession session) {
         System.out.println("=== DEBUG TAMBAH VENDOR ===");
         System.out.println("namapemilik: " + namapemilik);
         System.out.println("namavendor: " + namavendor);
@@ -197,16 +195,7 @@ public class PemilikController {
     }
 
     @PostMapping("/update-vendor")
-    public String updateVendor(
-            @RequestParam("idvendor") Long id,
-            @RequestParam String namapemilik,
-            @RequestParam String namavendor,
-            @RequestParam String alamatvendor,
-            @RequestParam String kontakvendor,
-            @RequestParam Long idjenisvendor,
-            HttpSession session,
-            RedirectAttributes redirectAttributes) { 
-        
+    public String updateVendor(@RequestParam("idvendor") Long id, @RequestParam String namapemilik, @RequestParam String namavendor, @RequestParam String alamatvendor, @RequestParam String kontakvendor, @RequestParam Long idjenisvendor, HttpSession session, RedirectAttributes redirectAttributes) { 
         System.out.println("=== DEBUG UPDATE VENDOR ===");
         System.out.println("idvendor: " + id);
         System.out.println("namapemilik: " + namapemilik);
@@ -257,7 +246,101 @@ public class PemilikController {
         if (!"PEMILIK".equals(role)) {
             return "redirect:/login";
         }
+
+        List<JenisVendor> jenisVendorList = jenisVendorRepository.findAll();
+        model.addAttribute("jenisVendorList", jenisVendorList);
         return "pemilik/jenis-vendor-pemilik";
+    }
+
+    @PostMapping("/jenis-vendor-pemilik")
+    public String tambahJenisVendor(@RequestParam Long idjenisvendor, @RequestParam String kisaranhargamin, @RequestParam String kisaranhargamax, @RequestParam String namajenisvendor, HttpSession session) {  
+        if (!"PEMILIK".equals(session.getAttribute("userRole"))) {
+            return "redirect:/login";
+        }
+
+        System.out.println("=== TAMBAH JENIS VENDOR ===");
+        System.out.println("ID: " + idjenisvendor);
+        System.out.println("Harga Min: " + kisaranhargamin);
+        System.out.println("Harga Max: " + kisaranhargamax);
+        System.out.println("Nama Jenis: " + namajenisvendor);
+
+        BigDecimal hargaMin = convertToBigDecimal(kisaranhargamin);
+        BigDecimal hargaMax = convertToBigDecimal(kisaranhargamax);
+
+        JenisVendor jenisVendor = new JenisVendor();
+        jenisVendor.setIdjenisvendor(idjenisvendor);
+        jenisVendor.setKisaranhargamin(hargaMin);
+        jenisVendor.setKisaranhargamax(hargaMax);
+        jenisVendor.setNamajenisvendor(namajenisvendor);
+
+        try {
+            jenisVendorRepository.save(jenisVendor);
+            System.out.println("SUKSES: Jenis Vendor ditambahkan");
+        } catch (Exception e) {
+            System.out.println("ERROR: " + e.getMessage());
+        }
+
+        return "redirect:/jenis-vendor-pemilik";
+    }
+
+    @PostMapping("/update-jenis-vendor")
+    public String updateJenisVendor(@RequestParam Long idjenisvendor, @RequestParam String kisaranhargamin, @RequestParam String kisaranhargamax, @RequestParam String namajenisvendor, HttpSession session) {
+        if (!"PEMILIK".equals(session.getAttribute("userRole"))) {
+            return "redirect:/login";
+        }
+
+        System.out.println("=== UPDATE JENIS VENDOR ===");
+        System.out.println("ID: " + idjenisvendor);
+        System.out.println("Harga Min: " + kisaranhargamin);
+        System.out.println("Harga Max: " + kisaranhargamax);
+        System.out.println("Nama: " + namajenisvendor);
+
+        BigDecimal hargaMin = convertToBigDecimal(kisaranhargamin);
+        BigDecimal hargaMax = convertToBigDecimal(kisaranhargamax);
+
+        JenisVendor jenisVendor = jenisVendorRepository.findById(idjenisvendor);
+        if (jenisVendor == null) {
+            return "redirect:/jenis-vendor-pemilik";
+        }
+
+        jenisVendor.setKisaranhargamin(hargaMin);
+        jenisVendor.setKisaranhargamax(hargaMax);
+        jenisVendor.setNamajenisvendor(namajenisvendor);
+        jenisVendorRepository.update(jenisVendor);
+        return "redirect:/jenis-vendor-pemilik";
+    }
+
+    @PostMapping("/delete-jenis-vendor")
+    public String deleteJenisVendor(@RequestParam Long idjenisvendor, HttpSession session) {
+        if (!"PEMILIK".equals(session.getAttribute("userRole"))) {
+            return "redirect:/login";
+        }
+
+        System.out.println("DELETE jenis vendor ID: " + idjenisvendor);
+        jenisVendorRepository.deleteById(idjenisvendor);
+        
+        return "redirect:/jenis-vendor-pemilik";
+    }
+
+    private BigDecimal convertToBigDecimal(String hargaStr) {
+        try {
+            if (hargaStr == null || hargaStr.trim().isEmpty()) {
+                return BigDecimal.ZERO;
+            }
+            System.out.println("Original: " + hargaStr);
+            String cleanStr = hargaStr.replaceAll("[^0-9]", "");
+            
+            System.out.println("Cleaned (digits only): " + cleanStr);
+            
+            if (cleanStr.isEmpty()) {
+                return BigDecimal.ZERO;
+            }
+            
+            return new BigDecimal(cleanStr);
+        } catch (Exception e) {
+            System.out.println("Error: " + hargaStr + " -> " + e.getMessage());
+            return BigDecimal.ZERO;
+        }
     }
 
     @GetMapping("/laporan-pemilik")

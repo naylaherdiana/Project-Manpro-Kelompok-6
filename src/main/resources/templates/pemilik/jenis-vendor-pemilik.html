@@ -42,69 +42,13 @@
                 </thead>
                 
                 <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>Rp 500.000</td>
-                        <td>Rp 5.500.000</td>
-                        <td>Transportasi</td>
-                        <td><button class="edit">Edit</button></td>
-                        <td><button class="hapus">Hapus</button></td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>Rp 1.200.000</td>
-                        <td>Rp 6.500.000</td>
-                        <td>Hiburan</td>
-                        <td><button class="edit">Edit</button></td>
-                        <td><button class="hapus">Hapus</button></td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>Rp 1.000.000</td>
-                        <td>Rp 12.000.000</td>
-                        <td>Catering</td>
-                        <td><button class="edit">Edit</button></td>
-                        <td><button class="hapus">Hapus</button></td>
-                    </tr>
-                    <tr>
-                        <td>4</td>
-                        <td>Rp 750.000</td>
-                        <td>Rp 3.000.000</td>
-                        <td>Dekorasi</td>
-                        <td><button class="edit">Edit</button></td>
-                        <td><button class="hapus">Hapus</button></td>
-                    </tr>
-                    <tr>
-                        <td>5</td>
-                        <td>Rp 200.000</td>
-                        <td>Rp 2.500.000</td>
-                        <td>Percetakan</td>
-                        <td><button class="edit">Edit</button></td>
-                        <td><button class="hapus">Hapus</button></td>
-                    </tr>
-                    <tr>
-                        <td>6</td>
-                       <td>Rp 200.000</td>
-                        <td>Rp 2.500.000</td>
-                        <td>Percetakan</td>
-                        <td><button class="edit">Edit</button></td>
-                        <td><button class="hapus">Hapus</button></td>
-                    </tr>
-                    <tr>
-                        <td>7</td>
-                        <td>Rp 200.000</td>
-                        <td>Rp 2.500.000</td>
-                        <td>Percetakan</td>
-                        <td><button class="edit">Edit</button></td>
-                        <td><button class="hapus">Hapus</button></td>
-                    </tr>
-                    <tr>
-                        <td>8</td>
-                        <td>Rp 200.000</td>
-                        <td>Rp 2.500.000</td>
-                        <td>Percetakan</td>
-                        <td><button class="edit">Edit</button></td>
-                        <td><button class="hapus">Hapus</button></td>
+                    <tr th:each="jenis : ${jenisVendorList}">
+                        <td th:text="${jenis.idjenisvendor}">301</td>
+                        <td th:text="'Rp ' + ${#numbers.formatDecimal(jenis.kisaranhargamin, 0, 'DEFAULT', 0, 'POINT')}">Rp 3.000.000</td>
+                        <td th:text="'Rp ' + ${#numbers.formatDecimal(jenis.kisaranhargamax, 0, 'DEFAULT', 0, 'POINT')}">Rp 8.000.000</td>
+                        <td th:text="${jenis.namajenisvendor}">Dekorasi</td>
+                        <td><button class="edit" th:data-id="${jenis.idjenisvendor}">Edit</button></td>
+                        <td><button class="hapus" th:data-id="${jenis.idjenisvendor}">Hapus</button></td>
                     </tr>
                 </tbody>
             </table>
@@ -112,14 +56,15 @@
         
         <button id="btnTambah">Tambah Jenis Vendor</button>
 
-         <!-- PopUp Tambah Asisten -->
+         <!-- PopUp Tambah Jenis Vendor -->
         <div class="tambah-jenis-vendor">
             <div class="popup-content">
-                <form id="formTambahJenisVendor" action="" method="">
+                <form id="formTambah" th:action="@{/jenis-vendor-pemilik}" method="post">
                     <h3>Tambah Jenis Vendor</h3>
-                    <input type="number" name="kisaran-minimal" placeholder="Kisaran Minimal" required>
-                    <input type="number" name="kisaran-maksimal" placeholder="Kisaran Maksimal" required>
-                    <input type="text" name="jenis-vendor" placeholder="Jenis Vendor" required>
+                    <input type="number" name="idjenisvendor" placeholder="ID Jenis Vendor" required>
+                    <input type="text" name="kisaranhargamin" placeholder="Kisaran Harga Minimal (contoh: Rp 3.000.000)" required>
+                    <input type="text" name="kisaranhargamax" placeholder="Kisaran Harga Maksimal (contoh: Rp 8.000.000)" required>
+                    <input type="text" name="namajenisvendor" placeholder="Nama Jenis Vendor" required>
                     <div>
                         <input type="button" id="btnCloseTambah" value="Tutup">
                         <input type="submit" id="btnSimpanTambah" value="Simpan">
@@ -128,14 +73,15 @@
             </div>
         </div>
 
-        <!-- PopUp Edit Asisten -->
+        <!-- PopUp Edit Jenis Vendor -->
         <div class="edit-jenis-vendor">
             <div class="popup-content">
-                <form id="formEditJenisVendor" action="" method="">
+                <form id="formEdit" th:action="@{/update-jenis-vendor}" method="post">
+                    <input type="hidden" id="editId" name="idjenisvendor">
                     <h3>Edit Jenis Vendor</h3>
-                    <input type="number" id="kisaranMinimal" name="kisaran-minimal" required>
-                    <input type="number" id="kisaranMaksimal" name="kisaran-maksimal" required>
-                    <input type="text" id="jenisVendor" name="jenis-vendor" required>
+                    <input type="text" id="editKisaranhargamin" name="kisaranhargamin" required>
+                    <input type="text" id="editKisaranhargamax" name="kisaranhargamax" required>
+                    <input type="text" id="editNamajenisvendor" name="namajenisvendor" required>
                     <div>
                         <input type="button" id="btnCloseEdit" value="Tutup">
                         <input type="submit" id="btnSimpanEdit" value="Simpan">
@@ -147,12 +93,15 @@
         <!-- PopUp Hapus Jenis Vendor-->
         <div class="hapus-jenis-vendor">
             <div class="popup-content">
-                <h3>Konfirmasi Hapus</h3>
-                <p>Apakah Anda yakin ingin menghapus data ini?</p>
-                <div>
-                    <input type="button" id="btnCloseHapus" value="Tutup">
-                    <input type="button" id="btnConfirmHapus" value="Ya">
-                </div>
+                <form id="formHapus" th:action="@{/delete-jenis-vendor}" method="post">
+                    <input type="hidden" id="hapusId" name="idjenisvendor">
+                    <h3>Konfirmasi Hapus</h3>
+                    <p>Apakah Anda yakin ingin menghapus data ini?</p>
+                    <div>
+                        <input type="button" id="btnCloseHapus" value="Tutup">
+                        <input type="submit" id="btnConfirmHapus" value="Ya">
+                    </div>
+                </form>
             </div>
         </div>
     </section>
