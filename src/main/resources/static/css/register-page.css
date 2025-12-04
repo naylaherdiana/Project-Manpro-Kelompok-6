@@ -98,7 +98,7 @@ main {
 
 .hero-container {
     width: 40%;
-    height: 60%;
+    height: 35rem;
     border-radius: 1em;
     background-color: var(--hero-color);
     display: flex;
@@ -124,7 +124,7 @@ main {
     height: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
+    justify-content: center;
 }
 
 #form-register {
@@ -134,7 +134,7 @@ main {
     display: flex;
     flex-direction: column;
     align-items: start;
-    gap: 0.5em;
+    gap: 1em;
 }
 
 #form-register h1 {
