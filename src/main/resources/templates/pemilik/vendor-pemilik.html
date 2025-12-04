@@ -44,75 +44,15 @@
                 </thead>
                 
                 <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>Abigail Maharani</td>
-                        <td>MatTrans</td>
-                        <td>Jl Taman Kopo Indah</td>
-                        <td>0812345678</td>
-                        <td>Transportasi</td>
-                        <td><button class="edit">Edit</button></td>
-                        <td><button class="hapus">Hapus</button></td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>Abigail Maharani</td>
-                        <td>Fun With You</td>
-                        <td>Jl Taman Kopo Indah</td>
-                        <td>0812345678</td>
-                        <td>Hiburan</td>
-                        <td><button class="edit">Edit</button></td>
-                        <td><button class="hapus">Hapus</button></td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>Abigail Maharani</td>
-                        <td>Tata Catering</td>
-                        <td>Jl Taman Kopo Indah</td>
-                        <td>0812345678</td>
-                        <td>Catering</td>
-                        <td><button class="edit">Edit</button></td>
-                        <td><button class="hapus">Hapus</button></td>
-                    </tr>
-                    <tr>
-                        <td>4</td>
-                        <td>Abigail Maharani</td>
-                        <td>Badoet</td>
-                        <td>Jl Taman Kopo Indah</td>
-                        <td>0812345678</td>
-                        <td>Dekorasi</td>
-                        <td><button class="edit">Edit</button></td>
-                        <td><button class="hapus">Hapus</button></td>
-                    </tr>
-                    <tr>
-                        <td>5</td>
-                        <td>Abigail Maharani</td>
-                        <td>Jojo Print</td>
-                        <td>Jl Taman Kopo Indah</td>
-                        <td>0812345678</td>
-                        <td>Percetakan</td>
-                        <td><button class="edit">Edit</button></td>
-                        <td><button class="hapus">Hapus</button></td>
-                    </tr>
-                    <tr>
-                        <td>6</td>
-                        <td>Abigail Maharani</td>
-                        <td>Tata Catering</td>
-                        <td>Jl Taman Kopo Indah</td>
-                        <td>0812345678</td>
-                        <td>Transportasi</td>
-                        <td><button class="edit">Edit</button></td>
-                        <td><button class="hapus">Hapus</button></td>
-                    </tr>
-                    <tr>
-                        <td>7</td>
-                        <td>Abigail Maharani</td>
-                        <td>Tata Catering</td>
-                        <td>Jl Taman Kopo Indah</td>
-                        <td>0812345678</td>
-                        <td>Transportasi</td>
-                        <td><button class="edit">Edit</button></td>
-                        <td><button class="hapus">Hapus</button></td>
+                    <tr th:each="vendor : ${vendorList}">
+                        <td th:text="${vendor.idvendor}">1</td>
+                        <td th:text="${vendor.namapemilik}">Abigail Maharani</td>
+                        <td th:text="${vendor.namavendor}">MatTrans</td>
+                        <td th:text="${vendor.alamatvendor}">Jl Taman Kopo Indah</td>
+                        <td th:text="${vendor.kontakvendor}">0812345678</td>
+                        <td th:text="${vendor.idjenisvendor}">Transportasi</td>
+                        <td><button class="edit" th:data-id="${vendor.idvendor}">Edit</button></td>
+                        <td><button class="hapus" th:data-id="${vendor.idvendor}">Hapus</button></td>
                     </tr>
                 </tbody>
             </table>
@@ -123,13 +63,13 @@
         <!-- PopUp Tambah Vendor -->
         <div class="tambah-vendor">
             <div class="popup-content">
-                <form id="formTambah" action="" method="">
+                <form id="formTambah" th:action="@{/vendor-pemilik}" method="post">
                     <h3>Tambah Vendor</h3>
-                    <input type="text" name="nama-pemilik" placeholder="Nama Pemilik" required>
-                    <input type="text" name="nama-vendor" placeholder="Nama Vendor" required>
-                    <input type="text" name="alamat" placeholder="Alamat" required>
-                    <input type="number" name="kontak" placeholder="Kontak" required>
-                    <input type="text" name="jenis-vendor" placeholder="Jenis Vendor" required>
+                    <input type="text" name="namapemilik" placeholder="Nama Pemilik" required>
+                    <input type="text" name="namavendor" placeholder="Nama Vendor" required>
+                    <input type="text" name="alamatvendor" placeholder="Alamat" required>
+                    <input type="text" name="kontakvendor" placeholder="Kontak" required>
+                    <input type="number" name="idjenisvendor" placeholder="ID Jenis Vendor" required>
                     <div>
                         <input type="button" id="btnCloseTambah" value="Tutup">
                         <input type="submit" id="btnSimpanTambah" value="Simpan">
@@ -141,13 +81,14 @@
         <!-- PopUp Edit Vendor -->
         <div class="edit-vendor">
             <div class="popup-content">
-                <form id="formEditVendor" action="" method="">
+                <form id="formEdit" th:action="@{/update-vendor}" method="post">
+                    <input type="hidden" id="editId" name="idvendor">
                     <h3>Edit Vendor</h3>
-                    <input type="text" id="namaPemilik" name="nama-pemilik" required>
-                    <input type="text" id="namaVendor" name="nama-vendor" required>
-                    <input type="text" id="alamat" name="alamat" required>
-                    <input type="number" id="kontak" name="kontak" required>
-                    <input type="text" id="jenisVendor" name="jenis-vendor" required>
+                    <input type="text" id="editNamapemilik" name="namapemilik" required>
+                    <input type="text" id="editNamavendor" name="namavendor" required>
+                    <input type="text" id="editAlamatvendor" name="alamatvendor" required>
+                    <input type="text" id="editKontakvendor" name="kontakvendor" required>
+                    <input type="number" id="editIdjenisvendor" name="idjenisvendor" required>
                     <div>
                         <input type="button" id="btnCloseEdit" value="Tutup">
                         <input type="submit" id="btnSimpanEdit" value="Simpan">
@@ -159,12 +100,15 @@
         <!-- PopUp Hapus Vendor -->
         <div class="hapus-vendor">
             <div class="popup-content">
-                <h3>Konfirmasi Hapus</h3>
-                <p>Apakah Anda yakin ingin menghapus data ini?</p>
-                <div>
-                    <input type="button" id="btnCloseHapus" value="Tutup">
-                    <input type="button" id="btnConfirmHapus" value="Ya">
-                </div>
+                <form id="formHapus" th:action="@{/delete-vendor}" method="post">
+                    <input type="hidden" id="hapusId" name="idvendor">
+                    <h3>Konfirmasi Hapus</h3>
+                    <p>Apakah Anda yakin ingin menghapus data ini?</p>
+                    <div>
+                        <input type="button" id="btnCloseHapus" value="Tutup">
+                        <input type="submit" id="btnConfirmHapus" value="Ya">
+                    </div>
+                </form>
             </div>
         </div>
 
