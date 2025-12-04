@@ -20,6 +20,15 @@ public class UserRepository {
         return jdbcTemplate.queryForObject(sql, this::mapRowToUser, username);
     }
 
+    public void deleteById(Long id) {
+        Long userId = jdbcTemplate.queryForObject(
+            "SELECT user_id FROM asisten WHERE id = ?",
+            Long.class, id
+        );
+    
+        jdbcTemplate.update("DELETE FROM users WHERE id = ?", userId);
+    }
+    
     private User mapRowToUser(ResultSet rs, int rowNum) throws SQLException {
         User user = new User();
         user.setId(rs.getLong("id"));

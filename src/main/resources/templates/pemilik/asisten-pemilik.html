@@ -44,59 +44,21 @@
                 </thead>
                 
                 <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>Abigail Maharani</td>
-                        <td>Jl Taman Kopo Indah</td>
-                        <td>0812345678</td>
-                        <td>abigail@gmail.com</td>
-                        <td><button class="edit">Edit</button></td>
-                        <td><button class="hapus">Hapus</button></td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>Max Indrawan</td>
-                        <td>Jl Bukit Indah</td>
-                        <td>0812345678</td>
-                        <td>indrawan@gmail.com</td>
-                        <td><button class="edit">Edit</button></td>
-                        <td><button class="hapus">Hapus</button></td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>Michael Christian</td>
-                        <td>Jl Ranca Bentang 17</td>
-                        <td>0812345678</td>
-                        <td>michael@gmail.com</td>
-                        <td><button class="edit">Edit</button></td>
-                        <td><button class="hapus">Hapus</button></td>
-                    </tr>
-                    <tr>
-                        <td>4</td>
-                        <td>Agatha Tasya</td>
-                        <td>Jl Ciumbuleuit</td>
-                        <td>0812345678</td>
-                        <td>tasya@gmail.com</td>
-                        <td><button class="edit">Edit</button></td>
-                        <td><button class="hapus">Hapus</button></td>
-                    </tr>
-                    <tr>
-                        <td>5</td>
-                        <td>Abigail Maharani</td>
-                        <td>Jl Taman Kopo Indah</td>
-                        <td>0812345678</td>
-                        <td>abigail@gmail.com</td>
-                        <td><button class="edit">Edit</button></td>
-                        <td><button class="hapus">Hapus</button></td>
-                    </tr>
-                    <tr>
-                        <td>6</td>
-                        <td>Abigail Maharani</td>
-                        <td>Jl Taman Kopo Indah</td>
-                        <td>0812345678</td>
-                        <td>abigail@gmail.com</td>
-                        <td><button class="edit">Edit</button></td>
-                        <td><button class="hapus">Hapus</button></td>
+                    <tr th:each="asisten : ${asistenList}">
+                        <td th:text="${asisten.id}">1</td>
+                        <td th:text="${asisten.nama}">Abigail Maharani</td>
+                        <td th:text="${asisten.alamat}">Jl Taman Kopo Indah</td>
+                        <td th:text="${asisten.kontak}">0812345678</td>
+                        <td th:text="${asisten.email}">abigail@gmail.com</td>
+                        <td><button class="edit"
+                                th:data-id="${asisten.id}"
+                                th:data-nama="${asisten.nama}"
+                                th:data-alamat="${asisten.alamat}"
+                                th:data-kontak="${asisten.kontak}"
+                                th:data-email="${asisten.email}">
+                            Edit
+                        </button></td>
+                        <td><button class="hapus" th:data-id="${asisten.id}">Hapus</button></td>
                     </tr>
                 </tbody>
             </table>
@@ -104,14 +66,13 @@
         
         <button id="btnTambah">Tambah Asisten</button>
 
-        <!-- PopUp Tambah Asisten -->
         <div class="tambah-asisten">
             <div class="popup-content">
-                <form id="formTambah" action="" method="">
+                <form id="formTambah" th:action="@{/asisten-pemilik}" method="post">
                     <h3>Tambah Asisten</h3>
-                    <input type="text" name="nama-asisten" placeholder="Nama Asisten" required>
+                    <input type="text" name="nama" placeholder="Nama Asisten" required>
                     <input type="text" name="alamat" placeholder="Alamat" required>
-                    <input type="number" name="kontak" placeholder="Kontak" required>
+                    <input type="text" name="kontak" placeholder="Kontak" required>
                     <input type="email" name="email" placeholder="Email" required>
                     <div>
                         <input type="button" id="btnCloseTambah" value="Tutup">
@@ -121,15 +82,15 @@
             </div>
         </div>
 
-        <!-- PopUp Edit Asisten -->
         <div class="edit-asisten">
             <div class="popup-content">
-                <form id="formEdit" action="" method="">
+                <form id="formEdit" th:action="@{/update-asisten}" method="post">
+                    <input type="hidden" id="editId" name="id">
                     <h3>Edit Asisten</h3>
-                    <input type="text" id="editNama" name="nama-asisten" required>
-                    <input type="text" id="editAlamat" required>
-                    <input type="text" id="editKontak" required>
-                    <input type="email" id="editEmail" required>
+                    <input type="text" id="editNama" name="nama" required>
+                    <input type="text" id="editAlamat" name="alamat" required>
+                    <input type="text" id="editKontak" name="kontak" required>
+                    <input type="email" id="editEmail" name="email" required>
                     <div>
                         <input type="button" id="btnCloseEdit" value="Tutup">
                         <input type="submit" id="btnSimpanEdit" value="Simpan">
@@ -138,15 +99,17 @@
             </div>
         </div>
         
-        <!-- PopUp Hapus Asisten -->
         <div class="hapus-asisten">
             <div class="popup-content">
-                <h3>Konfirmasi Hapus</h3>
-                <p>Apakah Anda yakin ingin menghapus data ini?</p>
-                <div>
-                    <input type="button" id="btnCloseHapus" value="Tutup">
-                    <input type="button" id="btnConfirmHapus" value="Ya">
-                </div>
+                <form id="formHapus" th:action="@{/delete-asisten}" method="post">
+                    <input type="hidden" id="hapusId" name="id">
+                    <h3>Konfirmasi Hapus</h3>
+                    <p>Apakah Anda yakin ingin menghapus data ini?</p>
+                    <div>
+                        <input type="button" id="btnCloseHapus" value="Tutup">
+                        <input type="submit" id="btnConfirmHapus" value="Ya">
+                    </div>
+                </form>
             </div>
         </div>
     </section>

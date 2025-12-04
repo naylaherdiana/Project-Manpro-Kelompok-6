@@ -189,7 +189,7 @@ td > button {
   align-items: center;
 }
 
-form {
+.formTambah, .formEdit {
   background: #ffffff;
   padding: 2em;
   border-radius: 1em;
@@ -200,13 +200,13 @@ form {
   gap: 1.5em;
 }
 
-form > input {
+.formTambah > input, .formEdit > input {
     padding: 0.5em;
     border: 1px solid;
     border-radius: 0.5em;
 }
 
-form>div {
+.formTambah > div, .formEdit > div {
     margin-top: 1em;
     text-align: end;
     word-spacing: 1em;
