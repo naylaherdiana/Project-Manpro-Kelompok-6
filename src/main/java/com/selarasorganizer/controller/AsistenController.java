@@ -5,8 +5,11 @@ import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.selarasorganizer.model.EventDashboardAsisten;
+import com.selarasorganizer.model.Klien;
 import com.selarasorganizer.repository.AsistenRepository;
 import com.selarasorganizer.repository.EventRepository;
 import com.selarasorganizer.repository.KlienRepository;
@@ -74,7 +77,90 @@ public class AsistenController {
         if (!"ASISTEN".equals(session.getAttribute("userRole"))) {
             return "redirect:/login";
         }
+        Long userId = (Long) session.getAttribute("userId");
+        if (userId != null) {
+            String namaAsisten = asistenRepository.getNamaAsistenByUserId(userId);
+            if (namaAsisten != null) {
+                model.addAttribute("namaAsisten", namaAsisten);
+            }
+        }
+        List<Klien> klienList = klienRepository.findAll();
+        model.addAttribute("klienList", klienList);
+        
         return "asisten/klien-asisten";
+    }
+
+    @PostMapping("/klien-asisten/tambah")
+    public String tambahKlien(@RequestParam String namaklien, @RequestParam(required = false) String alamatklien, @RequestParam String kontakklien, HttpSession session) {
+        if (session.getAttribute("userRole") == null || !"ASISTEN".equals(session.getAttribute("userRole"))) {
+            return "redirect:/login";
+        }
+        
+        if (namaklien == null || namaklien.trim().isEmpty()) {
+            session.setAttribute("error", "Nama klien tidak boleh kosong");
+            return "redirect:/klien-asisten";
+        }
+        
+        if (kontakklien == null || kontakklien.trim().isEmpty()) {
+            session.setAttribute("error", "Kontak tidak boleh kosong");
+            return "redirect:/klien-asisten";
+        }
+        
+        Klien klien = new Klien();
+        klien.setNamaklien(namaklien.trim());
+        klien.setAlamatklien(alamatklien != null ? alamatklien.trim() : null);
+        klien.setKontakklien(kontakklien.trim());
+        
+        klienRepository.save(klien);
+        
+        session.setAttribute("success", "Klien berhasil ditambahkan");
+        return "redirect:/klien-asisten";
+    }
+
+    @PostMapping("/klien-asisten/edit")
+    public String editKlien(@RequestParam Long idklien, @RequestParam String namaklien, @RequestParam(required = false) String alamatklien, @RequestParam String kontakklien, HttpSession session) {
+        if (session.getAttribute("userRole") == null || !"ASISTEN".equals(session.getAttribute("userRole"))) {
+            return "redirect:/login";
+        }
+
+        if (namaklien == null || namaklien.trim().isEmpty()) {
+            session.setAttribute("error", "Nama klien tidak boleh kosong");
+            return "redirect:/klien-asisten";
+        }
+        
+        if (kontakklien == null || kontakklien.trim().isEmpty()) {
+            session.setAttribute("error", "Kontak tidak boleh kosong");
+            return "redirect:/klien-asisten";
+        }
+        
+        Klien existingKlien = klienRepository.findById(idklien);
+        if (existingKlien == null) {
+            session.setAttribute("error", "Klien tidak ditemukan");
+            return "redirect:/klien-asisten";
+        }
+
+        existingKlien.setNamaklien(namaklien.trim());
+        existingKlien.setAlamatklien(alamatklien != null ? alamatklien.trim() : null);
+        existingKlien.setKontakklien(kontakklien.trim());
+        
+        klienRepository.save(existingKlien);
+        
+        session.setAttribute("success", "Klien berhasil diperbarui");
+        return "redirect:/klien-asisten";
+    }
+
+    @PostMapping("/klien-asisten/hapus")
+    public String hapusKlien(@RequestParam Long idklien, HttpSession session) {
+        if (session.getAttribute("userRole") == null || !"ASISTEN".equals(session.getAttribute("userRole"))) {
+            return "redirect:/login";
+        }
+        boolean deleted = klienRepository.deleteById(idklien);
+        if (deleted) {
+            session.setAttribute("success", "Klien berhasil dihapus");
+        } else {
+            session.setAttribute("error", "Gagal menghapus klien");
+        }
+        return "redirect:/klien-asisten";
     }
 
     @GetMapping("/event-asisten")

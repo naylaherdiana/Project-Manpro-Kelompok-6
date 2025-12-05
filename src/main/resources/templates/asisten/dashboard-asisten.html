@@ -31,23 +31,6 @@
         </nav>
     </header>
 
-<<<<<<< HEAD
-    <section class="main-section">
-        <div class="info-card">
-            <div>
-                <h1 th:text="${totalEvent}">18</h1>
-                <p>Event Ditangani</p>
-            </div>
-            <div>
-                <h1 th:text="${totalKlien}">4</h1>
-                <p>Klien</p>
-            </div>
-            <div>
-                <h1 th:text="${eventTuntas}">12</h1>
-                <p>Event Tuntas</p>
-            </div>
-        </div>
-=======
     <main>
         <section id="main-img">
             <div class="overlay"></div>
@@ -57,21 +40,20 @@
         <section id="main-section">
             <div id="info-card">
                 <div id="event-ditangani">
-                    <h1>18</h1>
+                    <h1 th:text="${totalEvent}">18</h1>
                     <p>Event Ditangani</p>
                 </div>
 
                 <div id="klien-aktif">
-                    <h1>4</h1>
+                    <h1 th:text="${totalKlien}">4</h1>
                     <p>Klien</p>
                 </div>
 
                 <div id="event-tuntas">
-                    <h1>12</h1>
+                    <h1 th:text="${eventTuntas}">12</h1>
                     <p>Event Tuntas</p>
                 </div>
             </div>
->>>>>>> fef6e50894a18767a62381bd3cbd9d5ae19ff37f
         
                 
             <div id="table-container">
@@ -101,6 +83,5 @@
             </div>
         </section>
     </main>
-    
 </body>
 </html>
