@@ -180,3 +180,41 @@ main div {
     border-bottom: 1px solid #f0f0f0;
     text-align: center;
 }
+
+
+/* PRINT DOCUMENT */
+.action-buttons {
+    padding: 0;
+    background-color: #F5F5F5;
+}
+
+.action-buttons button {
+    align-self: flex-end;
+    width: 30%;
+    height: 4rem;
+    color: #fff;
+    border: none;
+    border-radius: 0.5em;
+    background-color: #188187;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1em;
+}
+
+.action-buttons button:hover {
+    transition: 0.5s;
+    background-color: #36b9c5;
+    cursor: pointer;
+}
+
+.action-buttons button img {
+    width: 2em;
+    height: 2em;
+    object-fit: cover;
+    align-self: center;
+}
+
+.action-buttons button span {
+    align-self: center;
+}

@@ -31,6 +31,7 @@
         </nav>
     </header>
 
+
     <main class="container">
         <h1>Budgeting</h1>
         
@@ -56,6 +57,7 @@
                 </div>
             </form>
 
+            <!-- TABEL JENIS VENDOR -->
             <div class="table-container">
                 <table id="tabel-jenis-vendor">
                     <thead>
@@ -111,39 +113,35 @@
                                 th:text="${event.namaevent} + ' - ' + ${event.namaklien}">
                         </option>
                     </select>
-                </div>
-                
-                <div class="form-group">
+
                     <label for="selectVendor">Pilih Vendor:</label>
                     <select id="selectVendor" name="idvendor" required>
-                        <option value="">-- Pilih Vendor --</option>
+                        <option value="" disabled selected>-- Pilih Vendor --</option>
                         <option th:if="${vendorList != null}" 
                                 th:each="vendor : ${vendorList}"
                                 th:value="${vendor.idvendor}"
                                 th:text="${vendor.namavendor}">
                         </option>
                     </select>
-                </div>
-                
-                <div class="form-group">
+                    
                     <label for="hargaDealing">Harga Dealing (Rp):</label>
                     <input type="number" id="hargaDealing" name="hargadealing" 
                            placeholder="Masukkan harga" min="0.01" step="0.01" required>
-                </div>
-                
-                <div class="form-group">
                     <label for="statusDealing">Status Dealing:</label>
                     <select id="statusDealing" name="statusdealing" required>
-                        <option value="">-- Pilih Status --</option>
+                        <option value="" disabled selected>-- Pilih Status --</option>
                         <option value="Disetujui">Disetujui</option>
                         <option value="Negosiasi">Negosiasi</option>
                         <option value="Ditolak">Ditolak</option>
                     </select>
+
+                    <button type="submit" class="btn-submit">Tambah Vendor ke Event</button>
                 </div>
-                <button type="submit" class="btn-submit">Tambah Vendor ke Event</button>
             </form>
         </div>
 
+
+        <!-- EDIT / HAPUS VENDOR UNTUK EVENT -->
         <div id="edit-hapus-vendor">
             <h2>Edit / Hapus Vendor Untuk Event</h2>
             <p>Kelola vendor yang dipakai untuk event</p>
@@ -201,6 +199,7 @@
                 </table>
             </div>
             
+
             <!-- Form Edit Harga -->
             <div class="form-edit-harga" style="display: none;">
                 <h3>Edit Harga Dealing</h3>
