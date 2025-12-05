@@ -31,26 +31,34 @@
         </nav>
     </header>
 
-    <section class="main-section">
-        <div class="info-card">
-            <div id="klien-aktif">
-                <h1>18</h1>
-                <p>Event Ditangani</p>
+    <main>
+        <section id="main-img">
+            <div class="overlay"></div>
+            <img th:src="@{/img/event-hero.jpg}" alt="event image">
+        </section>
+
+        <section id="main-section">
+            <div id="info-card">
+                <div id="event-ditangani">
+                    <h1>18</h1>
+                    <p>Event Ditangani</p>
+                </div>
+
+                <div id="klien-aktif">
+                    <h1>4</h1>
+                    <p>Klien</p>
+                </div>
+
+                <div id="event-tuntas">
+                    <h1>12</h1>
+                    <p>Event Tuntas</p>
+                </div>
             </div>
-            <div id="klien-aktif">
-                <h1>4</h1>
-                <p>Klien</p>
-            </div>
-            <div>
-                <h1>12</h1>
-                <p>Event Tuntas</p>
-            </div>
-        </div>
         
-        <div class="dashboard-wrap">
-            <div id="event-terdekat">
+                
+            <div id="table-container">
+                <h1>Event Terdekat</h1>
                 <table>
-                    <caption>Event Terdekat</caption>
                     <thead>
                         <tr>
                             <th scope="col">Event</th>
@@ -85,18 +93,10 @@
                             <td>Abigail</td>
                         </tr>
                     </tbody>
-                    
                 </table>
             </div>
-
-            <div id="analisis-vendor">
-                <h1>Analisis Jenis Vendor</h1>
-            </div>
-
-            <div id="jadwal-event">
-                <h1>Jadwal Event</h1> 
-            </div>
-        </div>
-    </section>
+        </section>
+    </main>
+    
 </body>
 </html>
