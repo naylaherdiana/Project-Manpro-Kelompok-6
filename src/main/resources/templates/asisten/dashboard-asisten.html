@@ -25,7 +25,7 @@
 
             <!--POP UP LOGOUT -->
             <div id="popup-logout">
-                <p>Name</p>
+                <p th:text="${namaAsisten} ?: 'Asisten'">Asisten</p>
                 <button id="logout-btn">Logout</button>
             </div>
         </nav>
@@ -33,16 +33,16 @@
 
     <section class="main-section">
         <div class="info-card">
-            <div id="klien-aktif">
-                <h1>18</h1>
+            <div>
+                <h1 th:text="${totalEvent}">18</h1>
                 <p>Event Ditangani</p>
             </div>
-            <div id="klien-aktif">
-                <h1>4</h1>
+            <div>
+                <h1 th:text="${totalKlien}">4</h1>
                 <p>Klien</p>
             </div>
             <div>
-                <h1>12</h1>
+                <h1 th:text="${eventTuntas}">12</h1>
                 <p>Event Tuntas</p>
             </div>
         </div>
@@ -60,32 +60,17 @@
                         </tr>    
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>Sweet 17</td>
-                            <td>Vevilla</td>
-                            <td>4 November 2025</td>
-                            <td>Agatha</td>
+                        <tr th:each="event : ${eventBerlangsung}">
+                            <td th:text="${event.namaEvent}">Sweet 17</td>
+                            <td th:text="${event.namaKlien}">Vevilla</td>
+                            <td th:text="${#temporals.format(event.tanggal, 'dd MMMM yyyy')}">4 November 2025</td>
+                            <td th:text="${event.namaAsisten}">Agatha</td>
                         </tr>
-                        <tr>
-                            <td>Wedding</td>
-                            <td>Axel</td>
-                            <td>7 November 2025</td>
-                            <td>Max</td>
-                        </tr>
-                        <tr>
-                            <td>Gathering</td>
-                            <td>Ana</td>
-                            <td>9 November 2025</td>
-                            <td>Michael</td>
-                        </tr>
-                        <tr>
-                            <td>Wedding</td>
-                            <td>Nala</td>
-                            <td>9 November 2025</td>
-                            <td>Abigail</td>
+                        <!-- Jika tidak ada data -->
+                        <tr th:if="${#lists.isEmpty(eventBerlangsung)}">
+                            <td colspan="4" style="text-align: center;">Tidak ada event yang sedang berlangsung</td>
                         </tr>
                     </tbody>
-                    
                 </table>
             </div>
 

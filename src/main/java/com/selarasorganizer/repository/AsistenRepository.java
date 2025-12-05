@@ -2,19 +2,12 @@ package com.selarasorganizer.repository;
 
 import com.selarasorganizer.model.Asisten;
 import com.selarasorganizer.model.RegisterRequest;
-
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.List;
-import java.util.Map;
-
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.support.GeneratedKeyHolder;
-import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -134,6 +127,28 @@ public class AsistenRepository {
         jdbcTemplate.update("DELETE FROM asisten WHERE id = ?", id);
         jdbcTemplate.update("DELETE FROM user_roles WHERE user_id = ?", userId);
         jdbcTemplate.update("DELETE FROM users WHERE id = ?", userId);
+    }
+
+    public Long getAsistenIdByUserId(Long userId) {
+        try {
+            String sql = "SELECT id FROM Asisten WHERE user_id = ?";
+            return jdbcTemplate.queryForObject(sql, Long.class, userId);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    public String getNamaAsistenByUserId(Long userId) {
+        try {
+            String sql = """
+                SELECT a.nama 
+                FROM Asisten a 
+                WHERE a.user_id = ?
+                """;
+            return jdbcTemplate.queryForObject(sql, String.class, userId);
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     private Asisten mapRowToAsisten(ResultSet rs, int rowNum) throws SQLException {

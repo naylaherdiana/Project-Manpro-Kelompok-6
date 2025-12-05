@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import com.selarasorganizer.model.Event;
 import com.selarasorganizer.model.EventDashboard;
+import com.selarasorganizer.model.EventDashboardAsisten;
 
 @Repository
 public class EventRepository {
@@ -63,6 +64,48 @@ public class EventRepository {
             LIMIT 4
             """;
         return jdbcTemplate.query(sql, this::mapRowToEventDashboard);
+    }
+
+    public int countEventDitangani(Long asistenId) {
+        String sql = "SELECT COUNT(*) FROM Event WHERE idasisten = ?";
+        return jdbcTemplate.queryForObject(sql, Integer.class, asistenId);
+    }
+
+    public int countEventTuntas(Long asistenId) {
+        String sql = """
+            SELECT COUNT(*) 
+            FROM Event 
+            WHERE idasisten = ? AND statusevent = 'TUNTAS'
+            """;
+        return jdbcTemplate.queryForObject(sql, Integer.class, asistenId);
+    }
+
+    public List<EventDashboardAsisten> getEventBerlangsung(Long asistenId) {
+        String sql = """
+            SELECT 
+                e.namaevent,
+                k.namaklien,
+                e.tanggal,
+                a.nama as nama_asisten
+            FROM Event e
+            JOIN Klien k ON e.idklien = k.idklien
+            JOIN Asisten a ON e.idasisten = a.id
+            WHERE e.idasisten = ? 
+                AND e.statusevent = 'BERLANGSUNG'
+                AND e.tanggal >= CURRENT_DATE
+            ORDER BY e.tanggal ASC
+            LIMIT 10
+            """;
+        return jdbcTemplate.query(sql, this::mapRowToEventDashboardAsisten, asistenId);
+    }
+
+    private EventDashboardAsisten mapRowToEventDashboardAsisten(ResultSet rs, int rowNum) throws SQLException {
+        EventDashboardAsisten dashboard = new EventDashboardAsisten();
+        dashboard.setNamaEvent(rs.getString("nama_event"));
+        dashboard.setNamaAsisten(rs.getString("nama_asisten"));
+        dashboard.setTanggal(rs.getDate("tanggal").toLocalDate());
+        dashboard.setNamaKlien(rs.getString("nama_klien")); 
+        return dashboard;
     }
 
     private EventDashboard mapRowToEventDashboard(ResultSet rs, int rowNum) throws SQLException{

@@ -24,30 +24,41 @@ public class AuthController {
         this.registerService = registerService;
     }
 
-    // Halaman landing (sebelum login)
     @GetMapping("/")
     public String home() {
         return "layout/home-page";
     }
 
-    // Tampilkan halaman login
     @GetMapping("/login")
     public String showLoginForm(Model model) {
         model.addAttribute("loginRequest", new LoginRequest());
         return "auth/login-page";
     }
 
-    // Proses login
     @PostMapping("/login")
-    public String login(@Valid @ModelAttribute("loginRequest") LoginRequest request, BindingResult bindingResult, HttpSession session, Model model) {
+    public String login(@Valid @ModelAttribute("loginRequest") LoginRequest request, 
+                       BindingResult bindingResult, 
+                       HttpSession session, 
+                       Model model) {
         if (bindingResult.hasErrors()) {
             return "auth/login-page";
         }
 
-        String role = authService.authenticate(request.getUsername(), request.getPassword());
-        if (role != null) {
+        Object[] authResult = authService.authenticateWithUserId(request.getUsername(), request.getPassword());
+        
+        if (authResult != null) {
+            String role = (String) authResult[0];
+            Long userId = (Long) authResult[1];
+            
             session.setAttribute("userRole", role);
             session.setAttribute("username", request.getUsername());
+            session.setAttribute("userId", userId);
+            
+            // Debug info
+            System.out.println("=== LOGIN SUCCESS ===");
+            System.out.println("Username: " + request.getUsername());
+            System.out.println("Role: " + role);
+            System.out.println("User ID: " + userId);
 
             if ("PEMILIK".equals(role)) {
                 return "redirect:/dashboard-pemilik";
@@ -60,16 +71,16 @@ public class AuthController {
         }
     }
 
-    // Tampilkan halaman register (untuk asisten)
     @GetMapping("/register")
     public String showRegisterForm(Model model) {
         model.addAttribute("registerRequest", new RegisterRequest());
         return "auth/register-page";
     }
 
-    // Proses registrasi (hanya untuk asisten)
     @PostMapping("/register")
-    public String register(@Valid @ModelAttribute("registerRequest") RegisterRequest request, BindingResult bindingResult, Model model) {
+    public String register(@Valid @ModelAttribute("registerRequest") RegisterRequest request, 
+                          BindingResult bindingResult, 
+                          Model model) {
         if (bindingResult.hasErrors()) {
             return "auth/register-page";
         }
@@ -83,11 +94,9 @@ public class AuthController {
         }
     }
 
-    // Logout
     @GetMapping("/logout")
     public String logout(HttpSession session) {
         session.invalidate();
         return "redirect:/";
     }
-    
 }

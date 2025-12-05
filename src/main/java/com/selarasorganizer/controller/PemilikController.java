@@ -22,7 +22,6 @@ import com.selarasorganizer.repository.EventRepository;
 import com.selarasorganizer.repository.JenisVendorRepository;
 import com.selarasorganizer.repository.KlienRepository;
 import com.selarasorganizer.repository.LaporanRepository;
-import com.selarasorganizer.repository.UserRepository;
 import com.selarasorganizer.repository.VendorRepository;
 
 import java.math.BigDecimal;
@@ -32,7 +31,6 @@ import jakarta.servlet.http.HttpSession;
 
 @Controller
 public class PemilikController {
-    private final UserRepository userRepository;
     private final KlienRepository klienRepository;
     private final AsistenRepository asistenRepository;
     private final EventRepository eventRepository;
@@ -41,8 +39,7 @@ public class PemilikController {
     private final BCryptPasswordEncoder passwordEncoder;
     private final LaporanRepository laporanRepository;
 
-    public PemilikController(UserRepository userRepository, KlienRepository klienRepository, AsistenRepository asistenRepository, EventRepository eventRepository, VendorRepository vendorRepository, JenisVendorRepository jenisVendorRepository, LaporanRepository laporanRepository, BCryptPasswordEncoder passwordEncoder) {
-        this.userRepository = userRepository;
+    public PemilikController(KlienRepository klienRepository, AsistenRepository asistenRepository, EventRepository eventRepository, VendorRepository vendorRepository, JenisVendorRepository jenisVendorRepository, LaporanRepository laporanRepository, BCryptPasswordEncoder passwordEncoder) {
         this.klienRepository = klienRepository;
         this.asistenRepository = asistenRepository;
         this.eventRepository = eventRepository;

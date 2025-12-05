@@ -16,6 +16,15 @@ public class KlienRepository {
         this.jdbcTemplate = jdbcTemplate;
     }
 
+    public int countKlienDitangani(Long asistenId) {
+        String sql = """
+            SELECT COUNT(DISTINCT idklien) 
+            FROM Event 
+            WHERE idasisten = ?
+            """;
+        return jdbcTemplate.queryForObject(sql, Integer.class, asistenId);
+    }
+
     public int countAll() {
         String sql = "SELECT COUNT(*) FROM klien";
         return jdbcTemplate.queryForObject(sql, Integer.class);
