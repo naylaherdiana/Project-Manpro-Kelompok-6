@@ -29,7 +29,8 @@ header {
     grid-area: header;
     background-color: var(--navbar-color);
     position: sticky;
-    z-index: 1;
+    top: 0;
+    z-index: 5;
 }
 
 nav {
@@ -90,9 +91,41 @@ a {
     all: unset;
 }
 
+
+/* POPUP LOGOUT */
 #popup-logout {
+    padding: 1em;
+    width: 8rem;
     display: none;
+    flex-direction: column;
+    align-items: center;
+    gap: 1em;
+    position: absolute;
+    top: 4em;
+    right: 3.5em;
+    border-radius: 0.5em;
+    border: 1px solid #000;
+    background-color: #F5F5F5;
 }
+
+#popup-logout p {
+    color: #000;
+}
+
+#popup-logout button {
+    padding: 0.5em;
+    width: 100%;
+    border-radius: 0.5em;
+    border: 1px solid #000;
+    cursor: pointer;
+}
+
+#popup-logout button:hover {
+    color: #ffffff;
+    transition: 0.5s;
+    background-color: red;
+}
+
 
 /* MAIN */
 main {
@@ -128,7 +161,7 @@ main {
     width: 95%;
     height: 100%;
     border-radius: 1em;
-    background: rgba(0, 0, 0, 0.1); 
+    background: rgba(255, 255, 255, 0.3); 
     z-index: 2;
 }
 
@@ -138,6 +171,7 @@ main {
     width: 95%;
     display: flex;
     gap: 1em;
+    margin-bottom: 2em;
 }
 
 #info-card {
@@ -170,10 +204,50 @@ main {
     background-color: #fff;
 }
 
-#table-container table {
-    margin: 1em;
+
+/* TABLE */
+#table-container {
+    padding: 1em;
+    width: 100%;
+    height: 100%;      
+    overflow-y: auto;       
+    border: 1px solid #ddd;
+    border-radius: 1em;
+    background-color: #fff;
 }
 
-tr, td, th {
-    padding: 1em;
+#table-container h1 {
+    padding-bottom: 0.5em;
+    position: sticky;
+    top: -1px;
+    background: #fff;
+    z-index: 2;
+    text-align: center;
 }
+
+#table-container table {
+    padding: 0 1em;
+    width: 100%;
+    height: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    text-align: center;
+}
+
+/* Header tetap di atas */
+#table-container thead th {
+    padding: 0.5em;
+    position: sticky;
+    top: 0;
+    background: #fff; 
+    z-index: 1;
+    border-bottom: 1px solid #ddd;
+}
+
+/* Isi body */
+#table-container tbody td {
+    background: #fff;   
+    border-bottom: 1px solid #f0f0f0;
+}
+
+
