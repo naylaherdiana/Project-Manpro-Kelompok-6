@@ -195,8 +195,8 @@ td > button {
 }
 
 
-/* Fitur Tambah dan Edit Jenis Vendor */
-.tambah-jenis-vendor, .edit-jenis-vendor {
+/* Tambah dan Edit Jenis Vendor*/
+#tambah-jenis-vendor, #edit-jenis-vendor {
   position: fixed;
   top: 0;
   left: 0;
@@ -218,19 +218,19 @@ td > button {
     background-color: #ffffff;
 }
 
-#formTambahJenisVendor, #formEditJenisVendor {
-    padding: 2em;
-    height: 90%;
-    display: flex;
-    flex-direction: column;
-    gap: 1.5em;
+#formTambah, #formEdit {
+  padding: 2em;
+  height: 90%;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5em;
 }
 
-#formTambahJenisVendor input, #formEditJenisVendor input {
+#formTambah input, select, #formEdit input {
     padding: 0.5em;
 }
 
-#formTambahJenisVendor > div, #formEditJenisVendor > div {
+#formTambah > div, #formEdit > div {
     margin-top: 1em;
     text-align: end;
     word-spacing: 1em;
@@ -255,8 +255,8 @@ td > button {
 }
 
 
-/* Fitur Hapus Asisten */
-.hapus-jenis-vendor {
+/* Hapus Jenis VEndor */
+#hapus-jenis-vendor {
   position: fixed;
   top: 0;
   left: 0;
@@ -268,23 +268,30 @@ td > button {
   align-items: center;
 }
 
-.hapus-jenis-vendor .popup-content {
+#hapus-jenis-vendor .popup-content {
   background: #ffffff;
   padding: 2em;
   border-radius: 1em;
-  width: 50rem;
+  width: 40%;
   height: 12rem;
   display: flex;
   flex-direction: column;
   gap: 1.5em;
 }
 
-.hapus-jenis-vendor .popup-content div {
-    text-align: end;
-    word-spacing: 1em;
+#formHapus {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
 }
 
-#btnCloseHapus {
+#formHapus div {
+    width: 100%;
+    text-align: end;
+}
+
+#btnCloseHapus, #btnConfirmHapus {
     width: 15%;
     padding: 0.5em;
     color: #ffffff;
@@ -300,18 +307,7 @@ td > button {
     background-color: #36b9c5;
 }
 
-#btnConfirmHapus {
-    width: 15%;
-    padding: 0.5em;
-    color: #ffffff;
-    font-size: large;
-    background-color: red;
-    border: none;
-    border-radius: 1em;
-    cursor: pointer;
-}
-
 #btnConfirmHapus:hover {
     transition: 0.5s;
-    background-color: #9c0e0e;
+    background-color: red;
 }

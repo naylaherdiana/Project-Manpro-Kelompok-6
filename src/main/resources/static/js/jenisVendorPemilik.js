@@ -1,12 +1,12 @@
 // --- DOM Elements ---
 const btnTambah = document.getElementById('btnTambah');
-const popupTambah = document.querySelector('.tambah-jenis-vendor');
+const popupTambah = document.getElementById('tambah-jenis-vendor');
 const btnCloseTambah = document.getElementById('btnCloseTambah');
 
-const popupEdit = document.querySelector('.edit-jenis-vendor');
+const popupEdit = document.getElementById('edit-jenis-vendor');
 const btnCloseEdit = document.getElementById('btnCloseEdit');
 
-const popupHapus = document.querySelector('.hapus-jenis-vendor');
+const popupHapus = document.getElementById('hapus-jenis-vendor');
 const btnCloseHapus = document.getElementById('btnCloseHapus');
 
 // --- Helper: Tutup Semua Popup ---

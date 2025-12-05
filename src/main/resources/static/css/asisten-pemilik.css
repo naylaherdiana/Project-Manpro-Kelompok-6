@@ -232,7 +232,7 @@ td > button {
     padding: 0.5em;
 }
 
-.formTambah > div, .formEdit > div {
+#formTambah > div, #formEdit > div {
     margin-top: 1em;
     text-align: end;
     word-spacing: 1em;
@@ -250,11 +250,12 @@ td > button {
     cursor: pointer;
 }
 
-#btnCloseTambah:hover,
-#btnSimpanTambah:hover {
+#btnCloseTambah:hover, #btnSimpanTambah:hover,
+#btnCloseEdit:hover, #btnSimpanEdit:hover {
     transition: 0.5s;
     background-color: #36b9c5;
 }
+
 
 /* Hapus Asisten */
 .hapus-asisten {
@@ -273,19 +274,26 @@ td > button {
   background: #ffffff;
   padding: 2em;
   border-radius: 1em;
-  width: 50rem;
+  width: 40%;
   height: 12rem;
   display: flex;
   flex-direction: column;
   gap: 1.5em;
 }
 
-.hapus-asisten .popup-content div {
-    text-align: end;
-    word-spacing: 1em;
+#formHapus {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
 }
 
-#btnCloseHapus {
+#formHapus div {
+    width: 100%;
+    text-align: end;
+}
+
+#btnCloseHapus, #btnConfirmHapus {
     width: 15%;
     padding: 0.5em;
     color: #ffffff;
@@ -301,18 +309,7 @@ td > button {
     background-color: #36b9c5;
 }
 
-#btnConfirmHapus {
-    width: 15%;
-    padding: 0.5em;
-    color: #ffffff;
-    font-size: large;
-    background-color: red;
-    border: none;
-    border-radius: 1em;
-    cursor: pointer;
-}
-
 #btnConfirmHapus:hover {
     transition: 0.5s;
-    background-color: #9c0e0e;
+    background-color: red;
 }

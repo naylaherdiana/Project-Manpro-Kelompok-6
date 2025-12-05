@@ -64,14 +64,23 @@
         <button id="btnTambah">Tambah Jenis Vendor</button>
 
          <!-- PopUp Tambah Jenis Vendor -->
-        <div class="tambah-jenis-vendor">
+        <div id="tambah-jenis-vendor">
             <div class="popup-content">
                 <form id="formTambah" th:action="@{/jenis-vendor-pemilik}" method="post">
                     <h3>Tambah Jenis Vendor</h3>
                     <input type="number" name="idjenisvendor" placeholder="ID Jenis Vendor" required>
                     <input type="text" name="kisaranhargamin" placeholder="Kisaran Harga Minimal (contoh: Rp 3.000.000)" required>
                     <input type="text" name="kisaranhargamax" placeholder="Kisaran Harga Maksimal (contoh: Rp 8.000.000)" required>
-                    <input type="text" name="namajenisvendor" placeholder="Nama Jenis Vendor" required>
+                    <select name="namajenisvendor" id="namajenisvendor">
+                        <option value="" disabled selected>Pilih Jenis Vendor</option>
+                        <option value="dekorasi">Dekorasi</option>
+                        <option value="dokumentasi">Dokumentasi</option>
+                        <option value="katering">Katering</option>
+                        <option value="musik">Musik</option>
+                        <option value="panggung">Panggung</option>
+                        <option value="lainnya">Lainnya</option>
+                    </select>
+                    
                     <div>
                         <input type="button" id="btnCloseTambah" value="Tutup">
                         <input type="submit" id="btnSimpanTambah" value="Simpan">
@@ -81,7 +90,7 @@
         </div>
 
         <!-- PopUp Edit Jenis Vendor -->
-        <div class="edit-jenis-vendor">
+        <div id="edit-jenis-vendor">
             <div class="popup-content">
                 <form id="formEdit" th:action="@{/update-jenis-vendor}" method="post">
                     <input type="hidden" id="editId" name="idjenisvendor">
@@ -98,7 +107,7 @@
         </div>
         
         <!-- PopUp Hapus Jenis Vendor-->
-        <div class="hapus-jenis-vendor">
+        <div id="hapus-jenis-vendor">
             <div class="popup-content">
                 <form id="formHapus" th:action="@{/delete-jenis-vendor}" method="post">
                     <input type="hidden" id="hapusId" name="idjenisvendor">

@@ -31,30 +31,38 @@
         </nav>
     </header>
 
-    <section class="main-section">
-        <div class="info-card">
-            <div id="klien-aktif">
-                <h1 th:text="${totalKlien}">18</h1>
-                <p>Klien Aktif</p>
-            </div>
-            <div id="event-aktif">
-                <h1 th:text="${totalEvent}">4</h1>
-                <p>Event Terdekat</p>
-            </div>
-            <div id="vendor-aktif">
-                <h1 th:text="${totalVendor}">12</h1>
-                <p>Vendor Terdaftar</p>
-            </div>
-            <div id="vendor-teraktif">
-                <h1 th:text="${vendorTeraktif}">Tata Katering</h1>
-                <p>Vendor Paling Sering Dipakai</p>
-            </div>
-        </div>
+    <main>
+        <section id="main-img">
+            <div class="overlay"></div>
+            <img th:src="@{/img/event-hero.jpg}" alt="event image">
+        </section>
         
-        <div class="dashboard-wrap">
-            <div id="event-terdekat">
+        <section id="main-section">
+            <div id="info-card">
+                <div id="vendor-teraktif">
+                    <h1 th:text="${vendorTeraktif}">Tata Katering</h1>
+                    <p>Vendor Paling Sering Dipakai</p>
+                </div>
+
+                <div id="klien-aktif">
+                    <h1 th:text="${totalKlien}">18</h1>
+                    <p>Klien Aktif</p>
+                </div>
+                
+                <div id="event-aktif">
+                    <h1 th:text="${totalEvent}">4</h1>
+                    <p>Event Terdekat</p>
+                </div>
+                
+                <div id="vendor-aktif">
+                    <h1 th:text="${totalVendor}">12</h1>
+                    <p>Vendor Terdaftar</p>
+                </div>
+            </div>
+            
+            <div id="table-container">
+                <h1>Event Terdekat</h1>
                 <table>
-                    <caption>Event Terdekat</caption>
                     <thead>
                         <tr>
                             <th scope="col">Event</th>
@@ -73,37 +81,8 @@
                     </tbody>
                 </table>
             </div>
-
-            <div id="analisis-vendor">
-                <h1>Analisis Vendor</h1>
-            </div>
-
-            <div id="jadwal-event">
-                <h1>Jadwal Event</h1>
-                
-                <div class="calender">
-                    <div class="month">
-                        <ul>
-                            <li>August <span>2021</span></li>
-                            <li class="prev">&#10094;</li>
-                            <li class="next">&#10095;</li>
-                        </ul>
-                    </div>
-                    
-                    <div class="weekdays">
-                        <ul>
-                            <li>SUN</li>
-                            <li>MON</li>
-                            <li>TUE</li>
-                            <li>WED</li>
-                            <li>THU</li>
-                            <li>FRI</li>
-                            <li>SAT</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+        </section>
+    </main>
+    
 </body>
 </html>
