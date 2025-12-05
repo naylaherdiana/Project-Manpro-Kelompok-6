@@ -8,6 +8,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -88,78 +89,27 @@ public class AsistenRepository {
     }
 
     public boolean saveAsisten(RegisterRequest request) {
-        System.out.println("\n=== DEBUG saveAsisten ===");
-        System.out.println("Username: " + request.getUsername());
-        System.out.println("Email: " + request.getEmail());
-        System.out.println("Nama: " + request.getNama());
+        System.out.println("\n=== SIMPLE saveAsisten ===");
         
         try {
-            // 1. CEK apakah username sudah ada
-            String checkUsernameSql = "SELECT COUNT(*) FROM users WHERE username = ?";
-            Integer countUsername = jdbcTemplate.queryForObject(checkUsernameSql, Integer.class, 
-                request.getUsername());
+            String userSql = "INSERT INTO users (username, email, password) VALUES (?, ?, ?) RETURNING id";
             
-            System.out.println("Username count: " + countUsername);
+            Long userId = jdbcTemplate.queryForObject(
+                userSql,
+                Long.class,
+                request.getUsername(),
+                request.getEmail(),
+                request.getPassword()
+            );
             
-            // 2. CEK apakah email sudah ada
-            String checkEmailSql = "SELECT COUNT(*) FROM users WHERE email = ?";
-            Integer countEmail = jdbcTemplate.queryForObject(checkEmailSql, Integer.class, 
-                request.getEmail());
+            System.out.println("User ID: " + userId);
             
-            System.out.println("Email count: " + countEmail);
-            
-            if ((countUsername != null && countUsername > 0) || 
-                (countEmail != null && countEmail > 0)) {
-                System.out.println("Username atau email sudah ada!");
-                return false;
-            }
-            
-            // 3. INSERT ke users
-            System.out.println("Insert ke users...");
-            String userSql = "INSERT INTO users (username, email, password) VALUES (?, ?, ?)";
-            KeyHolder keyHolder = new GeneratedKeyHolder();
-            
-            int userRows = jdbcTemplate.update(connection -> {
-                PreparedStatement ps = connection.prepareStatement(userSql, Statement.RETURN_GENERATED_KEYS);
-                ps.setString(1, request.getUsername());
-                ps.setString(2, request.getEmail());
-                ps.setString(3, request.getPassword());
-                return ps;
-            }, keyHolder);
-            
-            System.out.println("User rows affected: " + userRows);
-            
-            if (userRows == 0) {
-                System.out.println("Gagal insert ke users!");
-                return false;
-            }
-            
-            Long userId = keyHolder.getKey().longValue();
-            System.out.println("User ID generated: " + userId);
-            
-            // 4. INSERT ke user_roles
-            System.out.println("Insert ke user_roles...");
-            int roleRows = jdbcTemplate.update(
+            jdbcTemplate.update(
                 "INSERT INTO user_roles (user_id, role) VALUES (?, 'ASISTEN')",
                 userId
             );
-            
-            System.out.println("Role rows affected: " + roleRows);
-            
-            if (roleRows == 0) {
-                System.out.println("Gagal insert ke user_roles!");
-                jdbcTemplate.update("DELETE FROM users WHERE id = ?", userId);
-                return false;
-            }
-            
-            // 5. INSERT ke asisten
-            System.out.println("Insert ke asisten...");
-            System.out.println("Nama: " + request.getNama());
-            System.out.println("Alamat: " + request.getAlamat());
-            System.out.println("Kontak: " + request.getKontak());
-            System.out.println("User ID: " + userId);
-            
-            int asistenRows = jdbcTemplate.update(
+     
+            jdbcTemplate.update(
                 "INSERT INTO asisten (nama, alamat, kontak, user_id) VALUES (?, ?, ?, ?)",
                 request.getNama(), 
                 request.getAlamat(), 
@@ -167,27 +117,13 @@ public class AsistenRepository {
                 userId
             );
             
-            System.out.println("Asisten rows affected: " + asistenRows);
-            
-            if (asistenRows == 0) {
-                System.out.println("GAGAL insert ke asisten!");
-                // Clean up
-                jdbcTemplate.update("DELETE FROM user_roles WHERE user_id = ?", userId);
-                jdbcTemplate.update("DELETE FROM users WHERE id = ?", userId);
-                return false;
-            }
-            
-            System.out.println("SUKSES total!");
             return true;
             
         } catch (DataIntegrityViolationException e) {
-            System.out.println("DataIntegrityViolationException: " + e.getMessage());
-            System.out.println("Biasanya karena constraint violation (foreign key, unique, etc)");
+            System.out.println("Duplicate username/email: " + e.getMessage());
             return false;
         } catch (Exception e) {
-            System.out.println("Exception: " + e.getClass().getName());
-            System.out.println("Message: " + e.getMessage());
-            e.printStackTrace();
+            System.out.println("Error: " + e.getMessage());
             return false;
         }
     }
