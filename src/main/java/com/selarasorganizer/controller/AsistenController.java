@@ -455,13 +455,34 @@ public class AsistenController {
     }
 
     @GetMapping("/laporan-asisten")
-    public String laporan(HttpSession session, Model model){
+    public String laporan(HttpSession session, Model model) {
         if (session.getAttribute("userRole") == null) {
             return "redirect:/login";
         }
         if (!"ASISTEN".equals(session.getAttribute("userRole"))) {
             return "redirect:/login";
         }
+        
+        Long userId = (Long) session.getAttribute("userId");
+        if (userId == null) {
+            return "redirect:/login";
+        }
+        
+        Long asistenId = asistenRepository.getAsistenIdByUserId(userId);
+        if (asistenId == null) {
+            session.setAttribute("error", "Data asisten tidak ditemukan");
+            return "redirect:/login";
+        }
+        String namaAsisten = asistenRepository.getNamaAsistenByUserId(userId);
+        if (namaAsisten != null) {
+            model.addAttribute("namaAsisten", namaAsisten);
+        }
+        List<Event> eventBerlangsung = eventRepository.findBerlangsungByAsisten(asistenId);
+        model.addAttribute("eventBerlangsung", eventBerlangsung);
+        
+        List<Event> eventTuntas = eventRepository.findTuntasByAsisten(asistenId);
+        model.addAttribute("eventTuntas", eventTuntas);
+        
         return "asisten/laporan-asisten";
     }
 }

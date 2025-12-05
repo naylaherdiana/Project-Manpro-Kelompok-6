@@ -3,9 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Selaras Organizer</title>
+    <title>Selaras Organizer - Laporan</title>
     <link rel="stylesheet" th:href="@{/css/laporan-asisten.css}">
     <script th:src="@{/js/logoutScript.js}" defer></script>
+    <script th:src="@{/js/laporanAsisten.js}" defer></script>
 </head>
 <body>
     <header>
@@ -25,7 +26,7 @@
 
             <!--POP UP LOGOUT -->
             <div id="popup-logout">
-                <p>Name</p>
+                <p th:text="${namaAsisten != null} ? ${namaAsisten} : 'Asisten'">Name</p>
                 <button id="logout-btn">Logout</button>
             </div>
         </nav>
@@ -33,6 +34,22 @@
 
     <main class="container">
         <h1>Laporan Asisten</h1>
+        
+        <div class="summary-stats">
+            <div class="stat-card">
+                <h3>Total Event Berlangsung</h3>
+                <p class="stat-number" th:text="${eventBerlangsung != null} ? ${#lists.size(eventBerlangsung)} : 0">0</p>
+            </div>
+            <div class="stat-card">
+                <h3>Total Event Tuntas</h3>
+                <p class="stat-number" th:text="${eventTuntas != null} ? ${#lists.size(eventTuntas)} : 0">0</p>
+            </div>
+            <div class="stat-card">
+                <h3>Total Semua Event</h3>
+                <p class="stat-number" th:text="${(eventBerlangsung != null ? #lists.size(eventBerlangsung) : 0) + (eventTuntas != null ? #lists.size(eventTuntas) : 0)}">0</p>
+            </div>
+        </div>
+        
         <div id="daftar-event-berjalan">
             <h2>Event Yang Sedang Berjalan</h2>
             <div class="table-container">
@@ -41,39 +58,28 @@
                         <tr>
                             <th>ID</th>
                             <th>Nama Event</th>
+                            <th>Jenis Event</th>
                             <th>Tanggal</th>
                             <th>Jumlah Undangan</th>
                             <th>Klien</th>
+                            <th>Status</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>Wedding Axel</td>
-                            <td>7 November 2025</td>
-                            <td>400</td>
-                            <td>Axel</td>
+                        <tr th:if="${eventBerlangsung != null}" 
+                            th:each="event : ${eventBerlangsung}">
+                            <td th:text="${event.idevent}">101</td>
+                            <td th:text="${event.namaevent}">Pernikahan Andi & Dinda</td>
+                            <td th:text="${event.jenisevent}">Pernikahan</td>
+                            <td th:text="${#temporals.format(event.tanggal, 'dd MMMM yyyy')}">15 Februari 2025</td>
+                            <td th:text="${event.jumlahundangan}">200</td>
+                            <td th:text="${event.namaklien}">Andi Pratama</td>
+                            <td>
+                                <span class="status-berlangsung" th:text="${event.statusevent}">BERLANGSUNG</span>
+                            </td>
                         </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>Wedding Axel</td>
-                            <td>7 November 2025</td>
-                            <td>400</td>
-                            <td>Axel</td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>Wedding Axel</td>
-                            <td>7 November 2025</td>
-                            <td>400</td>
-                            <td>Axel</td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>Wedding Axel</td>
-                            <td>7 November 2025</td>
-                            <td>400</td>
-                            <td>Axel</td>
+                        <tr th:if="${eventBerlangsung == null or #lists.isEmpty(eventBerlangsung)}">
+                            <td colspan="7" style="text-align: center;">Tidak ada event yang sedang berjalan</td>
                         </tr>
                     </tbody>
                 </table>
@@ -88,39 +94,49 @@
                         <tr>
                             <th>ID</th>
                             <th>Nama Event</th>
+                            <th>Jenis Event</th>
                             <th>Tanggal</th>
+                            <th>Jumlah Undangan</th>
                             <th>Klien</th>
+                            <th>Status</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>Wedding Axel</td>
-                            <td>7 November 2025</td>
-                            <td>Axel</td>
+                        <tr th:if="${eventTuntas != null}" 
+                            th:each="event : ${eventTuntas}">
+                            <td th:text="${event.idevent}">101</td>
+                            <td th:text="${event.namaevent}">Pernikahan Andi & Dinda</td>
+                            <td th:text="${event.jenisevent}">Pernikahan</td>
+                            <td th:text="${#temporals.format(event.tanggal, 'dd MMMM yyyy')}">15 Februari 2025</td>
+                            <td th:text="${event.jumlahundangan}">200</td>
+                            <td th:text="${event.namaklien}">Andi Pratama</td>
+                            <td>
+                                <span class="status-tuntas" th:text="${event.statusevent}">TUNTAS</span>
+                            </td>
                         </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>Wedding Axel</td>
-                            <td>7 November 2025</td>
-                            <td>Axel</td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>Wedding Axel</td>
-                            <td>7 November 2025</td>
-                            <td>Axel</td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>Wedding Axel</td>
-                            <td>7 November 2025</td>
-                            <td>Axel</td>
+                        <tr th:if="${eventTuntas == null or #lists.isEmpty(eventTuntas)}">
+                            <td colspan="7" style="text-align: center;">Belum ada event yang tuntas</td>
                         </tr>
                     </tbody>
                 </table>
             </div>
         </div>
-    </main>     
+        
+        <div class="action-buttons">
+            <button id="btnPrint" class="btn-print">
+                <img th:src="@{/img/print-icon.jpg}" alt="print icon" style="width: 16px; margin-right: 8px;">
+                Cetak Laporan
+            </button>
+        </div>
+    </main>
+
+    <div id="modalEventDetail" class="modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h3 id="modalEventTitle">Detail Event</h3>
+            <div id="modalEventBody">
+            </div>
+        </div>
+    </div>
 </body>
 </html>
