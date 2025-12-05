@@ -60,7 +60,6 @@ document.addEventListener('click', (e) => {
         document.getElementById('editId').value = id;
         document.getElementById('editKisaranhargamin').value = hargaMinAngka;
         document.getElementById('editKisaranhargamax').value = hargaMaxAngka;
-        document.getElementById('editNamajenisvendor').value = namaJenis;
         
         popupEdit.style.display = 'flex';
     }

@@ -97,7 +97,15 @@
                     <h3>Edit Jenis Vendor</h3>
                     <input type="text" id="editKisaranhargamin" name="kisaranhargamin" required>
                     <input type="text" id="editKisaranhargamax" name="kisaranhargamax" required>
-                    <input type="text" id="editNamajenisvendor" name="namajenisvendor" required>
+                    <select name="editnamajenisvendor" id="editnamajenisvendor">
+                        <option value="" disabled selected>Pilih Jenis Vendor</option>
+                        <option value="dekorasi">Dekorasi</option>
+                        <option value="dokumentasi">Dokumentasi</option>
+                        <option value="katering">Katering</option>
+                        <option value="musik">Musik</option>
+                        <option value="panggung">Panggung</option>
+                        <option value="lainnya">Lainnya</option>
+                    </select>
                     <div>
                         <input type="button" id="btnCloseEdit" value="Tutup">
                         <input type="submit" id="btnSimpanEdit" value="Simpan">
