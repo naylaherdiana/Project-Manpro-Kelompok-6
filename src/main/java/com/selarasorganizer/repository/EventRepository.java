@@ -2,6 +2,7 @@ package com.selarasorganizer.repository;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
@@ -246,10 +247,10 @@ public class EventRepository {
 
     private EventDashboardAsisten mapRowToEventDashboardAsisten(ResultSet rs, int rowNum) throws SQLException {
         EventDashboardAsisten dashboard = new EventDashboardAsisten();
-        dashboard.setNamaEvent(rs.getString("nama_event"));
-        dashboard.setNamaAsisten(rs.getString("nama_asisten"));
+        dashboard.setNamaEvent(rs.getString("namaevent")); 
+        dashboard.setNamaKlien(rs.getString("namaklien"));
         dashboard.setTanggal(rs.getDate("tanggal").toLocalDate());
-        dashboard.setNamaKlien(rs.getString("nama_klien")); 
+        dashboard.setNamaAsisten(rs.getString("nama_asisten"));
         return dashboard;
     }
 
@@ -259,7 +260,7 @@ public class EventRepository {
         event.setNamaevent(rs.getString("namaevent"));
         event.setTanggal(rs.getObject("tanggal", LocalDate.class));
         event.setStatusevent(rs.getString("statusevent"));
-        event.setNamaKlien(rs.getString("nama_klien"));
+        event.setNamaKlien(rs.getString("namaklien"));
         event.setNamaAsisten(rs.getString("nama_asisten"));
         return event;
     }
