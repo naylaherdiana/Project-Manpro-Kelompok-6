@@ -1,7 +1,9 @@
 package com.selarasorganizer.controller;
 
+import java.time.LocalDate;
 import java.util.List;
 
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.selarasorganizer.model.EventDashboardAsisten;
 import com.selarasorganizer.model.Klien;
+import com.selarasorganizer.model.Event;
 import com.selarasorganizer.repository.AsistenRepository;
 import com.selarasorganizer.repository.EventRepository;
 import com.selarasorganizer.repository.KlienRepository;
@@ -171,7 +174,114 @@ public class AsistenController {
         if (!"ASISTEN".equals(session.getAttribute("userRole"))) {
             return "redirect:/login";
         }
+       
+        Long userId = (Long) session.getAttribute("userId");
+        if (userId == null) {
+            return "redirect:/login";
+        }
+        
+        Long asistenId = asistenRepository.getAsistenIdByUserId(userId);
+        if (asistenId == null) {
+            session.setAttribute("error", "Data asisten tidak ditemukan");
+            return "redirect:/login";
+        }
+        
+        String namaAsisten = asistenRepository.getNamaAsistenByUserId(userId);
+        if (namaAsisten != null) {
+            model.addAttribute("namaAsisten", namaAsisten);
+        }
+        
+        List<Event> eventTuntas = eventRepository.findTuntasByAsisten(asistenId);
+        List<Event> eventBerlangsung = eventRepository.findBerlangsungByAsisten(asistenId);
+        
+        model.addAttribute("eventTuntas", eventTuntas);
+        model.addAttribute("eventBerlangsung", eventBerlangsung);
+        
+        List<Klien> klienList = klienRepository.findAll();
+        model.addAttribute("klienList", klienList);
+        
         return "asisten/event-asisten";
+    }
+
+    @PostMapping("/event-asisten/tambah")
+    public String tambahEvent(@RequestParam String namaevent, @RequestParam String jenisevent, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate tanggal, @RequestParam Integer jumlahundangan, @RequestParam String statusevent, @RequestParam Long idklien, HttpSession session) {
+        if (session.getAttribute("userRole") == null || !"ASISTEN".equals(session.getAttribute("userRole"))) {
+            return "redirect:/login";
+        }
+        
+        if (namaevent == null || namaevent.trim().isEmpty()) {
+            session.setAttribute("error", "Nama event tidak boleh kosong");
+            return "redirect:/event-asisten";
+        }
+        
+        if (tanggal == null) {
+            session.setAttribute("error", "Tanggal tidak boleh kosong");
+            return "redirect:/event-asisten";
+        }
+        
+        Long userId = (Long) session.getAttribute("userId");
+        Long asistenId = asistenRepository.getAsistenIdByUserId(userId);
+        if (asistenId == null) {
+            session.setAttribute("error", "Data asisten tidak ditemukan");
+            return "redirect:/login";
+        }
+
+        Event event = new Event();
+        event.setNamaevent(namaevent.trim());
+        event.setJenisevent(jenisevent.trim());
+        event.setTanggal(tanggal);
+        event.setJumlahundangan(jumlahundangan);
+        event.setStatusevent(statusevent.trim());
+        event.setIdklien(idklien);
+        event.setIdasisten(asistenId);
+        
+        // Simpan ke database
+        eventRepository.save(event);
+        
+        session.setAttribute("success", "Event berhasil ditambahkan");
+        return "redirect:/event-asisten";
+    }
+
+    @PostMapping("/event-asisten/edit")
+    public String editEvent(@RequestParam Long idevent, @RequestParam String namaevent, @RequestParam String jenisevent, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate tanggal, @RequestParam Integer jumlahundangan, @RequestParam String statusevent, @RequestParam Long idklien, HttpSession session) {
+        if (session.getAttribute("userRole") == null || !"ASISTEN".equals(session.getAttribute("userRole"))) {
+            return "redirect:/login";
+        }
+        
+        Event existingEvent = eventRepository.findById(idevent);
+        if (existingEvent == null) {
+            session.setAttribute("error", "Event tidak ditemukan");
+            return "redirect:/event-asisten";
+        }
+        
+        existingEvent.setNamaevent(namaevent.trim());
+        existingEvent.setJenisevent(jenisevent.trim());
+        existingEvent.setTanggal(tanggal);
+        existingEvent.setJumlahundangan(jumlahundangan);
+        existingEvent.setStatusevent(statusevent.trim());
+        existingEvent.setIdklien(idklien);
+        
+        eventRepository.save(existingEvent);
+        
+        session.setAttribute("success", "Event berhasil diperbarui");
+        return "redirect:/event-asisten";
+    }
+
+    @PostMapping("/event-asisten/hapus")
+    public String hapusEvent(@RequestParam Long idevent, HttpSession session) {
+        if (session.getAttribute("userRole") == null || !"ASISTEN".equals(session.getAttribute("userRole"))) {
+            return "redirect:/login";
+        }
+        
+        boolean deleted = eventRepository.deleteById(idevent);
+        
+        if (deleted) {
+            session.setAttribute("success", "Event berhasil dihapus");
+        } else {
+            session.setAttribute("error", "Gagal menghapus event");
+        }
+        
+        return "redirect:/event-asisten";
     }
 
     @GetMapping("/budgeting-asisten")

@@ -1,13 +1,17 @@
 package com.selarasorganizer.repository;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
+import com.selarasorganizer.model.Klien;
 import com.selarasorganizer.model.Event;
 import com.selarasorganizer.model.EventDashboard;
 import com.selarasorganizer.model.EventDashboardAsisten;
@@ -35,16 +39,6 @@ public class EventRepository {
             LIMIT 4
             """;
         return jdbcTemplate.query(sql, this::mapRowToEvent);
-    }
-
-    private Event mapRowToEvent(ResultSet rs, int rowNum) throws SQLException{
-        Event event = new Event();
-        event.setIdevent(rs.getLong("idevent"));
-        event.setNamaevent(rs.getString("namaevent"));
-        event.setJenisevent(rs.getString("jenisevent"));
-        event.setTanggal(rs.getObject("tanggal", LocalDate.class));
-        event.setStatusevent(rs.getString("statusevent"));
-        return event;
     }
 
     public List<EventDashboard> findUpcomingEvents(){
@@ -97,6 +91,157 @@ public class EventRepository {
             LIMIT 10
             """;
         return jdbcTemplate.query(sql, this::mapRowToEventDashboardAsisten, asistenId);
+    }
+
+    public List<EventDashboard> getEventDetailBerlangsung(Long asistenId) {
+        String sql = """
+            SELECT e.idevent, e.namaevent, e.jenisevent, e.tanggal, 
+                   e.jumlahundangan, e.statusevent, k.namaklien
+            FROM Event e 
+            JOIN Klien k ON e.idklien = k.idklien 
+            WHERE e.idasisten = ? AND e.statusevent = 'BERLANGSUNG'
+            ORDER BY e.tanggal
+            """;
+        return jdbcTemplate.query(sql, this::mapRowToEventDashboard, asistenId);
+    }
+
+    public List<Event> findAllByAsisten(Long asistenId) {
+        String sql = """
+            SELECT e.*, k.namaklien 
+            FROM Event e 
+            LEFT JOIN Klien k ON e.idklien = k.idklien 
+            WHERE e.idasisten = ?
+            ORDER BY e.tanggal DESC, e.idevent DESC
+            """;
+        return jdbcTemplate.query(sql, this::mapRowToEventFull, asistenId);
+    }
+
+    public List<Event> findTuntasByAsisten(Long asistenId) {
+        String sql = """
+            SELECT e.*, k.namaklien 
+            FROM Event e 
+            LEFT JOIN Klien k ON e.idklien = k.idklien 
+            WHERE e.idasisten = ? AND e.statusevent = 'TUNTAS'
+            ORDER BY e.tanggal DESC
+            """;
+        return jdbcTemplate.query(sql, this::mapRowToEventFull, asistenId);
+    }
+
+    public List<Event> findBerlangsungByAsisten(Long asistenId) {
+        String sql = """
+            SELECT e.*, k.namaklien 
+            FROM Event e 
+            LEFT JOIN Klien k ON e.idklien = k.idklien 
+            WHERE e.idasisten = ? AND e.statusevent = 'BERLANGSUNG'
+            ORDER BY e.tanggal
+            """;
+        return jdbcTemplate.query(sql, this::mapRowToEventFull, asistenId);
+    }
+
+    public Event findById(Long id) {
+        String sql = """
+            SELECT e.*, k.namaklien 
+            FROM Event e 
+            LEFT JOIN Klien k ON e.idklien = k.idklien 
+            WHERE e.idevent = ?
+            """;
+        List<Event> results = jdbcTemplate.query(sql, this::mapRowToEventFull, id);
+        return results.isEmpty() ? null : results.get(0);
+    }
+
+    public void save(Event event) {
+        if (event.getIdevent() == null) {
+            // INSERT new event
+            String sql = """
+                INSERT INTO Event (namaevent, jenisevent, tanggal, jumlahundangan, statusevent, idklien, idasisten) 
+                VALUES (?, ?, ?, ?, ?, ?, ?)
+                """;
+            
+            KeyHolder keyHolder = new GeneratedKeyHolder();
+            
+            jdbcTemplate.update(connection -> {
+                PreparedStatement ps = connection.prepareStatement(sql, new String[]{"idevent"});
+                ps.setString(1, event.getNamaevent());
+                ps.setString(2, event.getJenisevent());
+                ps.setDate(3, java.sql.Date.valueOf(event.getTanggal()));
+                ps.setInt(4, event.getJumlahundangan());
+                ps.setString(5, event.getStatusevent());
+                ps.setLong(6, event.getIdklien());
+                ps.setLong(7, event.getIdasisten());
+                return ps;
+            }, keyHolder);
+            
+            event.setIdevent(keyHolder.getKey().longValue());
+        } else {
+            // UPDATE existing event
+            String sql = """
+                UPDATE Event 
+                SET namaevent = ?, jenisevent = ?, tanggal = ?, 
+                    jumlahundangan = ?, statusevent = ?, idklien = ? 
+                WHERE idevent = ?
+                """;
+            jdbcTemplate.update(sql,
+                event.getNamaevent(),
+                event.getJenisevent(),
+                event.getTanggal(),
+                event.getJumlahundangan(),
+                event.getStatusevent(),
+                event.getIdklien(),
+                event.getIdevent());
+        }
+    }
+
+    public boolean deleteById(Long id) {
+        String sql = "DELETE FROM Event WHERE idevent = ?";
+        int rowsAffected = jdbcTemplate.update(sql, id);
+        return rowsAffected > 0;
+    }
+
+    public List<Klien> getAllKlien() {
+        String sql = "SELECT * FROM Klien ORDER BY namaklien";
+        return jdbcTemplate.query(sql, (rs, rowNum) -> {
+            com.selarasorganizer.model.Klien klien = new com.selarasorganizer.model.Klien();
+            klien.setIdklien(rs.getLong("idklien"));
+            klien.setNamaklien(rs.getString("namaklien"));
+            return klien;
+        });
+    }
+
+    private Event mapRowToEventFull(ResultSet rs, int rowNum) throws SQLException {
+        Event event = new Event();
+        event.setIdevent(rs.getLong("idevent"));
+        event.setNamaevent(rs.getString("namaevent"));
+        event.setJenisevent(rs.getString("jenisevent"));
+        event.setTanggal(rs.getDate("tanggal").toLocalDate());
+        event.setJumlahundangan(rs.getInt("jumlahundangan"));
+        event.setStatusevent(rs.getString("statusevent"));
+        event.setIdklien(rs.getLong("idklien"));
+        event.setIdasisten(rs.getLong("idasisten"));
+    
+        if (columnExists(rs, "namaklien")) {
+            event.setNamaklien(rs.getString("namaklien"));
+        }
+        
+        return event;
+    }
+
+    private boolean columnExists(ResultSet rs, String columnName) {
+        try {
+            rs.findColumn(columnName);
+            return true;
+        } catch (SQLException e) {
+            return false;
+        }
+    }
+
+    private Event mapRowToEvent(ResultSet rs, int rowNum) throws SQLException{
+        Event event = new Event();
+        event.setIdevent(rs.getLong("idevent"));
+        event.setNamaevent(rs.getString("namaevent"));
+        event.setJenisevent(rs.getString("jenisevent"));
+        event.setTanggal(rs.getObject("tanggal", LocalDate.class));
+        event.setStatusevent(rs.getString("statusevent"));
+        return event;
     }
 
     private EventDashboardAsisten mapRowToEventDashboardAsisten(ResultSet rs, int rowNum) throws SQLException {

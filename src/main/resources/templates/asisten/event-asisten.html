@@ -26,7 +26,7 @@
 
             <!--POP UP LOGOUT -->
             <div id="popup-logout">
-                <p>Name</p>
+                <p th:text="${namaAsisten} ?: 'Asisten'">Name</p>
                 <button id="logout-btn">Logout</button>
             </div>
         </nav>
@@ -34,6 +34,13 @@
 
     <section class="main-section">
         <h1>Daftar Event</h1>
+
+        <div th:if="${success}" class="alert success">
+            <span th:text="${success}">Sukses</span>
+        </div>
+        <div th:if="${error}" class="alert error">
+            <span th:text="${error}">Error</span>
+        </div>
         
         <h3>Event Tuntas</h3>
         <div class="table-container">
@@ -47,45 +54,35 @@
                         <th scope="col">Jumlah Undangan</th>
                         <th scope="col">Status</th>
                         <th scope="col">Klien</th>
+                        <th scope="col"></th>
                     </tr>    
                 </thead>
                 
                 <tbody>
-                    <tr>
-                        <td>10</td>
-                        <td>Wedding Beila</td>
-                        <td>Wedding</td>
-                        <td>23 October 2025</td>
-                        <td>400</td>
-                        <td>Tuntas</td>
-                        <td>Bella</td>
+                    <tr th:each="event : ${eventTuntas}">
+                        <td th:text="${event.idevent}">101</td>
+                        <td th:text="${event.namaevent}">Pernikahan Andi & Dinda</td>
+                        <td th:text="${event.jenisevent}">Pernikahan</td>
+                        <td th:text="${#temporals.format(event.tanggal, 'dd MMMM yyyy')}">15 Februari 2025</td>
+                        <td th:text="${event.jumlahundangan}">200</td>
+                        <td><span class="status-tuntas" th:text="${event.statusevent}">TUNTAS</span></td>
+                        <td th:text="${event.namaklien}">Andi Pratama</td>
+                        <td>
+                            <button class="edit" 
+                                    th:data-id="${event.idevent}"
+                                    th:data-nama="${event.namaevent}"
+                                    th:data-jenis="${event.jenisevent}"
+                                    th:data-tanggal="${event.tanggal}"
+                                    th:data-undangan="${event.jumlahundangan}"
+                                    th:data-status="${event.statusevent}"
+                                    th:data-idklien="${event.idklien}">Edit</button>
+                            <button class="hapus" 
+                                    th:data-id="${event.idevent}"
+                                    th:data-nama="${event.namaevent}">Hapus</button>
+                        </td>
                     </tr>
-                    <tr>
-                        <td>10</td>
-                        <td>Wedding Beila</td>
-                        <td>Wedding</td>
-                        <td>23 October 2025</td>
-                        <td>400</td>
-                        <td>Tuntas</td>
-                        <td>Bella</td>
-                    </tr>
-                    <tr>
-                        <td>10</td>
-                        <td>Wedding Beila</td>
-                        <td>Wedding</td>
-                        <td>23 October 2025</td>
-                        <td>400</td>
-                        <td>Tuntas</td>
-                        <td>Bella</td>
-                    </tr>
-                    <tr>
-                        <td>10</td>
-                        <td>Wedding Beila</td>
-                        <td>Wedding</td>
-                        <td>23 October 2025</td>
-                        <td>400</td>
-                        <td>Tuntas</td>
-                        <td>Bella</td>
+                    <tr th:if="${#lists.isEmpty(eventTuntas)}">
+                        <td colspan="8" style="text-align: center;">Tidak ada event tuntas</td>
                     </tr>
                 </tbody>
             </table>
@@ -103,45 +100,35 @@
                         <th scope="col">Jumlah Undangan</th>
                         <th scope="col">Status</th>
                         <th scope="col">Klien</th>
+                        <th scope="col"></th>
                     </tr>     
                 </thead>
                 
                 <tbody>
-                   <tr>
-                        <td>10</td>
-                        <td>Wedding Beila</td>
-                        <td>Wedding</td>
-                        <td>23 October 2025</td>
-                        <td>400</td>
-                        <td>Tuntas</td>
-                        <td>Bella</td>
+                    <tr th:each="event : ${eventBerlangsung}">
+                        <td th:text="${event.idevent}">101</td>
+                        <td th:text="${event.namaevent}">Pernikahan Andi & Dinda</td>
+                        <td th:text="${event.jenisevent}">Pernikahan</td>
+                        <td th:text="${#temporals.format(event.tanggal, 'dd MMMM yyyy')}">15 Februari 2025</td>
+                        <td th:text="${event.jumlahundangan}">200</td>
+                        <td><span class="status-berlangsung" th:text="${event.statusevent}">BERLANGSUNG</span></td>
+                        <td th:text="${event.namaklien}">Andi Pratama</td>
+                        <td>
+                            <button class="edit" 
+                                    th:data-id="${event.idevent}"
+                                    th:data-nama="${event.namaevent}"
+                                    th:data-jenis="${event.jenisevent}"
+                                    th:data-tanggal="${event.tanggal}"
+                                    th:data-undangan="${event.jumlahundangan}"
+                                    th:data-status="${event.statusevent}"
+                                    th:data-idklien="${event.idklien}">Edit</button>
+                            <button class="hapus" 
+                                    th:data-id="${event.idevent}"
+                                    th:data-nama="${event.namaevent}">Hapus</button>
+                        </td>
                     </tr>
-                    <tr>
-                        <td>10</td>
-                        <td>Wedding Beila</td>
-                        <td>Wedding</td>
-                        <td>23 October 2025</td>
-                        <td>400</td>
-                        <td>Tuntas</td>
-                        <td>Bella</td>
-                    </tr>
-                    <tr>
-                        <td>10</td>
-                        <td>Wedding Beila</td>
-                        <td>Wedding</td>
-                        <td>23 October 2025</td>
-                        <td>400</td>
-                        <td>Tuntas</td>
-                        <td>Bella</td>
-                    </tr>
-                    <tr>
-                        <td>10</td>
-                        <td>Wedding Beila</td>
-                        <td>Wedding</td>
-                        <td>23 October 2025</td>
-                        <td>400</td>
-                        <td>Tuntas</td>
-                        <td>Bella</td>
+                    <tr th:if="${#lists.isEmpty(eventBerlangsung)}">
+                        <td colspan="8" style="text-align: center;">Tidak ada event berlangsung</td>
                     </tr>
                 </tbody>
             </table>
@@ -151,22 +138,103 @@
     </section>
 
     <!-- PopUp Tambah Event -->
-        <div class="tambah-event">
-            <div class="popup-content">
-                <form id="formTambahEvent" action="" method="">
-                    <h3>Tambah Event</h3>
-                    <input type="text" name="namaEvent" placeholder="Nama Event" required>
-                    <input type="text" name="jenisEvent" placeholder="Jenis Event" required>
-                    <input type="date" name="tanggalEvent" placeholder="Tanggal Event" required>
-                    <input type="number" name="jumlahUndangan" placeholder="Jumlah Undangan" required>
-                    <input type="text" name="statusEvent" placeholder="Status Event" required>
-                    <input type="text" name="klien" placeholder="Klien" required>
-                    <div>
-                        <input type="button" id="btnCloseTambah" value="Tutup">
-                        <input type="submit" id="btnSimpanTambah" value="Simpan">
-                    </div>
-                </form>
-            </div>
+    <div class="tambah-event" style="display: none;">
+        <div class="popup-content">
+            <form id="formTambahEvent" th:action="@{/event-asisten/tambah}" method="post">
+                <h3>Tambah Event</h3>
+                <input type="text" name="namaevent" placeholder="Nama Event" required>
+                
+                <select name="jenisevent" required>
+                    <option value="">Pilih Jenis Event</option>
+                    <option value="Pernikahan">Pernikahan</option>
+                    <option value="Ulang Tahun">Ulang Tahun</option>
+                    <option value="Seminar">Seminar</option>
+                    <option value="Gathering">Gathering</option>
+                    <option value="Lainnya">Lainnya</option>
+                </select>
+                
+                <input type="date" name="tanggal" placeholder="Tanggal" required>
+                
+                <input type="number" name="jumlahundangan" placeholder="Jumlah Undangan" min="1" required>
+                
+                <select name="statusevent" required>
+                    <option value="">Pilih Status</option>
+                    <option value="BERLANGSUNG">Berlangsung</option>
+                    <option value="TUNTAS">Tuntas</option>
+                </select>
+                
+                <select name="idklien" required>
+                    <option value="">Pilih Klien</option>
+                    <option th:each="klien : ${klienList}" 
+                            th:value="${klien.idklien}"
+                            th:text="${klien.namaklien}">
+                    </option>
+                </select>
+                
+                <div class="form-buttons">
+                    <input type="button" id="btnCloseTambah" value="Tutup">
+                    <input type="submit" id="btnSimpanTambah" value="Simpan">
+                </div>
+            </form>
         </div>
+    </div>
+
+    <div class="edit-event" style="display: none;">
+        <div class="popup-content">
+            <form id="formEditEvent" th:action="@{/event-asisten/edit}" method="post">
+                <h3>Edit Event</h3>
+                <input type="hidden" id="editId" name="idevent">
+                
+                <input type="text" id="editNama" name="namaevent" placeholder="Nama Event" required>
+                
+                <select id="editJenis" name="jenisevent" required>
+                    <option value="">Pilih Jenis Event</option>
+                    <option value="Pernikahan">Pernikahan</option>
+                    <option value="Ulang Tahun">Ulang Tahun</option>
+                    <option value="Seminar">Seminar</option>
+                    <option value="Gathering">Gathering</option>
+                    <option value="Lainnya">Lainnya</option>
+                </select>
+                
+                <input type="date" id="editTanggal" name="tanggal" required>
+                
+                <input type="number" id="editUndangan" name="jumlahundangan" placeholder="Jumlah Undangan" min="1" required>
+                
+                <select id="editStatus" name="statusevent" required>
+                    <option value="">Pilih Status</option>
+                    <option value="BERLANGSUNG">Berlangsung</option>
+                    <option value="TUNTAS">Tuntas</option>
+                </select>
+                
+                <select id="editKlien" name="idklien" required>
+                    <option value="">Pilih Klien</option>
+                    <option th:each="klien : ${klienList}" 
+                            th:value="${klien.idklien}"
+                            th:text="${klien.namaklien}">
+                    </option>
+                </select>
+                
+                <div class="form-buttons">
+                    <input type="button" id="btnCloseEdit" value="Tutup">
+                    <input type="submit" id="btnSimpanEdit" value="Simpan">
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- PopUp Hapus Event -->
+    <div class="hapus-event" style="display: none;">
+        <div class="popup-content">
+            <form id="formHapusEvent" th:action="@{/event-asisten/hapus}" method="post">
+                <h3>Konfirmasi Hapus</h3>
+                <p>Apakah Anda yakin ingin menghapus event "<span id="deleteEventName"></span>"?</p>
+                <input type="hidden" id="deleteId" name="idevent">
+                <div class="form-buttons">
+                    <input type="button" id="btnCloseHapus" value="Tutup">
+                    <input type="submit" id="btnConfirmHapus" value="Ya, Hapus">
+                </div>
+            </form>
+        </div>
+    </div>
 </body>
 </html>

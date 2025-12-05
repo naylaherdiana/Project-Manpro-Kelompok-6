@@ -13,4 +13,5 @@ public class Event {
     private String statusevent;
     private Long idklien;
     private Long idasisten;
+    private String namaklien;
 }
