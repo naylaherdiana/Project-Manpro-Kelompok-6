@@ -205,6 +205,7 @@ th {
 }
 
 td > button {
+    margin: 0 0.5em;
     width: 5em;
     padding: 0.2em;
     border: 1px solid #61A4AB;
@@ -212,8 +213,69 @@ td > button {
     color: #61A4AB;
 }
 
-/* Tambah Event */
-.tambah-event {
+
+/* Tambah dan Edit Event*/
+#tambah-event, #edit-event {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 3;
+}
+
+.popup-content {
+    width: 40%;
+    height: 70%;
+    display: flex;
+    flex-direction: column;
+    border-radius: 0.5em;
+    background-color: #ffffff;
+}
+
+#formTambahEvent, #formEditEvent {
+  padding: 2em;
+  height: 90%;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5em;
+}
+
+#formTambahEvent input, #formEditEvent input, select {
+    padding: 0.5em;
+}
+
+#formTambahEvent > div, #formEditEvent > div {
+    margin-top: 1em;
+    text-align: end;
+    word-spacing: 1em;
+}
+
+#btnCloseTambah, #btnSimpanTambah,
+#btnCloseEdit, #btnSimpanEdit {
+    width: 15%;
+    padding: 0.5em;
+    color: #ffffff;
+    font-size: large;
+    background-color: var(--btn-color);
+    border: none;
+    border-radius: 1em;
+    cursor: pointer;
+}
+
+#btnCloseTambah:hover, #btnSimpanTambah:hover,
+#btnCloseEdit:hover, #btnSimpanEdit:hover {
+    transition: 0.5s;
+    background-color: #36b9c5;
+}
+
+
+/* Fitur Hapus Event */
+#hapus-event {
   position: fixed;
   top: 0;
   left: 0;
@@ -225,31 +287,31 @@ td > button {
   align-items: center;
 }
 
-.tambah-event form {
+#hapus-event .popup-content {
   background: #ffffff;
   padding: 2em;
   border-radius: 1em;
-  width: 50rem;
-  height: 30rem;
+  width: 40%;
+  height: 12rem;
   display: flex;
   flex-direction: column;
-  gap: 1em;
+  gap: 1.5em;
 }
 
-.tambah-event form > input {
-    padding: 0.5em;
-    border: 1px solid;
-    border-radius: 0.5em;
+#formHapusEvent {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
 }
 
-.tambah-event form > div {
-    margin-top: 1em;
+#formHapusEvent div {
+    width: 100%;
     text-align: end;
-    word-spacing: 1em;
 }
 
-#btnCloseTambah,
-#btnSimpanTambah {
+
+#btnCloseHapus, #btnConfirmHapus {
     width: 15%;
     padding: 0.5em;
     color: #ffffff;
@@ -260,8 +322,12 @@ td > button {
     cursor: pointer;
 }
 
-#btnCloseTambah:hover,
-#btnSimpanTambah:hover {
+#btnCloseHapus:hover {
     transition: 0.5s;
     background-color: #36b9c5;
+}
+
+#btnConfirmHapus:hover {
+    transition: 0.5s;
+    background-color: red;
 }

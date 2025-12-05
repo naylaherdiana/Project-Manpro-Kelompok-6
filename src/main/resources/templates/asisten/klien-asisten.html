@@ -80,7 +80,7 @@
         <button id="btnTambah">Tambah Klien</button>
 
         <!-- PopUp Tambah Klien -->
-        <div class="tambah-klien">
+        <div id="tambah-klien">
             <div class="popup-content">
                 <form id="formTambahKlien" th:action="@{/klien-asisten/tambah}" method="post">
                     <h3>Tambah Klien</h3>
@@ -96,7 +96,7 @@
         </div>
 
         <!-- PopUp Edit Klien -->
-        <div class="edit-klien">
+        <div id="edit-klien">
             <div class="popup-content">
                 <form id="formEditKlien" th:action="@{/klien-asisten/edit}" method="post">
                     <h3>Edit Klien</h3>
@@ -113,7 +113,7 @@
         </div>
         
         <!-- PopUp Hapus Klien -->
-        <div class="hapus-klien">
+        <div id="hapus-klien">
             <div class="popup-content">
                 <form id="formHapusKlien" th:action="@{/klien-asisten/hapus}" method="post">
                     <h3>Konfirmasi Hapus</h3>
@@ -121,7 +121,7 @@
                     <input type="hidden" id="deleteId" name="idklien">
                     <div class="form-buttons">
                         <input type="button" id="btnCloseHapus" value="Tutup">
-                        <input type="submit" id="btnConfirmHapus" value="Ya, Hapus">
+                        <input type="submit" id="btnConfirmHapus" value="Hapus">
                     </div>
                 </form>
             </div>

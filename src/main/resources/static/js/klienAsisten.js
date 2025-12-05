@@ -1,6 +1,6 @@
 /* Tambah Klien */
 const btnTambah = document.getElementById('btnTambah');
-const popupTambah = document.querySelector('.tambah-klien');
+const popupTambah = document.getElementById('tambah-klien');
 const btnCloseTambah = document.getElementById('btnCloseTambah');
 
 btnTambah.onclick = () => {
@@ -12,7 +12,7 @@ btnCloseTambah.onclick = () => {
 };
 
 /* Edit Klien */
-const popupEdit = document.querySelector('.edit-klien');
+const popupEdit = document.getElementById('edit-klien');
 const btnCloseEdit = document.getElementById('btnCloseEdit');
 
 // Fungsi untuk menampilkan popup edit
@@ -44,7 +44,7 @@ btnCloseEdit.onclick = () => {
 };
 
 /* Hapus Klien */
-const popupHapus = document.querySelector('.hapus-klien');
+const popupHapus = document.getElementById('hapus-klien');
 const btnCloseHapus = document.getElementById('btnCloseHapus');
 
 // Fungsi untuk menampilkan popup hapus

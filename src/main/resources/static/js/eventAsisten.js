@@ -1,8 +1,8 @@
 // DOM Elements
 const btnTambah = document.getElementById('btnTambah');
-const popupTambah = document.querySelector('.tambah-event');
-const popupEdit = document.querySelector('.edit-event');
-const popupHapus = document.querySelector('.hapus-event');
+const popupTambah = document.getElementById('tambah-event');
+const popupEdit = document.getElementById('edit-event');
+const popupHapus = document.getElementById('hapus-event');
 const btnCloseTambah = document.getElementById('btnCloseTambah');
 const btnCloseEdit = document.getElementById('btnCloseEdit');
 const btnCloseHapus = document.getElementById('btnCloseHapus');
