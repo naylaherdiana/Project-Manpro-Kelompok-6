@@ -1,10 +1,10 @@
 // Versi minimalis tanpa loading indicator
 const btnTambah = document.getElementById('btnTambah');
-const popupTambah = document.querySelector('.tambah-vendor');
+const popupTambah = document.getElementById('tambah-vendor');
 const btnCloseTambah = document.getElementById('btnCloseTambah');
-const popupEdit = document.querySelector('.edit-vendor');
+const popupEdit = document.getElementById('edit-vendor');
 const btnCloseEdit = document.getElementById('btnCloseEdit');
-const popupHapus = document.querySelector('.hapus-vendor');
+const popupHapus = document.getElementById('hapus-vendor');
 const btnCloseHapus = document.getElementById('btnCloseHapus');
 
 function closeAllPopups() {

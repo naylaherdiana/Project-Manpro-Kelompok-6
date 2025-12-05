@@ -68,7 +68,7 @@
         <button id="btnTambah">Tambah Vendor</button>
 
         <!-- PopUp Tambah Vendor -->
-        <div class="tambah-vendor">
+        <div id="tambah-vendor">
             <div class="popup-content">
                 <form id="formTambah" th:action="@{/vendor-pemilik}" method="post">
                     <h3>Tambah Vendor</h3>
@@ -86,7 +86,7 @@
         </div>
 
         <!-- PopUp Edit Vendor -->
-        <div class="edit-vendor">
+        <div id="edit-vendor">
             <div class="popup-content">
                 <form id="formEdit" th:action="@{/update-vendor}" method="post">
                     <input type="hidden" id="editId" name="idvendor">
@@ -105,7 +105,7 @@
         </div>
         
         <!-- PopUp Hapus Vendor -->
-        <div class="hapus-vendor">
+        <div id="hapus-vendor">
             <div class="popup-content">
                 <form id="formHapus" th:action="@{/delete-vendor}" method="post">
                     <input type="hidden" id="hapusId" name="idvendor">

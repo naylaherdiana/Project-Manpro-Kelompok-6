@@ -22,7 +22,7 @@ body {
 }
 
 body::-webkit-scrollbar {
-  display: none; 
+    display: none; 
 }
 
 header {
@@ -192,16 +192,6 @@ main {
     justify-content: center;
     align-items: center;
     gap: 1em;
-}
-
-#dashboard-wrap {
-    padding: 1em;
-    width: 60%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    border-radius: 1em;
-    background-color: #fff;
 }
 
 
