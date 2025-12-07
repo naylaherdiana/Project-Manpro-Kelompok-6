@@ -18,15 +18,19 @@ body {
     width: 100%;
     height: 100vh;
     font-family: Arial, Helvetica, sans-serif;
-    overflow: hidden;
     background-color: #F5F5F5;
+}
+
+body::-webkit-scrollbar {
+    display: none; 
 }
 
 header {
     grid-area: header;
     background-color: var(--navbar-color);
     position: sticky;
-    z-index: 1;
+    top: 0;
+    z-index: 5;
 }
 
 nav {
@@ -87,33 +91,102 @@ a {
     all: unset;
 }
 
-/* section info */
-.main-section {
+
+/* POPUP LOGOUT */
+#popup-logout {
+    padding: 1em;
+    width: 8rem;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    gap: 1em;
+    position: absolute;
+    top: 4em;
+    right: 3.5em;
+    border-radius: 0.5em;
+    border: 1px solid #000;
+    background-color: #F5F5F5;
+}
+
+#popup-logout p {
+    color: #000;
+}
+
+#popup-logout button {
+    padding: 0.5em;
     width: 100%;
-    height: 100vh;
-    display: grid;
-    grid-template-areas: 
-        "a a a"
-        "b b b"
-    ;
-    grid-template-rows: 0.1fr 1fr;
+    border-radius: 0.5em;
+    border: 1px solid #000;
+    cursor: pointer;
+}
+
+#popup-logout button:hover {
+    color: #ffffff;
+    transition: 0.5s;
+    background-color: red;
+}
+
+
+/* MAIN */
+main {
+    grid-area: main;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     gap: 2em;
 }
 
-.info-card { 
-    margin-top: 3em;
-    grid-area: a; 
+/* CONTAINER IMG*/
+#main-img {
+    margin-top: 2em;
+    position: relative;      
+    width: 100%;
+    height: 40vh;
     display: flex;
-    justify-content: space-evenly;
-    align-items: center;
+    justify-content: center;
 }
 
-.info-card > div {
-    width: 28rem;
+/* Gambar */
+#main-img img {
+    width: 95%;
     height: 100%;
-    padding: 1em;
-    background-color: #ffffff;
     border-radius: 1em;
+    opacity: 0.7;
+}
+
+/* Overlay gelap */
+#main-img .overlay {
+    position: absolute;
+    top: 0;
+    width: 95%;
+    height: 100%;
+    border-radius: 1em;
+    background: rgba(255, 255, 255, 0.3); 
+    z-index: 2;
+}
+
+
+/* MAIN SECTION */
+#main-section {
+    width: 95%;
+    display: flex;
+    gap: 1em;
+    margin-bottom: 2em;
+}
+
+#info-card {
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 2em;
+}
+
+#info-card div {
+    width: 100%;
+    height: 7rem;
+    border-radius: 1em;
+    background-color: #fff;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -121,54 +194,50 @@ a {
     gap: 1em;
 }
 
-.dashboard-wrap {
-    grid-area: b;
+
+/* TABLE */
+#table-container {
+    padding: 1em;
     width: 100%;
-    display: flex;
-    justify-content: space-evenly;
-    align-items: start;
-}
-
-.dashboard-wrap > div {
-    height: 27rem;
-    width: 28rem;
+    height: 100%;      
+    overflow-y: auto;       
+    border: 1px solid #ddd;
     border-radius: 1em;
-    background-color: #ffffff;
-    display: flex;
-    justify-content: center;
-    align-items: start;
+    background-color: #fff;
 }
 
-#event-terdekat {
-    padding: 1em;
+#table-container h1 {
+    padding-bottom: 0.5em;
+    position: sticky;
+    top: -1px;
+    background: #fff;
+    z-index: 2;
+    text-align: center;
 }
 
-caption {
-    font-size: 2em;
-    font-weight: bold;
-    margin-bottom: 0.5em;
+#table-container table {
+    padding: 0 1em;
+    width: 100%;
+    height: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    text-align: center;
 }
 
-#event-terdekat table {
-  table-layout: fixed;
-  width: 100%;
-  height: 90%;
-  text-align: center;
+/* Header tetap di atas */
+#table-container thead th {
+    padding: 0.5em;
+    position: sticky;
+    top: 0;
+    background: #fff; 
+    z-index: 1;
+    border-bottom: 1px solid #ddd;
 }
 
-
-
-#analisis-vendor { 
-    padding: 1em;
-}
-
-
-#jadwal-event { 
-    padding: 1em;
-    display: flex;
-    flex-direction: column;
-    justify-content: start;
-    align-items: center;
+/* Isi body */
+#table-container tbody td {
+    background: #fff;   
+    border-bottom: 1px solid #f0f0f0;
 }
 
 

@@ -1,31 +1,37 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Selaras Organizer</title>
-    <link rel="stylesheet" href="../styles/laporan-pemilik.css">
+    <link rel="stylesheet" th:href="@{/css/laporan-pemilik.css}" />
+    <script th:src="@{/js/logoutScript.js}" defer></script>
 </head>
 <body>
     <header>
         <nav>
-            <img src="../assets/img/selaras-logo.png" alt="logo selaras organizer">
+            <img th:src="@{/img/selaras-logo.png}" alt="logo selaras organizer"/>
             <ul>
-                <li><a href="dashboard-pemilik.html">Dashboard</a></li>
-                <li><a href="asisten-pemilik.html">Asisten</a></li>
-                <li><a href="vendor-pemilik.html">Vendor</a></li>
-                <li><a href="jenis-vendor-pemilik.html">Jenis Vendor</a></li>
+                <li><a th:href="@{/dashboard-pemilik}">Dashboard</a></li>
+                <li><a th:href="@{/asisten-pemilik}">Asisten</a></li>
+                <li><a th:href="@{/vendor-pemilik}">Vendor</a></li>
+                <li><a th:href="@{/jenis-vendor-pemilik}">Jenis Vendor</a></li>
                 <li>Laporan</li>
             </ul>
             <div class="icon">
-                <img src="../assets/img/notification-icon.png" alt="notif icon">
-                <img src="../assets/img/profile-icon.png" alt="profile icon">
+                <img th:src="@{/img/notification-icon.png}" alt="notif icon"/>
+                <img id="user-btn" th:src="@{/img/profile-icon.png}" alt="profile icon"/>
+            </div>
+
+            <!--POP UP LOGOUT -->
+            <div id="popup-logout">
+                <p>Name</p>
+                <button id="logout-btn">Logout</button>
             </div>
         </nav>
     </header>
 
     <section class="main-section">
-        <button>Back</button>
         <h1>Laporan</h1>
         
         <h3>Vendor Paling Aktif</h3>
@@ -41,35 +47,14 @@
                 </thead>
                 
                 <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>Badoet</td>
-                        <td>Djjawhari Manuel</td>
-                        <td>12</td>
+                    <tr th:each="vendor, stat : ${vendorAktifList}">
+                        <td th:text="${vendor.idvendor}">3</td>
+                        <td th:text="${vendor.namavendor}">Badoet</td>
+                        <td th:text="${vendor.namapemilik}">Dijawhari Manuel</td>
+                        <td th:text="${vendor.jumlahEvent}">12</td>
                     </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>Badoet</td>
-                        <td>Djjawhari Manuel</td>
-                        <td>12</td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>Badoet</td>
-                        <td>Djjawhari Manuel</td>
-                        <td>12</td>
-                    </tr>
-                    <tr>
-                        <td>4</td>
-                        <td>Tata Katering</td>
-                        <td>Jennifer Thania</td>
-                        <td>8</td>
-                    </tr>
-                    <tr>
-                        <td>5</td>
-                        <td>Tata Katering</td>
-                        <td>Jennifer Thania</td>
-                        <td>8</td>
+                    <tr th:if="${vendorAktifList == null or vendorAktifList.isEmpty()}">
+                        <td colspan="4" class="no-data">Belum ada data vendor</td>
                     </tr>
                 </tbody>
             </table>
@@ -89,38 +74,19 @@
                 </thead>
                 
                 <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>Sweet 17 Vevila</td>
-                        <td>2025-11-04</td>
-                        <td>Agatha Tasya</td>
-                        <td>Vevila Angelia</td>
+                    <tr th:each="event, stat : ${eventBerlangsungList}">
+                        <td th:text="${event.idevent}">1</td>
+                        <td th:text="${event.namaevent}">Sweet 17 Vevila</td>
+                        <td th:text="${event.tanggal}">2025-11-04</td>
+                        <td th:text="${event.namaAsisten}">Agatha Tasya</td>
+                        <td th:text="${event.namaKlien}">Vevila Angelia</td>
                     </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>Sweet 17 Vevila</td>
-                        <td>2025-11-04</td>
-                        <td>Agatha Tasya</td>
-                        <td>Vevila Angelia</td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>Sweet 17 Vevila</td>
-                        <td>2025-11-04</td>
-                        <td>Agatha Tasya</td>
-                        <td>Vevila Angelia</td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>Sweet 17 Vevila</td>
-                        <td>2025-11-04</td>
-                        <td>Agatha Tasya</td>
-                        <td>Vevila Angelia</td>
+                    <tr th:if="${eventBerlangsungList == null or eventBerlangsungList.isEmpty()}">
+                        <td colspan="5" class="no-data">Tidak ada event berlangsung</td>
                     </tr>
                 </tbody>
             </table>
         </div>
-        
     </section>
 </body>
 </html>

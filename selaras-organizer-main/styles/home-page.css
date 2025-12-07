@@ -1,0 +1,139 @@
+:root {
+    --navbar-color: #41959D;
+    --hero-color: #C0DEE5;
+    --btn-color: #07575B;
+}
+
+* {
+    margin: 0; padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    width: 100%;
+    height: 100vh;
+    font-family: Arial, Helvetica, sans-serif;
+    overflow: hidden;
+}
+
+header {
+    margin: 20px;
+    background-color: var(--navbar-color);
+    border-radius: 50px;
+    position: sticky;
+    z-index: 1;
+}
+
+nav {
+    margin-left: 20px;
+    margin-right: 20px;
+    padding: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: white;
+}
+
+nav>img {
+    width: 60px;
+    height: 60px;
+}
+
+ul {
+    width: 500px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    list-style: none;
+}
+
+li {
+    cursor: pointer;
+    padding: 10px;
+    font-size: 1.5em;
+}
+
+li:hover {
+    background-color: #07575B;
+    transition: 0.5s;
+}
+
+a {
+    all: unset;
+}
+
+#btn-starter {
+    width: 7em;
+    height: 3.5em;
+    border-radius: 3em;
+    color: white;
+    background-color: var(--btn-color);
+    cursor: pointer;
+    overflow: hidden;
+    font-size: 1em;
+}
+
+#btn-starter:hover {
+    background-color: var(--hero-color);
+    color: black;
+    transition: 0.5s;
+}
+
+section {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+section:first-of-type>img {
+    width: 65%;
+    height: 110vh;
+    opacity: 75%;
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 0;
+}
+
+.hero-container {
+    padding: 3em;
+    width: 40rem;
+    height: 25rem;
+    border-radius: 20px;
+    background-color: var(--hero-color);
+    position: absolute;
+    top: 15rem;
+    left: 5rem;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    box-shadow: 10px 10px 15px;
+}
+
+h1 {
+    font-size: 2.5em;
+}
+
+p {
+    text-align: justify;
+    line-height: 1.5em;
+}
+
+button {
+    padding: 10px;
+    margin: 10px;
+    width: 10em;
+    font-size: 1.5em;
+    color: white;
+    background-color: var(--btn-color);
+    border-radius: 10em;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #41959D;
+    transition: 0.5s;
+}
+

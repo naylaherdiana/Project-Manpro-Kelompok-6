@@ -89,6 +89,45 @@ a {
     background-color: #2a858a;
 }
 
+<<<<<<< HEAD
+=======
+
+/* POPUP LOGOUT */
+#popup-logout {
+    padding: 1em;
+    width: 8rem;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    gap: 1em;
+    position: absolute;
+    top: 4em;
+    right: 3.5em;
+    border-radius: 0.5em;
+    border: 1px solid #000;
+    background-color: #F5F5F5;
+}
+
+#popup-logout p {
+    color: #000;
+}
+
+#popup-logout button {
+    padding: 0.5em;
+    width: 100%;
+    border-radius: 0.5em;
+    border: 1px solid #000;
+    cursor: pointer;
+}
+
+#popup-logout button:hover {
+    color: #ffffff;
+    transition: 0.5s;
+    background-color: red;
+}
+
+
+>>>>>>> 6903204c1cf9f4d99aef6ebc2575a90f765c71b3
 /* Main Content */
 main {
     grid-area: main;
@@ -103,6 +142,7 @@ main::-webkit-scrollbar {
     display: none;
 }
 
+<<<<<<< HEAD
 main button:first-of-type {
     width: 8%;
     padding: 0.3em;
@@ -119,6 +159,8 @@ main button:first-of-type:hover {
     transition: 0.5s;
 }
 
+=======
+>>>>>>> 6903204c1cf9f4d99aef6ebc2575a90f765c71b3
 main div {
     padding: 1em;
     display: flex;
@@ -161,3 +203,43 @@ main div {
     text-align: center;
 }
 
+<<<<<<< HEAD
+=======
+
+/* PRINT DOCUMENT */
+.action-buttons {
+    padding: 0;
+    background-color: #F5F5F5;
+}
+
+.action-buttons button {
+    align-self: flex-end;
+    width: 30%;
+    height: 4rem;
+    color: #fff;
+    border: none;
+    border-radius: 0.5em;
+    background-color: #188187;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1em;
+}
+
+.action-buttons button:hover {
+    transition: 0.5s;
+    background-color: #36b9c5;
+    cursor: pointer;
+}
+
+.action-buttons button img {
+    width: 2em;
+    height: 2em;
+    object-fit: cover;
+    align-self: center;
+}
+
+.action-buttons button span {
+    align-self: center;
+}
+>>>>>>> 6903204c1cf9f4d99aef6ebc2575a90f765c71b3

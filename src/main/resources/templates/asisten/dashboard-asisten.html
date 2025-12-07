@@ -5,45 +5,59 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Selaras Organizer</title>
     <link rel="stylesheet" th:href="@{/css/dashboard-asisten.css}"/>
+    <script th:src="@{/js/logoutScript.js}" defer></script>
 </head>
 <body>
     <header>
         <nav>
             <img th:src="@{/img/selaras-logo.png}" alt="logo selaras organizer"/>
             <ul>
-                <li><a href="">Dashboard</a></li>
-                <li><a th:href="@{klien-asisten.html}">Klien</a></li>
-                <li><a href="">Event</a></li>
-                <li><a href="">Budgeting</a></li>
-                <li><a href="">Laporan</a></li>
+                <li>Dashboard</li>
+                <li><a th:href="@{/klien-asisten}">Klien</a></li>
+                <li><a th:href="@{/event-asisten}">Event</a></li>
+                <li><a th:href="@{/budgeting-asisten}">Budgeting</a></li>
+                <li><a th:href="@{/laporan-asisten}">Laporan</a></li>
             </ul>
             <div class="icon">
                 <img th:src="@{/img/notification-icon.png}" alt="notif icon"/>
-                <img th:src="@{/img/profile-icon.png}" alt="profile icon" />
+                <img id="user-btn" th:src="@{/img/profile-icon.png}" alt="profile icon" />
+            </div>
+
+            <!--POP UP LOGOUT -->
+            <div id="popup-logout">
+                <p th:text="${namaAsisten} ?: 'Asisten'">Asisten</p>
+                <button id="logout-btn">Logout</button>
             </div>
         </nav>
     </header>
 
-    <section class="main-section">
-        <div class="info-card">
-            <div id="klien-aktif">
-                <h1>18</h1>
-                <p>Event Ditangani</p>
+    <main>
+        <section id="main-img">
+            <div class="overlay"></div>
+            <img th:src="@{/img/event-hero.jpg}" alt="event image">
+        </section>
+
+        <section id="main-section">
+            <div id="info-card">
+                <div id="event-ditangani">
+                    <h1 th:text="${totalEvent}">18</h1>
+                    <p>Event Ditangani</p>
+                </div>
+
+                <div id="klien-aktif">
+                    <h1 th:text="${totalKlien}">4</h1>
+                    <p>Klien</p>
+                </div>
+
+                <div id="event-tuntas">
+                    <h1 th:text="${eventTuntas}">12</h1>
+                    <p>Event Tuntas</p>
+                </div>
             </div>
-            <div id="klien-aktif">
-                <h1>4</h1>
-                <p>Klien</p>
-            </div>
-            <div>
-                <h1>12</h1>
-                <p>Event Tuntas</p>
-            </div>
-        </div>
-        
-        <div class="dashboard-wrap">
-            <div id="event-terdekat">
+                
+            <div id="table-container">
+                <h1>Event Terdekat</h1>
                 <table>
-                    <caption>Event Terdekat</caption>
                     <thead>
                         <tr>
                             <th scope="col">Event</th>
@@ -53,43 +67,20 @@
                         </tr>    
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>Sweet 17</td>
-                            <td>Vevilla</td>
-                            <td>4 November 2025</td>
-                            <td>Agatha</td>
+                        <tr th:each="event : ${eventBerlangsung}">
+                            <td th:text="${event.namaEvent}">Sweet 17</td>
+                            <td th:text="${event.namaKlien}">Vevilla</td>
+                            <td th:text="${#temporals.format(event.tanggal, 'dd MMMM yyyy')}">4 November 2025</td>
+                            <td th:text="${event.namaAsisten}">Agatha</td>
                         </tr>
-                        <tr>
-                            <td>Wedding</td>
-                            <td>Axel</td>
-                            <td>7 November 2025</td>
-                            <td>Max</td>
-                        </tr>
-                        <tr>
-                            <td>Gathering</td>
-                            <td>Ana</td>
-                            <td>9 November 2025</td>
-                            <td>Michael</td>
-                        </tr>
-                        <tr>
-                            <td>Wedding</td>
-                            <td>Nala</td>
-                            <td>9 November 2025</td>
-                            <td>Abigail</td>
+                        <!-- Jika tidak ada data -->
+                        <tr th:if="${#lists.isEmpty(eventBerlangsung)}">
+                            <td colspan="4" style="text-align: center;">Tidak ada event yang sedang berlangsung</td>
                         </tr>
                     </tbody>
-                    
                 </table>
             </div>
-
-            <div id="analisis-vendor">
-                <h1>Analisis Jenis Vendor</h1>
-            </div>
-
-            <div id="jadwal-event">
-                <h1>Jadwal Event</h1> 
-            </div>
-        </div>
-    </section>
+        </section>
+    </main>
 </body>
 </html>

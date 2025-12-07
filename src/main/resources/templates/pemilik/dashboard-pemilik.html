@@ -1,53 +1,68 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Selaras Organizer</title>
-    <link rel="stylesheet" href="../styles/dashboard-pemilik.css">
+    <link rel="stylesheet" th:href="@{/css/dashboard-pemilik.css}" />
+    <script th:src="@{/js/logoutScript.js}" defer></script>
 </head>
 <body>
     <header>
         <nav>
-            <img src="../assets/img/selaras-logo.png" alt="logo selaras organizer">
+            <img th:src="@{/img/selaras-logo.png}" alt="logo selaras organizer"/>
             <ul>
-                <li><a href="">Dashboard</a></li>
-                <li><a href="asisten-pemilik.html">Asisten</a></li>
-                <li><a href="vendor-pemilik.html">Vendor</a></li>
-                <li><a href="jenis-vendor-pemilik.html">Jenis Vendor</a></li>
-                <li><a href="laporan-pemilik.html">Laporan</a></li>
+                <li>Dashboard</li>
+                <li><a th:href="@{/asisten-pemilik}">Asisten</a></li>
+                <li><a th:href="@{/vendor-pemilik}">Vendor</a></li>
+                <li><a th:href="@{/jenis-vendor-pemilik}">Jenis Vendor</a></li>
+                <li><a th:href="@{/laporan-pemilik}">Laporan</a></li>
             </ul>
             <div class="icon">
-                <img src="../assets/img/notification-icon.png" alt="notif icon">
-                <img src="../assets/img/profile-icon.png" alt="profile icon">
+                <img th:src="@{/img/notification-icon.png}" alt="notif icon"/>
+                <img id="user-btn" th:src="@{/img/profile-icon.png}" alt="profile icon"/>
+            </div>
+
+            <!--POP UP LOGOUT -->
+            <div id="popup-logout">
+                <p>Name</p>
+                <button id="logout-btn">Logout</button>
             </div>
         </nav>
     </header>
 
-    <section class="main-section">
-        <div class="info-card">
-            <div id="klien-aktif">
-                <h1>18</h1>
-                <p>Klien Aktif</p>
-            </div>
-            <div id="klien-aktif">
-                <h1>4</h1>
-                <p>Event Terdekat</p>
-            </div>
-            <div>
-                <h1>12</h1>
-                <p>Vendor Terdaftar</p>
-            </div>
-            <div>
-                <h1>Tata Katering</h1>
-                <p>Vendor Paling Sering Dipakai</p>
-            </div>
-        </div>
+    <main>
+        <section id="main-img">
+            <div class="overlay"></div>
+            <img th:src="@{/img/event-hero.jpg}" alt="event image">
+        </section>
         
-        <div class="dashboard-wrap">
-            <div id="event-terdekat">
+        <section id="main-section">
+            <div id="info-card">
+                <div id="vendor-teraktif">
+                    <h1 th:text="${vendorTeraktif}">Tata Katering</h1>
+                    <p>Vendor Paling Sering Dipakai</p>
+                </div>
+
+                <div id="klien-aktif">
+                    <h1 th:text="${totalKlien}">18</h1>
+                    <p>Klien Aktif</p>
+                </div>
+                
+                <div id="event-aktif">
+                    <h1 th:text="${totalEvent}">4</h1>
+                    <p>Event Terdekat</p>
+                </div>
+                
+                <div id="vendor-aktif">
+                    <h1 th:text="${totalVendor}">12</h1>
+                    <p>Vendor Terdaftar</p>
+                </div>
+            </div>
+            
+            <div id="table-container">
+                <h1>Event Terdekat</h1>
                 <table>
-                    <caption>Event Terdekat</caption>
                     <thead>
                         <tr>
                             <th scope="col">Event</th>
@@ -57,67 +72,17 @@
                         </tr>    
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>Sweet 17</td>
-                            <td>Vevilla</td>
-                            <td>4 November 2025</td>
-                            <td>Agatha</td>
-                        </tr>
-                        <tr>
-                            <td>Wedding</td>
-                            <td>Axel</td>
-                            <td>7 November 2025</td>
-                            <td>Max</td>
-                        </tr>
-                        <tr>
-                            <td>Gathering</td>
-                            <td>Ana</td>
-                            <td>9 November 2025</td>
-                            <td>Michael</td>
-                        </tr>
-                        <tr>
-                            <td>Wedding</td>
-                            <td>Nala</td>
-                            <td>9 November 2025</td>
-                            <td>Abigail</td>
+                        <tr th:each="event : ${upcomingEvents}">
+                            <td th:text="${event.namaevent}">Sweet 17</td>
+                            <td th:text="${event.namaKlien}">Andi Pratama</td>
+                            <td th:text="${#temporals.format(event.tanggal, 'd MMMM yyyy')}">4 November 2025</td>
+                            <td th:text="${event.namaAsisten}">Abigail Maharani</td>
                         </tr>
                     </tbody>
-                    
                 </table>
             </div>
-
-            <div id="analisis-vendor">
-                <h1>Analisis Vendor</h1>
-            </div>
-
-            <div id="jadwal-event">
-                <h1>Jadwal Event</h1>
-                
-                <div class="calender">
-                    <div class="month">
-                        <ul>
-                            <li>August <span>2021</span></li>
-                            <li class="prev">&#10094;</li>
-                            <li class="next">&#10095;</li>
-                        </ul>
-                    </div>
-                    
-                    <div class="weekdays">
-                        <ul>
-                            <li>SUN</li>
-                            <li>MON</li>
-                            <li>TUE</li>
-                            <li>WED</li>
-                            <li>THU</li>
-                            <li>FRI</li>
-                            <li>SAT</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-
-    </section>
+        </section>
+    </main>
+    
 </body>
 </html>

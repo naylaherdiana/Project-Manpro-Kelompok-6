@@ -8,5 +8,6 @@ public class Asisten {
     private String nama;
     private String alamat;
     private String kontak;
+    private String email;
     private Long userId;
 }

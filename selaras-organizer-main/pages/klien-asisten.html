@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Selaras Organizer</title>
+    <link rel="stylesheet" href="../styles/klien-asisten.css">
+    <script src="../script/klienAsisten.js" defer></script>
+</head>
+<body>
+    <header>
+        <nav>
+            <img src="../assets/img/selaras-logo.png" alt="logo selaras organizer">
+            <ul>
+                <li><a href="dashboard-asisten.html">Dashboard</a></li>
+                <li><a href="">Klien</a></li>
+                <li><a href="event-asisten.html">Event</a></li>
+                <li><a href="budgeting-asisten.html">Budgeting</a></li>
+                <li><a href="laporan-asisten.html">Laporan</a></li>
+            </ul>
+            <div class="icon">
+                <img src="../assets/img/notification-icon.png" alt="notif icon">
+                <img src="../assets/img/profile-icon.png" alt="profile icon">
+            </div>
+        </nav>
+    </header>
+
+    <section class="main-section">
+        <button>Back</button>
+        <h1>Daftar Klien</h1>
+        
+        <div class="table-container">
+            <table> 
+                <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Nama</th>
+                        <th scope="col">Alamat</th>
+                        <th scope="col">Kontak</th>
+                        <th scope="col"></th>
+                        <th scope="col"></th>
+                    </tr>    
+                </thead>
+                
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>Abigail Maharani</td>
+                        <td>Jl Taman Kopo Indah</td>
+                        <td>0812345678</td>
+                        <td><button class="edit">Edit</button></td>
+                        <td><button class="hapus">Hapus</button></td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Max Indrawan</td>
+                        <td>Jl Bukit Indah</td>
+                        <td>0812345678</td>
+                        <td><button class="edit">Edit</button></td>
+                        <td><button class="hapus">Hapus</button></td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>Michael Christian</td>
+                        <td>Jl Ranca Bentang 17</td>
+                        <td>0812345678</td>
+                        <td><button class="edit">Edit</button></td>
+                        <td><button class="hapus">Hapus</button></td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>Agatha Tasya</td>
+                        <td>Jl Ciumbuleuit</td>
+                        <td>0812345678</td>
+                        <td><button class="edit">Edit</button></td>
+                        <td><button class="hapus">Hapus</button></td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td>Abigail Maharani</td>
+                        <td>Jl Taman Kopo Indah</td>
+                        <td>0812345678</td>
+                        <td><button class="edit">Edit</button></td>
+                        <td><button class="hapus">Hapus</button></td>
+                    </tr>
+                    <tr>
+                        <td>6</td>
+                        <td>Abigail Maharani</td>
+                        <td>Jl Taman Kopo Indah</td>
+                        <td>0812345678</td>
+                        <td><button class="edit">Edit</button></td>
+                        <td><button class="hapus">Hapus</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <button id="btnTambah">Tambah Klien</button>
+
+        <!-- PopUp Tambah Klien -->
+        <div class="tambah-klien">
+            <div class="popup-content">
+                <form id="formTambahKlien" action="" method="">
+                    <h3>Tambah Klien</h3>
+                    <input type="text" name="nama-klien" placeholder="Nama Klien" required>
+                    <input type="text" name="alamat" placeholder="Alamat" required>
+                    <input type="number" name="kontak" placeholder="Kontak" required>
+                    <div>
+                        <input type="button" id="btnCloseTambah" value="Tutup">
+                        <input type="submit" id="btnSimpanTambah" value="Simpan">
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- PopUp Edit Klien -->
+        <div class="edit-klien">
+            <div class="popup-content">
+                <form id="formEditKlien" action="" method="">
+                    <h3>Edit Klien</h3>
+                    <input type="text" id="editNama" name="nama-klien" required>
+                    <input type="text" id="editAlamat" required>
+                    <input type="number" id="editKontak" required>
+                    <div>
+                        <input type="button" id="btnCloseEdit" value="Tutup">
+                        <input type="submit" id="btnSimpanEdit" value="Simpan">
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <!-- PopUp Hapus Klien -->
+        <div class="hapus-klien">
+            <div class="popup-content">
+                <h3>Konfirmasi Hapus</h3>
+                <p>Apakah Anda yakin ingin menghapus data ini?</p>
+                <div>
+                    <input type="button" id="btnCloseHapus" value="Tutup">
+                    <input type="button" id="btnConfirmHapus" value="Ya">
+                </div>
+            </div>
+        </div>
+
+
+    </section>
+</body>
+</html>

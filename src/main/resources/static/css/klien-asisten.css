@@ -90,6 +90,40 @@ a {
 }
 
 
+/* POPUP LOGOUT */
+#popup-logout {
+    padding: 1em;
+    width: 8rem;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    gap: 1em;
+    position: absolute;
+    top: 4em;
+    right: 3.5em;
+    border-radius: 0.5em;
+    border: 1px solid #000;
+    background-color: #F5F5F5;
+}
+
+#popup-logout p {
+    color: #000;
+}
+
+#popup-logout button {
+    padding: 0.5em;
+    width: 100%;
+    border-radius: 0.5em;
+    border: 1px solid #000;
+    cursor: pointer;
+}
+
+#popup-logout button:hover {
+    color: #ffffff;
+    transition: 0.5s;
+    background-color: red;
+}
+
 /* Main Section */
 .main-section {
     grid-area: main;
@@ -97,22 +131,6 @@ a {
     flex-direction: column;
     gap: 1em;
     margin: 2em;
-}
-
-.main-section > button:first-of-type {
-    width: 8%;
-    padding: 0.3em;
-    font-size: 1em;
-    color: #ffffff;
-    cursor: pointer;
-    border: none;
-    border-radius: 0.5em;
-    background-color: var(--navbar-color);
-}
-
-.main-section > button:first-of-type:hover {
-    background-color: #36b9c5;
-    transition: 0.5s;
 }
 
 .main-section > h1 {
@@ -147,6 +165,13 @@ table th, table td {
     border-bottom: 1px solid #eee;
 }
 
+td:last-of-type {
+    justify-self: center;
+    width: 70%;
+    display: flex;
+    justify-content: space-between;
+}
+
 td > button {
     width: 5em;
     padding: 0.2em;
@@ -157,7 +182,7 @@ td > button {
 }
 
 /* Button: Tambah Klien */
-.main-section > button:nth-of-type(2) {
+#btnTambah {
     width: 20%;
     margin-top: 0.5em;
     padding: 0.5em;
@@ -170,14 +195,14 @@ td > button {
     align-self: flex-end;
 }
 
-.main-section > button:nth-of-type(2):hover {
+#btnTambah:hover {
     background-color: #36b9c5;
     transition: 0.5s;
 }
 
 
-/* Tambah Klien */
-.tambah-klien {
+/* Tambah dan Edit Klien*/
+#tambah-klien, #edit-klien {
   position: fixed;
   top: 0;
   left: 0;
@@ -187,33 +212,38 @@ td > button {
   display: none;
   justify-content: center;
   align-items: center;
+  z-index: 3;
 }
 
-.tambah-klien form {
-  background: #ffffff;
+.popup-content {
+    width: 40%;
+    height: 60%;
+    display: flex;
+    flex-direction: column;
+    border-radius: 0.5em;
+    background-color: #ffffff;
+}
+
+#formTambahKlien, #formEditKlien {
   padding: 2em;
-  border-radius: 1em;
-  width: 50rem;
-  height: 20rem;
+  height: 90%;
   display: flex;
   flex-direction: column;
   gap: 1.5em;
 }
 
-.tambah-klien form > input {
+#formTambahKlien input, #formEditKlien input {
     padding: 0.5em;
-    border: 1px solid;
-    border-radius: 0.5em;
 }
 
-.tambah-klien form > div {
+#formTambahKlien > div, #formEditKlien > div {
     margin-top: 1em;
     text-align: end;
     word-spacing: 1em;
 }
 
-#btnCloseTambah,
-#btnSimpanTambah {
+#btnCloseTambah, #btnSimpanTambah,
+#btnCloseEdit, #btnSimpanEdit {
     width: 15%;
     padding: 0.5em;
     color: #ffffff;
@@ -224,15 +254,15 @@ td > button {
     cursor: pointer;
 }
 
-#btnCloseTambah:hover,
-#btnSimpanTambah:hover {
+#btnCloseTambah:hover, #btnSimpanTambah:hover,
+#btnCloseEdit:hover, #btnSimpanEdit:hover {
     transition: 0.5s;
     background-color: #36b9c5;
 }
 
 
-/* Edit Klien */
-.edit-klien {
+/* Fitur Hapus Klien */
+#hapus-klien {
   position: fixed;
   top: 0;
   left: 0;
@@ -244,6 +274,7 @@ td > button {
   align-items: center;
 }
 
+<<<<<<< HEAD
 #formEditKlien {
   background: #ffffff;
   padding: 2em;
@@ -304,18 +335,32 @@ td > button {
   padding: 2em;
   border-radius: 1em;
   width: 50rem;
+=======
+#hapus-klien .popup-content {
+  background: #ffffff;
+  padding: 2em;
+  border-radius: 1em;
+  width: 40%;
+>>>>>>> 6903204c1cf9f4d99aef6ebc2575a90f765c71b3
   height: 12rem;
   display: flex;
   flex-direction: column;
   gap: 1.5em;
 }
 
-.hapus-klien .popup-content div {
-    text-align: end;
-    word-spacing: 1em;
+#formHapusKlien {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
 }
 
-#btnCloseHapus {
+#formHapusKlien div {
+    width: 100%;
+    text-align: end;
+}
+
+#btnCloseHapus, #btnConfirmHapus {
     width: 15%;
     padding: 0.5em;
     color: #ffffff;
@@ -331,18 +376,7 @@ td > button {
     background-color: #36b9c5;
 }
 
-#btnConfirmHapus {
-    width: 15%;
-    padding: 0.5em;
-    color: #ffffff;
-    font-size: large;
-    background-color: red;
-    border: none;
-    border-radius: 1em;
-    cursor: pointer;
-}
-
 #btnConfirmHapus:hover {
     transition: 0.5s;
-    background-color: #9c0e0e;
+    background-color: red;
 }

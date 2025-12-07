@@ -6,29 +6,43 @@
     <title>Selaras Organizer</title>
     <link rel="stylesheet" th:href="@{/css/klien-asisten.css}"/>
     <script th:src="@{/js/klienAsisten.js}" defer></script>
+    <script th:src="@{/js/logoutScript.js}" defer></script>
+
 </head>
 <body>
     <header>
         <nav>
             <img th:src="@{/img/selaras-logo.png}" alt="logo selaras organizer"/>
             <ul>
-                <li><a th:href="@{dashboard-asisten.html}">Dashboard</a></li>
-                <li><a href="">Klien</a></li>
-                <li><a href="">Event</a></li>
-                <li><a href="">Budgeting</a></li>
-                <li><a href="">Laporan</a></li>
+                <li><a th:href="@{/dashboard-asisten}">Dashboard</a></li>
+                <li>Klien</li>
+                <li><a th:href="@{/event-asisten}">Event</a></li>
+                <li><a th:href="@{/budgeting-asisten}">Budgeting</a></li>
+                <li><a th:href="@{/laporan-asisten}">Laporan</a></li>
             </ul>
             <div class="icon">
                 <img th:src="@{/img/notification-icon.png}" alt="notif icon"/>
-                <img th:src="@{/img/profile-icon.png}" alt="profile icon"/>
+                <img id="user-btn" th:src="@{/img/profile-icon.png}" alt="profile icon"/>
+            </div>
+
+            <!--POP UP LOGOUT -->
+            <div id="popup-logout">
+                <p th:text="${namaAsisten} ?: 'Asisten'">Name</p>
+                <button id="logout-btn">Logout</button>
             </div>
         </nav>
     </header>
 
     <section class="main-section">
-        <button>Back</button>
         <h1>Daftar Klien</h1>
         
+        <div th:if="${success}" class="alert success" style="background-color: #d4edda; color: #155724; padding: 10px; margin-bottom: 15px; border-radius: 4px;">
+            <span th:text="${success}">Sukses</span>
+        </div>
+        <div th:if="${error}" class="alert error" style="background-color: #f8d7da; color: #721c24; padding: 10px; margin-bottom: 15px; border-radius: 4px;">
+            <span th:text="${error}">Error</span>
+        </div>
+
         <div class="table-container">
             <table> 
                 <thead>
@@ -43,53 +57,21 @@
                 </thead>
                 
                 <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>Abigail Maharani</td>
-                        <td>Jl Taman Kopo Indah</td>
-                        <td>0812345678</td>
-                        <td><button class="edit">Edit</button></td>
-                        <td><button class="hapus">Hapus</button></td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>Max Indrawan</td>
-                        <td>Jl Bukit Indah</td>
-                        <td>0812345678</td>
-                        <td><button class="edit">Edit</button></td>
-                        <td><button class="hapus">Hapus</button></td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>Michael Christian</td>
-                        <td>Jl Ranca Bentang 17</td>
-                        <td>0812345678</td>
-                        <td><button class="edit">Edit</button></td>
-                        <td><button class="hapus">Hapus</button></td>
-                    </tr>
-                    <tr>
-                        <td>4</td>
-                        <td>Agatha Tasya</td>
-                        <td>Jl Ciumbuleuit</td>
-                        <td>0812345678</td>
-                        <td><button class="edit">Edit</button></td>
-                        <td><button class="hapus">Hapus</button></td>
-                    </tr>
-                    <tr>
-                        <td>5</td>
-                        <td>Abigail Maharani</td>
-                        <td>Jl Taman Kopo Indah</td>
-                        <td>0812345678</td>
-                        <td><button class="edit">Edit</button></td>
-                        <td><button class="hapus">Hapus</button></td>
-                    </tr>
-                    <tr>
-                        <td>6</td>
-                        <td>Abigail Maharani</td>
-                        <td>Jl Taman Kopo Indah</td>
-                        <td>0812345678</td>
-                        <td><button class="edit">Edit</button></td>
-                        <td><button class="hapus">Hapus</button></td>
+                    <tr th:each="klien : ${klienList}">
+                        <td th:text="${klien.idklien}">1</td>
+                        <td th:text="${klien.namaklien}">Abigail Maharani</td>
+                        <td th:text="${klien.alamatklien} ?: '-'">Jl Taman Kopo Indah</td>
+                        <td th:text="${klien.kontakklien}">0812345678</td>
+                        <td>
+                            <button class="edit" 
+                                    th:data-id="${klien.idklien}"
+                                    th:data-nama="${klien.namaklien}"
+                                    th:data-alamat="${klien.alamatklien}"
+                                    th:data-kontak="${klien.kontakklien}">Edit</button>
+                            <button class="hapus" 
+                                    th:data-id="${klien.idklien}"
+                                    th:data-nama="${klien.namaklien}">Hapus</button>
+                        </td>
                     </tr>
                 </tbody>
             </table>
@@ -98,14 +80,14 @@
         <button id="btnTambah">Tambah Klien</button>
 
         <!-- PopUp Tambah Klien -->
-        <div class="tambah-klien">
+        <div id="tambah-klien">
             <div class="popup-content">
-                <form id="formTambahKlien" action="" method="">
+                <form id="formTambahKlien" th:action="@{/klien-asisten/tambah}" method="post">
                     <h3>Tambah Klien</h3>
-                    <input type="text" name="nama-klien" placeholder="Nama Klien" required>
-                    <input type="text" name="alamat" placeholder="Alamat" required>
-                    <input type="number" name="kontak" placeholder="Kontak" required>
-                    <div>
+                    <input type="text" name="namaklien" placeholder="Nama Klien" required>
+                    <input type="text" name="alamatklien" placeholder="Alamat" required>
+                    <input type="number" name="kontakklien" placeholder="Kontak" required>
+                    <div class="form-buttons">
                         <input type="button" id="btnCloseTambah" value="Tutup">
                         <input type="submit" id="btnSimpanTambah" value="Simpan">
                     </div>
@@ -114,14 +96,15 @@
         </div>
 
         <!-- PopUp Edit Klien -->
-        <div class="edit-klien">
+        <div id="edit-klien">
             <div class="popup-content">
-                <form id="formEditKlien" action="" method="">
+                <form id="formEditKlien" th:action="@{/klien-asisten/edit}" method="post">
                     <h3>Edit Klien</h3>
-                    <input type="text" id="editNama" name="nama-klien" required>
-                    <input type="text" id="editAlamat" required>
-                    <input type="text" id="editKontak" required>
-                    <div>
+                    <input type="hidden" id="editId" name="idklien">
+                    <input type="text" id="editNama" name="namaklien" placeholder="Nama Klien" required>
+                    <input type="text" id="editAlamat" name="alamatklien" placeholder="Alamat" required>
+                    <input type="text" id="editKontak" name="kontakklien" placeholder="Kontak" required>
+                    <div class="form-buttons">
                         <input type="button" id="btnCloseEdit" value="Tutup">
                         <input type="submit" id="btnSimpanEdit" value="Simpan">
                     </div>
@@ -130,18 +113,19 @@
         </div>
         
         <!-- PopUp Hapus Klien -->
-        <div class="hapus-klien">
+        <div id="hapus-klien">
             <div class="popup-content">
-                <h3>Konfirmasi Hapus</h3>
-                <p>Apakah Anda yakin ingin menghapus data ini?</p>
-                <div>
-                    <input type="button" id="btnCloseHapus" value="Tutup">
-                    <input type="button" id="btnConfirmHapus" value="Ya">
-                </div>
+                <form id="formHapusKlien" th:action="@{/klien-asisten/hapus}" method="post">
+                    <h3>Konfirmasi Hapus</h3>
+                    <p>Apakah Anda yakin ingin menghapus klien <span id="deleteKlienName"></span>?</p>
+                    <input type="hidden" id="deleteId" name="idklien">
+                    <div class="form-buttons">
+                        <input type="button" id="btnCloseHapus" value="Tutup">
+                        <input type="submit" id="btnConfirmHapus" value="Hapus">
+                    </div>
+                </form>
             </div>
         </div>
-
-
     </section>
 </body>
 </html>

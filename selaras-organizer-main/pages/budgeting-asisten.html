@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Selaras Organizer</title>
+    <link rel="stylesheet" href="../styles/budgeting-asisten.css">
+    <script src="../script/eventAsisten.js" defer ></script>
+</head>
+<body>
+    <header>
+        <nav>
+            <img src="../assets/img/selaras-logo.png" alt="logo selaras organizer">
+            <ul>
+                <li><a href="dashboard-asisten.html">Dashboard</a></li>
+                <li><a href="klien-asisten.html">Klien</a></li>
+                <li><a href="event-asisten.html">Event</a></li>
+                <li><a href="">Budgeting</a></li>
+                <li><a href="laporan-asisten.html">Laporan</a></li>
+            </ul>
+            <div class="icon">
+                <img src="../assets/img/notification-icon.png" alt="notif icon">
+                <img src="../assets/img/profile-icon.png" alt="profile icon">
+            </div>
+        </nav>
+    </header>
+
+    <main class="container">
+        <button>Back</button>
+        <h1>Budgeting</h1>
+        <div id="daftar-jenis-vendor">
+            <h2>Tampilkan Daftar Jenis Event</h2>
+            <p>Filter harga untuk mencari vendor yang sesuai budget klien</p>
+            <div class="input-harga">
+                <input type="number" name="hargaMin" id="hargaMin" placeholder="Harga Min">
+                <input type="number" name="hargaMax" id="hargaMax" placeholder="Harga Max">
+                <button>Cari</button>
+            </div>
+
+            <div class="table-container">
+                <table id="tabel-jenis-vendor">
+                    <thead>
+                        <tr>
+                            <th>ID Vendor</th>
+                            <th>Nama Vendor</th>
+                            <th>Jenis</th>
+                            <th>Harga Min</th>
+                            <th>Harga Max</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>2</td>
+                            <td>Fun With You</td>
+                            <td>Hiburan</td>
+                            <td>Rp 1.200.000</td>
+                            <td>Rp 6.500.000</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>Fun With You</td>
+                            <td>Hiburan</td>
+                            <td>Rp 1.200.000</td>
+                            <td>Rp 6.500.000</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>Fun With You</td>
+                            <td>Hiburan</td>
+                            <td>Rp 1.200.000</td>
+                            <td>Rp 6.500.000</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>Fun With You</td>
+                            <td>Hiburan</td>
+                            <td>Rp 1.200.000</td>
+                            <td>Rp 6.500.000</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>Fun With You</td>
+                            <td>Hiburan</td>
+                            <td>Rp 1.200.000</td>
+                            <td>Rp 6.500.000</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>Fun With You</td>
+                            <td>Hiburan</td>
+                            <td>Rp 1.200.000</td>
+                            <td>Rp 6.500.000</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div id="tambah-vendor">
+            <h2>Pilih atau Tambah Vendor untuk Event</h2>
+            <p>Pilih event -> pilih vendor dari daftar</p>
+            <button>Pilih Vendor</button>
+        </div>
+
+        <div id="edit-hapus-vendor">
+            <h2>Edit / Hapus Vendor Untuk Event</h2>
+            <p>Kelola vendor yang dipakai untuk event</p>
+        </div>
+    </main>     
+    
+</body>
+</html>

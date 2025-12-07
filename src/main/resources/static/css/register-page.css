@@ -98,7 +98,12 @@ main {
 
 .hero-container {
     width: 40%;
+<<<<<<< HEAD
     height: 60%;
+    border-radius: 1em;
+    background-color: var(--hero-color);
+=======
+    height: 35rem;
     border-radius: 1em;
     background-color: var(--hero-color);
     display: flex;
@@ -122,11 +127,38 @@ main {
 #form-container {
     width: 50%;
     height: 100%;
+>>>>>>> 6903204c1cf9f4d99aef6ebc2575a90f765c71b3
+    display: flex;
+    align-items: center;
+    box-shadow: 5px 5px 5px;
+}
+
+#img-container {
+    width: 50%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+<<<<<<< HEAD
+    align-items: center;
+}
+
+#img-container img {
+    width: 70%;
+    height: 60%;
+}
+
+#form-container {
+    width: 50%;
+    height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
 }
 
+=======
+}
+
+>>>>>>> 6903204c1cf9f4d99aef6ebc2575a90f765c71b3
 #form-register {
     width: 100%;
     height: 80%;
@@ -134,7 +166,11 @@ main {
     display: flex;
     flex-direction: column;
     align-items: start;
+<<<<<<< HEAD
     gap: 0.5em;
+=======
+    gap: 1em;
+>>>>>>> 6903204c1cf9f4d99aef6ebc2575a90f765c71b3
 }
 
 #form-register h1 {

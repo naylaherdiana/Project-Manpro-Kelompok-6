@@ -1,0 +1,208 @@
+:root {
+    --navbar-color: #41959D;
+    --hero-color: #C0DEE5;
+    --btn-color: #07575B;
+}
+
+/* Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Layout */
+body {
+    display: grid;
+    grid-template-areas:
+        "header"
+        "main";
+    grid-template-rows: 5em 1fr;
+    width: 100%;
+    height: 100vh;
+    font-family: Arial, Helvetica, sans-serif;
+    overflow: hidden;
+    background-color: #F5F5F5;
+}
+
+header {
+    grid-area: header;
+    position: sticky;
+    z-index: 1;
+    background-color: var(--navbar-color);
+}
+
+/* Navbar */
+nav {
+    margin: 0 20px;
+    padding: 5px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    color: white;
+}
+
+nav > img:first-of-type {
+    width: 4em;
+    height: 4em;
+}
+
+ul {
+    display: flex;
+    align-items: center;
+    list-style: none;
+    gap: 4em;
+}
+
+li {
+    padding: 0.5em;
+    margin: 0.5em;
+    font-size: 1.3em;
+    cursor: pointer;
+}
+
+li:hover {
+    background-color: #188187;
+    transition: 0.5s;
+}
+
+li:nth-of-type(4) {
+    background-color: #188187;
+}
+
+a {
+    all: unset;
+}
+
+.icon {
+    display: flex;
+    gap: 3em;
+}
+
+.icon > img {
+    width: 2.5em;
+    padding: 0.3em;
+}
+
+.icon > img:hover {
+    cursor: pointer;
+    background-color: #2a858a;
+}
+
+/* Main Content */
+main {
+    grid-area: main;
+    overflow-y:auto;
+    padding: 2em 2em;
+    display: flex;
+    flex-direction: column;
+    gap: 2em;
+}
+
+main::-webkit-scrollbar {
+    display: none;
+}
+
+main button:first-of-type {
+    width: 8%;
+    padding: 0.3em;
+    font-size: 1em;
+    color: #ffffff;
+    cursor: pointer;
+    border: none;
+    border-radius: 0.5em;
+    background-color: var(--navbar-color);
+}
+
+main button:first-of-type:hover {
+    background-color: #36b9c5;
+    transition: 0.5s;
+}
+
+main div {
+    padding: 1em;
+    display: flex;
+    flex-direction: column;
+    border-radius: 1em;
+    background-color: #ffffff;
+    gap: 1em;
+}
+
+/* DAFTAR JENIS VENDOR*/
+#daftar-jenis-vendor {
+    padding: 2em;
+}
+
+.input-harga {
+    display: flex;
+    flex-direction: row;
+    padding-left: 0;
+    padding-top: 0;
+}
+
+.input-harga input {
+    padding: 0.5em;
+    border-radius: 0.3em;
+    border: 1px solid;
+}
+
+.input-harga button {
+    width: 10%;
+    color: #ffffff;
+    border-radius: 0.3em;
+    background-color: var(--btn-color);
+}
+
+.input-harga button:hover {
+    border: none;
+    transition: 0.5s;
+    background-color: #36b9c5;
+}
+
+.table-container {
+    background: #fff;
+    padding: 0;
+    margin: 0;
+    overflow-x: auto;
+    height: 12rem;
+    border: 1px solid #ccc;
+}
+
+#tabel-jenis-vendor thead th {
+    position: sticky;
+    top: 0;
+    background: #fff;
+    z-index: 100;
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+}
+
+#tabel-jenis-vendor tbody td {
+    padding: 10px;
+    background: #f5f5f5;           
+    border-bottom: 1px solid #f0f0f0;
+    text-align: center;
+}
+
+/* TAMBAH VENDOR UNTUK EVENT*/
+#tambah-vendor {
+    padding: 2em;
+}
+
+#tambah-vendor button {
+    padding: 0.5em;
+    width: 10em;
+    color: #ffffff;
+    border-radius: 0.3em;
+    background-color: var(--btn-color);
+}
+
+#tambah-vendor button:hover {
+    transition: 0.5s;
+    background-color: #36b9c5;
+}
+
+/* TAMBAH VENDOR UNTUK EVENT*/
+#edit-hapus-vendor {
+    padding: 2em;
+}

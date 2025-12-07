@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Selaras Organizer</title>
+    <link rel="stylesheet" th:href="@{/css/budgeting-asisten.css}">
+    <script th:src="@{/js/budgetingAsisten.js}" defer></script>
+    <script th:src="@{/js/logoutScript.js}" defer></script>
+</head>
+<body>
+    <header>
+        <nav>
+            <img th:src="@{/img/selaras-logo.png}" alt="logo selaras organizer">
+            <ul>
+                <li><a th:href="@{/dashboard-asisten}">Dashboard</a></li>
+                <li><a th:href="@{/klien-asisten}">Klien</a></li>
+                <li><a th:href="@{/event-asisten}">Event</a></li>
+                <li>Budgeting</li>
+                <li><a th:href="@{/laporan-asisten}">Laporan</a></li>
+            </ul>
+            <div class="icon">
+                <img th:src="@{/img/notification-icon.png}" alt="notif icon">
+                <img id="user-btn" th:src="@{/img/profile-icon.png}" alt="profile icon">
+            </div>
+
+            <div id="popup-logout">
+                <p th:text="${namaAsisten != null} ? ${namaAsisten} : 'Asisten'">Name</p>
+                <button id="logout-btn">Logout</button>
+            </div>
+        </nav>
+    </header>
+
+
+    <main class="container">
+        <h1>Budgeting</h1>
+        
+        <div th:if="${success != null}" class="alert success">
+            <span th:text="${success}">Sukses</span>
+        </div>
+        <div th:if="${error != null}" class="alert error">
+            <span th:text="${error}">Error</span>
+        </div>
+        
+        <div id="daftar-jenis-vendor">
+            <h2>Tampilkan Daftar Jenis Vendor</h2>
+            <p>Filter harga untuk mencari vendor yang sesuai budget klien</p>
+
+            <form th:action="@{/budgeting-asisten}" method="get" class="filter-form">
+                <div class="input-harga">
+                    <input type="number" name="hargaMin" id="hargaMin" 
+                           placeholder="Harga Min" th:value="${hargaMin}" step="0.01">
+                    <input type="number" name="hargaMax" id="hargaMax" 
+                           placeholder="Harga Max" th:value="${hargaMax}" step="0.01">
+                    <button type="submit">Cari</button>
+                    <button type="button" id="btnResetFilter">Reset</button>
+                </div>
+            </form>
+
+            <!-- TABEL JENIS VENDOR -->
+            <div class="table-container">
+                <table id="tabel-jenis-vendor">
+                    <thead>
+                        <tr>
+                            <th>ID Jenis</th>
+                            <th>Nama Jenis Vendor</th>
+                            <th>Harga Min</th>
+                            <th>Harga Max</th>
+                            <th>Jumlah Vendor</th>
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:if="${jenisVendorList != null}" 
+                            th:each="jenis : ${jenisVendorList}">
+                            <td th:text="${jenis.idjenisvendor}">301</td>
+                            <td th:text="${jenis.namajenisvendor}">Dekorasi</td>
+                            <td>Rp <span th:text="${jenis.kisaranhargamin != null} ? ${#numbers.formatDecimal(jenis.kisaranhargamin, 0, 'DEFAULT', 2, 'DEFAULT')} : '0'">3,000,000</span></td>
+                            <td>Rp <span th:text="${jenis.kisaranhargamax != null} ? ${#numbers.formatDecimal(jenis.kisaranhargamax, 0, 'DEFAULT', 2, 'DEFAULT')} : '0'">8,000,000</span></td>
+                            <td>
+                                <span th:text="${vendorCountMap != null and vendorCountMap.containsKey(jenis.idjenisvendor)} ? ${vendorCountMap[jenis.idjenisvendor]} : 0">
+                                    0
+                                </span> vendor
+                            </td>
+                            <td>
+                                <button class="btn-lihat-vendor" 
+                                        th:data-id="${jenis.idjenisvendor}"
+                                        th:data-nama="${jenis.namajenisvendor}">
+                                    Lihat Vendor
+                                </button>
+                            </td>
+                        </tr>
+                        <tr th:if="${jenisVendorList == null or #lists.isEmpty(jenisVendorList)}">
+                            <td colspan="6" style="text-align: center;">Tidak ada data jenis vendor</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div id="tambah-vendor">
+            <h2>Pilih atau Tambah Vendor untuk Event</h2>
+            <p>Pilih event -> pilih vendor dari daftar</p>
+            
+            <form th:action="@{/budgeting-asisten/tambah-vendor}" method="post" class="form-tambah-vendor">
+                <div class="form-group">
+                    <label for="selectEvent">Pilih Event:</label>
+                    <select id="selectEvent" name="idevent" required>
+                        <option value="">-- Pilih Event --</option>
+                        <option th:if="${eventList != null}" 
+                                th:each="event : ${eventList}"
+                                th:value="${event.idevent}"
+                                th:text="${event.namaevent} + ' - ' + ${event.namaklien}">
+                        </option>
+                    </select>
+
+                    <label for="selectVendor">Pilih Vendor:</label>
+                    <select id="selectVendor" name="idvendor" required>
+                        <option value="" disabled selected>-- Pilih Vendor --</option>
+                        <option th:if="${vendorList != null}" 
+                                th:each="vendor : ${vendorList}"
+                                th:value="${vendor.idvendor}"
+                                th:text="${vendor.namavendor}">
+                        </option>
+                    </select>
+                    
+                    <label for="hargaDealing">Harga Dealing (Rp):</label>
+                    <input type="number" id="hargaDealing" name="hargadealing" 
+                           placeholder="Masukkan harga" min="0.01" step="0.01" required>
+                    <label for="statusDealing">Status Dealing:</label>
+                    <select id="statusDealing" name="statusdealing" required>
+                        <option value="" disabled selected>-- Pilih Status --</option>
+                        <option value="Disetujui">Disetujui</option>
+                        <option value="Negosiasi">Negosiasi</option>
+                        <option value="Ditolak">Ditolak</option>
+                    </select>
+
+                    <button type="submit" class="btn-submit">Tambah Vendor ke Event</button>
+                </div>
+            </form>
+        </div>
+
+
+        <!-- EDIT / HAPUS VENDOR UNTUK EVENT -->
+        <div id="edit-hapus-vendor">
+            <h2>Edit / Hapus Vendor Untuk Event</h2>
+            <p>Kelola vendor yang dipakai untuk event</p>
+            
+            <div class="table-container">
+                <table id="tabel-vendor-event">
+                    <thead>
+                        <tr>
+                            <th>ID Event</th>
+                            <th>Nama Event</th>
+                            <th>Nama Vendor</th>
+                            <th>Jenis Vendor</th>
+                            <th>Harga Dealing</th>
+                            <th>Status Dealing</th>
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:if="${vendorEventList != null}" 
+                            th:each="vendorEvent : ${vendorEventList}">
+                            <td th:text="${vendorEvent.idevent}">101</td>
+                            <td th:text="${vendorEvent.namaevent}">Pernikahan Andi & Dinda</td>
+                            <td th:text="${vendorEvent.namavendor}">Vendor Dekorasi Ceria</td>
+                            <td>
+                                <span th:text="${vendorEvent.namajenisvendor != null} ? ${vendorEvent.namajenisvendor} : 'Tidak ada'">
+                                    Dekorasi
+                                </span>
+                            </td>
+                            <td>Rp <span th:text="${vendorEvent.hargadealing != null} ? ${#numbers.formatDecimal(vendorEvent.hargadealing, 0, 'DEFAULT', 2, 'DEFAULT')} : '0'">6,000,000</span></td>
+                            <td>
+                                <!-- PERBAIKAN DI SINI: -->
+                                <span th:class="${vendorEvent.statusdealing != null} ? 
+                                    'status-dealing ' + ${vendorEvent.statusdealing.toLowerCase()} : 
+                                    'status-dealing'">
+                                    <span th:text="${vendorEvent.statusdealing}">Disetujui</span>
+                                </span>
+                            </td>
+                            <td>
+                                <button class="btn-edit" 
+                                        th:data-idevent="${vendorEvent.idevent}"
+                                        th:data-idvendor="${vendorEvent.idvendor}"
+                                        th:data-harga="${vendorEvent.hargadealing}"
+                                        th:data-status="${vendorEvent.statusdealing}">Edit</button>
+                                <button class="btn-hapus" 
+                                        th:data-idevent="${vendorEvent.idevent}"
+                                        th:data-idvendor="${vendorEvent.idvendor}"
+                                        th:data-nama="${vendorEvent.namavendor}"
+                                        onclick="hapusVendor(event, this)">Hapus</button>
+                            </td>
+                        </tr>
+                        <tr th:if="${vendorEventList == null or #lists.isEmpty(vendorEventList)}">
+                            <td colspan="7" style="text-align: center;">Belum ada vendor yang ditambahkan ke event</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+
+            <!-- Form Edit Harga -->
+            <div class="form-edit-harga" style="display: none;">
+                <h3>Edit Harga Dealing</h3>
+                <form id="formEditHarga" method="post">
+                    <input type="hidden" id="editIdevent" name="idevent">
+                    <input type="hidden" id="editIdvendor" name="idvendor">
+                    
+                    <div class="form-group">
+                        <label for="editHarga">Harga Baru (Rp):</label>
+                        <input type="number" id="editHarga" name="hargadealing" min="0.01" step="0.01" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="editStatus">Status Baru:</label>
+                        <select id="editStatus" name="statusdealing" required>
+                            <option value="Disetujui">Disetujui</option>
+                            <option value="Negosiasi">Negosiasi</option>
+                            <option value="Ditolak">Ditolak</option>
+                        </select>
+                    </div>
+                    
+                    <button type="submit" class="btn-submit">Update</button>
+                    <button type="button" class="btn-cancel">Batal</button>
+                </form>
+            </div>
+        </div>
+    </main>
+    
+    <div id="modalVendor" class="modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h3 id="modalTitle">Daftar Vendor</h3>
+            <div class="table-container">
+                <table id="modalTabelVendor">
+                    <thead>
+                        <tr>
+                            <th>ID Vendor</th>
+                            <th>Nama Vendor</th>
+                            <th>Pemilik</th>
+                            <th>Kontak</th>
+                            <th>Harga Min</th>
+                            <th>Harga Max</th>
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody id="modalVendorBody">
+                        <tr>
+                            <td colspan="7" style="text-align: center;">Pilih jenis vendor untuk melihat daftar</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+    // Fungsi helper untuk hapus vendor
+    function hapusVendor(event, button) {
+        event.preventDefault();
+        const idevent = button.getAttribute('data-idevent');
+        const idvendor = button.getAttribute('data-idvendor');
+        const namaVendor = button.getAttribute('data-nama');
+        
+        if (confirm(`Apakah Anda yakin ingin menghapus vendor "${namaVendor}"?`)) {
+            // Submit form hapus
+            const form = document.createElement('form');
+            form.method = 'POST';
+            form.action = '/budgeting-asisten/hapus-vendor';
+            
+            const csrfInput = document.createElement('input');
+            csrfInput.type = 'hidden';
+            csrfInput.name = '_csrf';
+            csrfInput.value = document.querySelector('meta[name="_csrf"]')?.content || '';
+            form.appendChild(csrfInput);
+            
+            const ideventInput = document.createElement('input');
+            ideventInput.type = 'hidden';
+            ideventInput.name = 'idevent';
+            ideventInput.value = idevent;
+            form.appendChild(ideventInput);
+            
+            const idvendorInput = document.createElement('input');
+            idvendorInput.type = 'hidden';
+            idvendorInput.name = 'idvendor';
+            idvendorInput.value = idvendor;
+            form.appendChild(idvendorInput);
+            
+            document.body.appendChild(form);
+            form.submit();
+        }
+    }
+    </script>
+</body>
+</html>
