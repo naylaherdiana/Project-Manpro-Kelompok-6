@@ -42,22 +42,60 @@ public class EventRepository {
     }
 
     public List<EventDashboard> findUpcomingEvents(){
-        String sql = """
-            SELECT 
-                e.idevent,
-                e.namaevent,
-                e.tanggal,
-                e.statusevent,
-                k.namaklien AS nama_klien,
-                a.nama AS nama_asisten
-            FROM event e
-            JOIN klien k ON e.idklien = k.idklien
-            JOIN asisten a ON e.idasisten = a.id
-            WHERE e.statusevent = 'BERLANGSUNG'
-            ORDER BY e.tanggal ASC
-            LIMIT 4
-            """;
-        return jdbcTemplate.query(sql, this::mapRowToEventDashboard);
+        System.out.println("\n=== DEBUG: findUpcomingEvents FOR PEMILIK ===");
+
+        String sql = "SELECT e.idevent, e.namaevent, e.tanggal, e.statusevent, " +
+                     "k.namaklien, a.nama as nama_asisten " +
+                     "FROM event e " +
+                     "LEFT JOIN klien k ON e.idklien = k.idklien " +
+                     "LEFT JOIN asisten a ON e.idasisten = a.id " +
+                     "WHERE e.statusevent = 'BERLANGSUNG' " +
+                     "ORDER BY e.tanggal ASC " +
+                     "LIMIT 4";
+        
+        System.out.println("SQL Query: " + sql);
+        
+        try {
+            List<EventDashboard> results = jdbcTemplate.query(sql, (rs, rowNum) -> {
+                EventDashboard event = new EventDashboard();
+                event.setIdevent(rs.getLong("idevent"));
+                event.setNamaevent(rs.getString("namaevent"));
+                
+                java.sql.Date sqlDate = rs.getDate("tanggal");
+                event.setTanggal(sqlDate != null ? sqlDate.toLocalDate() : LocalDate.now());
+                
+                event.setStatusevent(rs.getString("statusevent"));
+                
+                try {
+                    event.setNamaKlien(rs.getString("namaklien"));
+                } catch (SQLException e) {
+                    event.setNamaKlien("Tidak ada klien");
+                }
+                
+                try {
+                    event.setNamaAsisten(rs.getString("nama_asisten"));
+                } catch (SQLException e) {
+                    event.setNamaAsisten("Tidak ada asisten");
+                }
+                
+                return event;
+            });
+            
+            System.out.println("Found " + results.size() + " upcoming events for Pemilik");
+            
+            for (EventDashboard event : results) {
+                System.out.println("- ID: " + event.getIdevent() + 
+                                 ", Event: " + event.getNamaevent() + 
+                                 ", Klien: " + event.getNamaKlien() + 
+                                 ", Asisten: " + event.getNamaAsisten());
+            }
+            
+            return results;
+        } catch (Exception e) {
+            System.out.println("ERROR in findUpcomingEvents (Pemilik): " + e.getMessage());
+            e.printStackTrace();
+            return List.of();
+        }
     }
 
     public int countEventDitangani(Long asistenId) {

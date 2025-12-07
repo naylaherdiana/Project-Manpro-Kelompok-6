@@ -15,11 +15,6 @@ public class RegisterService {
     }
 
     public boolean registerAsisten(RegisterRequest request) {
-        // Di sini bisa ditambahkan logika bisnis tambahan, misalnya:
-        // - Validasi domain (apakah email domain @selarasorganizer.com?)
-        // - Cek kuota asisten maksimal
-        // - Kirim notifikasi (nantinya)
-        
         return asistenRepository.saveAsisten(request);
     }
 }

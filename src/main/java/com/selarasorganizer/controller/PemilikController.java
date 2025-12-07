@@ -1,5 +1,6 @@
 package com.selarasorganizer.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -58,18 +59,44 @@ public class PemilikController {
         if (!"PEMILIK".equals(role)) {
             return "redirect:/login";
         }
-        int totalKlien = klienRepository.countAll();
-        int totalEvent = eventRepository.countByStatus("BERLANGSUNG");
-        int totalVendor = vendorRepository.countAll();
-        String vendorTeraktif = vendorRepository.findMostUsedVendorName();
-        List<EventDashboard> upcomingEvents = eventRepository.findUpcomingEvents();
+        
+        try {
+            int totalKlien = klienRepository.countAll();
+            int totalEvent = eventRepository.countByStatus("BERLANGSUNG");
+            int totalVendor = vendorRepository.countAll();
+            String vendorTeraktif = vendorRepository.findMostUsedVendorName();
+            
+            // TRY-CATCH khusus untuk method yang error
+            List<EventDashboard> upcomingEvents;
+            try {
+                upcomingEvents = eventRepository.findUpcomingEvents();
+            } catch (Exception e) {
+                System.out.println("ERROR in findUpcomingEvents: " + e.getMessage());
+                e.printStackTrace();
+                upcomingEvents = new ArrayList<>(); // Return empty list
+            }
 
-        model.addAttribute("totalKlien", totalKlien);
-        model.addAttribute("totalEvent", totalEvent);
-        model.addAttribute("totalVendor", totalVendor);
-        model.addAttribute("vendorTeraktif", vendorTeraktif);
-        model.addAttribute("upcomingEvents", upcomingEvents);
-        return "pemilik/dashboard-pemilik";
+            model.addAttribute("totalKlien", totalKlien);
+            model.addAttribute("totalEvent", totalEvent);
+            model.addAttribute("totalVendor", totalVendor);
+            model.addAttribute("vendorTeraktif", vendorTeraktif);
+            model.addAttribute("upcomingEvents", upcomingEvents);
+            
+            return "pemilik/dashboard-pemilik";
+            
+        } catch (Exception e) {
+            System.out.println("ERROR in dashboard: " + e.getMessage());
+            e.printStackTrace();
+            
+            // Return default values
+            model.addAttribute("totalKlien", 0);
+            model.addAttribute("totalEvent", 0);
+            model.addAttribute("totalVendor", 0);
+            model.addAttribute("vendorTeraktif", "Tidak ada data");
+            model.addAttribute("upcomingEvents", new ArrayList<>());
+            
+            return "pemilik/dashboard-pemilik";
+        }
     }
 
     @GetMapping("/asisten-pemilik")
