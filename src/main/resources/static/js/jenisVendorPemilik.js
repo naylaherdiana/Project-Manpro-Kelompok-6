@@ -28,12 +28,15 @@ btnCloseTambah.addEventListener('click', closeAllPopups);
 btnCloseEdit.addEventListener('click', closeAllPopups);
 btnCloseHapus.addEventListener('click', closeAllPopups);
 
+// Fungsi untuk format angka ke Rupiah
 function formatRupiah(angka) {
     return 'Rp ' + angka.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 }
 
+// Fungsi untuk parse Rupiah ke angka
 function parseRupiah(rupiahStr) {
-    return parseInt(rupiahStr.replace(/[^0-9]/g, ''));
+    const cleaned = rupiahStr.replace(/[^0-9]/g, '');
+    return cleaned ? parseInt(cleaned, 10) : 0;
 }
 
 // --- Event Delegation: Handle Edit & Hapus ---
@@ -48,18 +51,23 @@ document.addEventListener('click', (e) => {
         const id = e.target.getAttribute('data-id');
         const hargaMinText = cells[1].textContent.trim();
         const hargaMaxText = cells[2].textContent.trim();
-        const namaJenis = cells[3].textContent.trim();
+        const namaJenis = cells[3].textContent.trim(); // Ambil dari kolom ke-4 (indeks 3)
         
         // Parse dari format Rupiah ke angka
         const hargaMinAngka = parseRupiah(hargaMinText);
         const hargaMaxAngka = parseRupiah(hargaMaxText);
         
-        console.log("Harga Min (parsed):", hargaMinAngka);
-        console.log("Harga Max (parsed):", hargaMaxAngka);
+        console.log("Data yang diambil:");
+        console.log("- ID:", id);
+        console.log("- Harga Min (parsed):", hargaMinAngka);
+        console.log("- Harga Max (parsed):", hargaMaxAngka);
+        console.log("- Nama Jenis:", namaJenis);
         
+        // Isi form edit
         document.getElementById('editId').value = id;
         document.getElementById('editKisaranhargamin').value = hargaMinAngka;
         document.getElementById('editKisaranhargamax').value = hargaMaxAngka;
+        document.getElementById('editnamajenisvendor').value = namaJenis; // Isi input text nama
         
         popupEdit.style.display = 'flex';
     }
@@ -82,4 +90,29 @@ btnCloseTambah.addEventListener('click', function() {
 
 btnCloseEdit.addEventListener('click', function() {
     document.getElementById('formEdit').reset();
+});
+
+// --- TAMBAHAN: Validasi format input harga ---
+document.addEventListener('DOMContentLoaded', function() {
+    // Format input harga saat user mengetik
+    const hargaInputs = document.querySelectorAll('input[name="kisaranhargamin"], input[name="kisaranhargamax"], #editKisaranhargamin, #editKisaranhargamax');
+    
+    hargaInputs.forEach(input => {
+        input.addEventListener('input', function(e) {
+            // Hapus semua karakter non-angka
+            let value = e.target.value.replace(/[^0-9]/g, '');
+            
+            // Tambahkan titik sebagai pemisah ribuan
+            if (value.length > 3) {
+                value = value.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+            }
+            
+            // Tambahkan "Rp " di depan jika ada nilai
+            if (value) {
+                e.target.value = 'Rp ' + value;
+            } else {
+                e.target.value = '';
+            }
+        });
+    });
 });

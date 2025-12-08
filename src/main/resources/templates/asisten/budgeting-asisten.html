@@ -203,7 +203,7 @@
             <!-- Form Edit Harga -->
             <div class="form-edit-harga" style="display: none;">
                 <h3>Edit Harga Dealing</h3>
-                <form id="formEditHarga" method="post">
+                <form id="formEditHarga" th:action="@{/budgeting-asisten/update-harga}" method="post">
                     <input type="hidden" id="editIdevent" name="idevent">
                     <input type="hidden" id="editIdvendor" name="idvendor">
                     

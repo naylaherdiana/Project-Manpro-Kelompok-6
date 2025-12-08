@@ -29,13 +29,42 @@ btnCloseHapus.addEventListener('click', closeAllPopups);
 document.addEventListener('click', (e) => {
     if (e.target.classList.contains('edit')) {
         closeAllPopups();
-        const cells = e.target.closest('tr').querySelectorAll('td');
-        document.getElementById('editId').value = e.target.getAttribute('data-id');
+        
+        // Ambil row yang diklik
+        const row = e.target.closest('tr');
+        const vendorId = e.target.getAttribute('data-id');
+        
+        // Ambil data dari cell
+        const cells = row.querySelectorAll('td');
+        
+        // Ambil data dari row - ambil data dari data attributes atau cells
+        const idjenisvendor = row.getAttribute('data-jenis-id') || 
+                              row.querySelector('[data-jenis-id]')?.getAttribute('data-jenis-id') || 
+                              '';
+        
+        // Isi form edit
+        document.getElementById('editId').value = vendorId;
         document.getElementById('editNamapemilik').value = cells[1].textContent;
         document.getElementById('editNamavendor').value = cells[2].textContent;
         document.getElementById('editAlamatvendor').value = cells[3].textContent;
         document.getElementById('editKontakvendor').value = cells[4].textContent;
-        document.getElementById('editIdjenisvendor').value = cells[5].textContent;
+        
+        // Set dropdown jenis vendor dengan ID yang benar
+        if (idjenisvendor) {
+            document.getElementById('editIdjenisvendor').value = idjenisvendor;
+        } else {
+            // Jika tidak ada data attribute, coba ambil dari text dan mapping
+            const namaJenis = cells[5].textContent.trim();
+            // Cari option yang textnya sama dengan nama jenis
+            const select = document.getElementById('editIdjenisvendor');
+            for (let i = 0; i < select.options.length; i++) {
+                if (select.options[i].text === namaJenis) {
+                    select.value = select.options[i].value;
+                    break;
+                }
+            }
+        }
+        
         popupEdit.style.display = 'flex';
     }
     

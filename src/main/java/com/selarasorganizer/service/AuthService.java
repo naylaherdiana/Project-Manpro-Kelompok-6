@@ -12,19 +12,20 @@ public class AuthService {
     private final UserRoleRepository userRoleRepository;
     private final BCryptPasswordEncoder passwordEncoder;
 
-    public AuthService(UserRepository userRepository, UserRoleRepository userRoleRepository) {
+    public AuthService(UserRepository userRepository, UserRoleRepository userRoleRepository, BCryptPasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.userRoleRepository = userRoleRepository;
-        this.passwordEncoder = new BCryptPasswordEncoder();
+        this.passwordEncoder = passwordEncoder;
     }
 
     public String authenticate(String username, String rawPassword) {
         try {
             User user = userRepository.findByUsername(username);
-            if (passwordEncoder.matches(rawPassword, user.getPassword())) {
+            if (user != null && passwordEncoder.matches(rawPassword, user.getPassword())) {
                 return userRoleRepository.findRoleByUserId(user.getId());
             }
         } catch (Exception e) {
+            e.printStackTrace();
         }
         return null;
     }
@@ -40,6 +41,7 @@ public class AuthService {
             }
         } catch (Exception e) {
             System.out.println("Auth error: " + e.getMessage());
+            e.printStackTrace();
         }
         return null;
     }

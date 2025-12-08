@@ -78,9 +78,7 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public String register(@Valid @ModelAttribute("registerRequest") RegisterRequest request, 
-                          BindingResult bindingResult, 
-                          Model model) {
+    public String register(@Valid @ModelAttribute("registerRequest") RegisterRequest request, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             return "auth/register-page";
         }

@@ -26,7 +26,7 @@
 
             <!--POP UP LOGOUT -->
             <div id="popup-logout">
-                <p>Name</p>
+                <p th:text="${namaPemilik} ?: 'Pemilik'">Name</p>
                 <button id="logout-btn">Logout</button>
             </div>
         </nav>
@@ -34,7 +34,13 @@
 
     <section class="main-section">
         <h1>Daftar Vendor</h1>
-        
+
+        <div th:if="${success}" class="alert alert-success">
+            <span th:text="${success}"></span>
+        </div>
+        <div th:if="${error}" class="alert alert-error">
+            <span th:text="${error}"></span>
+        </div>
         <div class="table-container">
             <table>
                 <thead>
@@ -44,20 +50,22 @@
                         <th scope="col">Nama Vendor</th>
                         <th scope="col">Alamat</th>
                         <th scope="col">Kontak</th>
-                        <th scope="col">Jenis</th>
+                        <th scope="col">Jenis vendor</th>
                         <th scope="col"></th>
                         <th scope="col"></th>
                     </tr>    
                 </thead>
                 
                 <tbody>
-                    <tr th:each="vendor : ${vendorList}">
+                    <tr th:each="vendor : ${vendorList}" th:attr="data-jenis-id=${vendor.idjenisvendor}">
                         <td th:text="${vendor.idvendor}">1</td>
                         <td th:text="${vendor.namapemilik}">Abigail Maharani</td>
                         <td th:text="${vendor.namavendor}">MatTrans</td>
                         <td th:text="${vendor.alamatvendor}">Jl Taman Kopo Indah</td>
                         <td th:text="${vendor.kontakvendor}">0812345678</td>
-                        <td th:text="${vendor.idjenisvendor}">Transportasi</td>
+                        <td>
+                            <span th:text="${vendor.namajenisvendor} ?: vendor.idjenisvendor">Transportasi</span>
+                        </td>
                         <td><button class="edit" th:data-id="${vendor.idvendor}">Edit</button></td>
                         <td><button class="hapus" th:data-id="${vendor.idvendor}">Hapus</button></td>
                     </tr>
@@ -76,7 +84,14 @@
                     <input type="text" name="namavendor" placeholder="Nama Vendor" required>
                     <input type="text" name="alamatvendor" placeholder="Alamat" required>
                     <input type="text" name="kontakvendor" placeholder="Kontak" required>
-                    <input type="number" name="idjenisvendor" placeholder="ID Jenis Vendor" required>
+                    <select name="idjenisvendor" id="idjenisvendor" required>
+                        <option value="" disabled selected>Pilih Jenis Vendor</option>
+                        <option th:each="jenis : ${jenisVendorList}" 
+                                th:value="${jenis.idjenisvendor}"
+                                th:text="${jenis.namajenisvendor}">
+                            Jenis Vendor
+                        </option>
+                    </select>
                     <div>
                         <input type="button" id="btnCloseTambah" value="Tutup">
                         <input type="submit" id="btnSimpanTambah" value="Simpan">
@@ -95,7 +110,16 @@
                     <input type="text" id="editNamavendor" name="namavendor" required>
                     <input type="text" id="editAlamatvendor" name="alamatvendor" required>
                     <input type="text" id="editKontakvendor" name="kontakvendor" required>
-                    <input type="number" id="editIdjenisvendor" name="idjenisvendor" required>
+
+                    <select id="editIdjenisvendor" name="idjenisvendor" required>
+                        <option value="" disabled selected>Pilih Jenis Vendor</option>
+                        <option th:each="jenis : ${jenisVendorList}" 
+                                th:value="${jenis.idjenisvendor}"
+                                th:text="${jenis.namajenisvendor}">
+                            Jenis Vendor
+                        </option>
+                    </select>
+
                     <div>
                         <input type="button" id="btnCloseEdit" value="Tutup">
                         <input type="submit" id="btnSimpanEdit" value="Simpan">
@@ -118,7 +142,6 @@
                 </form>
             </div>
         </div>
-
     </section>
 </body>
 </html>
