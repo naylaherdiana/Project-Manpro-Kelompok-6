@@ -26,7 +26,7 @@
 
             <!--POP UP LOGOUT -->
             <div id="popup-logout">
-                <p>Name</p>
+                <p th:text="${namaPemilik} ?: 'Pemilik'">Name</p>
                 <button id="logout-btn">Logout</button>
             </div>
         </nav>
@@ -34,6 +34,13 @@
 
     <section class="main-section">
         <h1>Daftar Jenis Vendor</h1>
+
+        <div th:if="${success}" class="alert alert-success">
+            <span th:text="${success}"></span>
+        </div>
+        <div th:if="${error}" class="alert alert-error">
+            <span th:text="${error}"></span>
+        </div>
         
         <div class="table-container">
             <table>
@@ -49,7 +56,7 @@
                 </thead>
                 
                 <tbody>
-                    <tr th:each="jenis : ${jenisVendorList}">
+                    <tr th:each="jenis : ${jenisVendorList}" th:attr="data-nama-jenis=${jenis.namajenisvendor}">
                         <td th:text="${jenis.idjenisvendor}">301</td>
                         <td th:text="'Rp ' + ${#numbers.formatDecimal(jenis.kisaranhargamin, 0, 'DEFAULT', 0, 'POINT')}">Rp 3.000.000</td>
                         <td th:text="'Rp ' + ${#numbers.formatDecimal(jenis.kisaranhargamax, 0, 'DEFAULT', 0, 'POINT')}">Rp 8.000.000</td>
@@ -64,22 +71,14 @@
         <button id="btnTambah">Tambah Jenis Vendor</button>
 
          <!-- PopUp Tambah Jenis Vendor -->
-        <div id="tambah-jenis-vendor">
+         <div id="tambah-jenis-vendor">
             <div class="popup-content">
                 <form id="formTambah" th:action="@{/jenis-vendor-pemilik}" method="post">
                     <h3>Tambah Jenis Vendor</h3>
                     <input type="number" name="idjenisvendor" placeholder="ID Jenis Vendor" required>
-                    <input type="text" name="kisaranhargamin" placeholder="Kisaran Harga Minimal (contoh: Rp 3.000.000)" required>
-                    <input type="text" name="kisaranhargamax" placeholder="Kisaran Harga Maksimal (contoh: Rp 8.000.000)" required>
-                    <select name="namajenisvendor" id="namajenisvendor">
-                        <option value="" disabled selected>Pilih Jenis Vendor</option>
-                        <option value="dekorasi">Dekorasi</option>
-                        <option value="dokumentasi">Dokumentasi</option>
-                        <option value="katering">Katering</option>
-                        <option value="musik">Musik</option>
-                        <option value="panggung">Panggung</option>
-                        <option value="lainnya">Lainnya</option>
-                    </select>
+                    <input type="text" name="kisaranhargamin" placeholder="Kisaran Harga Minimal" required>
+                    <input type="text" name="kisaranhargamax" placeholder="Kisaran Harga Maksimal" required>
+                    <input type="text" name="namajenisvendor" placeholder="Nama Jenis Vendor" required>
                     
                     <div>
                         <input type="button" id="btnCloseTambah" value="Tutup">
@@ -97,15 +96,7 @@
                     <h3>Edit Jenis Vendor</h3>
                     <input type="text" id="editKisaranhargamin" name="kisaranhargamin" required>
                     <input type="text" id="editKisaranhargamax" name="kisaranhargamax" required>
-                    <select name="editnamajenisvendor" id="editnamajenisvendor">
-                        <option value="" disabled selected>Pilih Jenis Vendor</option>
-                        <option value="dekorasi">Dekorasi</option>
-                        <option value="dokumentasi">Dokumentasi</option>
-                        <option value="katering">Katering</option>
-                        <option value="musik">Musik</option>
-                        <option value="panggung">Panggung</option>
-                        <option value="lainnya">Lainnya</option>
-                    </select>
+                    <input type="text" id="editnamajenisvendor" name="namajenisvendor" placeholder="Nama Jenis Vendor" required>
                     <div>
                         <input type="button" id="btnCloseEdit" value="Tutup">
                         <input type="submit" id="btnSimpanEdit" value="Simpan">

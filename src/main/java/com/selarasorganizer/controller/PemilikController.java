@@ -55,9 +55,12 @@ public class PemilikController {
         if (session.getAttribute("userRole") == null) {
             return "redirect:/login";
         }
+
         String role = (String) session.getAttribute("userRole");
         if (!"PEMILIK".equals(role)) {
             return "redirect:/login";
+        } else {
+            model.addAttribute("namaPemilik", "Budi Laraso");
         }
         
         try {
@@ -107,7 +110,10 @@ public class PemilikController {
         String role = (String) session.getAttribute("userRole");
         if (!"PEMILIK".equals(role)) {
             return "redirect:/login";
+        }else {
+            model.addAttribute("namaPemilik", "Budi Laraso");
         }
+        
         List<Asisten> asistenList = asistenRepository.findAll();
 
         System.out.println("=== DAFTAR ASISTEN ===");
@@ -247,12 +253,20 @@ public class PemilikController {
         if (session.getAttribute("userRole") == null) {
             return "redirect:/login";
         }
+        
         String role = (String) session.getAttribute("userRole");
         if (!"PEMILIK".equals(role)) {
             return "redirect:/login";
         }
+        
+        model.addAttribute("namaPemilik", "Budi Laraso");
+        
         List<Vendor> vendorList = vendorRepository.findAll();
+        List<JenisVendor> jenisVendorList = jenisVendorRepository.findAll();
+        
         model.addAttribute("vendorList", vendorList);
+        model.addAttribute("jenisVendorList", jenisVendorList); // Untuk dropdown
+        
         return "pemilik/vendor-pemilik";
     }
 
@@ -339,6 +353,8 @@ public class PemilikController {
         String role = (String) session.getAttribute("userRole");
         if (!"PEMILIK".equals(role)) {
             return "redirect:/login";
+        }else {
+            model.addAttribute("namaPemilik", "Budi Laraso");
         }
 
         List<JenisVendor> jenisVendorList = jenisVendorRepository.findAll();
@@ -445,6 +461,8 @@ public class PemilikController {
         String role = (String) session.getAttribute("userRole");
         if (!"PEMILIK".equals(role)) {
             return "redirect:/login";
+        }else {
+            model.addAttribute("namaPemilik", "Budi Laraso");
         }
 
         List<VendorAktif> vendorAktifList = laporanRepository.findVendorPalingAktif();

@@ -25,21 +25,34 @@ public class VendorRepository{
     public List<Vendor> findAll(){
         String sql = """
                 SELECT 
-                v.idvendor,
-                v.namapemilik,
-                v.namavendor,
-                v.alamatvendor,
-                v.kontakvendor,
-                v.idjenisvendor
-            FROM vendor v
-            ORDER BY v.idvendor
-            """;
+                    v.idvendor,
+                    v.namapemilik,
+                    v.namavendor,
+                    v.alamatvendor,
+                    v.kontakvendor,
+                    v.idjenisvendor,
+                    jv.namajenisvendor 
+                FROM vendor v
+                LEFT JOIN JenisVendor jv ON v.idjenisvendor = jv.idjenisvendor
+                ORDER BY v.idvendor
+                """;
         return jdbcTemplate.query(sql, this::mapRowToVendor);
     }
 
     public Vendor findById(Long id) {
-        String sql = "SELECT * FROM vendor WHERE idvendor = ?";
-        return jdbcTemplate.queryForObject(sql, this::mapRowToVendor, id);
+        String sql = """
+                SELECT 
+                    v.*,
+                    jv.namajenisvendor
+                FROM vendor v
+                LEFT JOIN JenisVendor jv ON v.idjenisvendor = jv.idjenisvendor
+                WHERE v.idvendor = ?
+                """;
+        try {
+            return jdbcTemplate.queryForObject(sql, this::mapRowToVendor, id);
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
     }
 
     public void update(Vendor vendor) {
@@ -101,6 +114,13 @@ public class VendorRepository{
         vendor.setAlamatvendor(rs.getString("alamatvendor"));
         vendor.setKontakvendor(rs.getString("kontakvendor"));
         vendor.setIdjenisvendor(rs.getLong("idjenisvendor"));
+
+        try {
+            vendor.setNamajenisvendor(rs.getString("namajenisvendor"));
+        } catch (SQLException e) {
+            vendor.setNamajenisvendor("Tidak diketahui");
+        }
+        
         return vendor;
     }
 }

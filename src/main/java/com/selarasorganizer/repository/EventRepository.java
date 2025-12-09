@@ -50,8 +50,7 @@ public class EventRepository {
                      "LEFT JOIN klien k ON e.idklien = k.idklien " +
                      "LEFT JOIN asisten a ON e.idasisten = a.id " +
                      "WHERE e.statusevent = 'BERLANGSUNG' " +
-                     "ORDER BY e.tanggal ASC " +
-                     "LIMIT 4";
+                     "ORDER BY e.tanggal ASC ";
         
         System.out.println("SQL Query: " + sql);
         
