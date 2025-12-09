@@ -90,8 +90,6 @@ a {
 }
 
 
-<<<<<<< HEAD
-=======
 /* POPUP LOGOUT */
 #popup-logout {
     padding: 1em;
@@ -127,7 +125,6 @@ a {
 }
 
 
->>>>>>> 6903204c1cf9f4d99aef6ebc2575a90f765c71b3
 /* Main Section */
 .main-section {
     grid-area: main;
@@ -140,25 +137,6 @@ a {
     display: none;
 }
 
-<<<<<<< HEAD
-.main-section > button:first-of-type {
-    width: 8%;
-    padding: 0.3em;
-    font-size: 1em;
-    color: #ffffff;
-    cursor: pointer;
-    border: none;
-    border-radius: 0.5em;
-    background-color: var(--navbar-color);
-}
-
-.main-section > button:first-of-type:hover {
-    background-color: #36b9c5;
-    transition: 0.5s;
-}
-=======
-
->>>>>>> 6903204c1cf9f4d99aef6ebc2575a90f765c71b3
 
 .main-section > h1 {
     margin-top: 0.5em;
@@ -175,11 +153,7 @@ a {
     border-radius: 1em 1em 0 0;
 }
 
-<<<<<<< HEAD
-.main-section > button:nth-of-type(2) {
-=======
 #btnTambah {
->>>>>>> 6903204c1cf9f4d99aef6ebc2575a90f765c71b3
     width: 20%;
     margin-top: 0.1em;
     padding: 0.5em;
@@ -192,11 +166,7 @@ a {
     align-self: flex-end;
 }
 
-<<<<<<< HEAD
-.main-section > button:nth-of-type(2):hover {
-=======
 #btnTambah:hover {
->>>>>>> 6903204c1cf9f4d99aef6ebc2575a90f765c71b3
     background-color: #36b9c5;
     transition: 0.5s;
 }
@@ -234,10 +204,7 @@ th {
 }
 
 td > button {
-<<<<<<< HEAD
-=======
     margin: 0 0.5em;
->>>>>>> 6903204c1cf9f4d99aef6ebc2575a90f765c71b3
     width: 5em;
     padding: 0.2em;
     border: 1px solid #61A4AB;
@@ -245,10 +212,6 @@ td > button {
     color: #61A4AB;
 }
 
-<<<<<<< HEAD
-/* Tambah Event */
-.tambah-event {
-=======
 
 /* Tambah dan Edit Event*/
 #tambah-event, #edit-event {
@@ -312,7 +275,6 @@ td > button {
 
 /* Fitur Hapus Event */
 #hapus-event {
->>>>>>> 6903204c1cf9f4d99aef6ebc2575a90f765c71b3
   position: fixed;
   top: 0;
   left: 0;
@@ -324,33 +286,6 @@ td > button {
   align-items: center;
 }
 
-<<<<<<< HEAD
-.tambah-event form {
-  background: #ffffff;
-  padding: 2em;
-  border-radius: 1em;
-  width: 50rem;
-  height: 30rem;
-  display: flex;
-  flex-direction: column;
-  gap: 1em;
-}
-
-.tambah-event form > input {
-    padding: 0.5em;
-    border: 1px solid;
-    border-radius: 0.5em;
-}
-
-.tambah-event form > div {
-    margin-top: 1em;
-    text-align: end;
-    word-spacing: 1em;
-}
-
-#btnCloseTambah,
-#btnSimpanTambah {
-=======
 #hapus-event .popup-content {
   background: #ffffff;
   padding: 2em;
@@ -376,7 +311,6 @@ td > button {
 
 
 #btnCloseHapus, #btnConfirmHapus {
->>>>>>> 6903204c1cf9f4d99aef6ebc2575a90f765c71b3
     width: 15%;
     padding: 0.5em;
     color: #ffffff;
@@ -387,12 +321,6 @@ td > button {
     cursor: pointer;
 }
 
-<<<<<<< HEAD
-#btnCloseTambah:hover,
-#btnSimpanTambah:hover {
-    transition: 0.5s;
-    background-color: #36b9c5;
-=======
 #btnCloseHapus:hover {
     transition: 0.5s;
     background-color: #36b9c5;
@@ -401,5 +329,4 @@ td > button {
 #btnConfirmHapus:hover {
     transition: 0.5s;
     background-color: red;
->>>>>>> 6903204c1cf9f4d99aef6ebc2575a90f765c71b3
 }
