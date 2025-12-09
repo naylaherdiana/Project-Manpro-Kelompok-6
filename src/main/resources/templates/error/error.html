@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${errorType} + ' - Selaras Organizer'">Error - Selaras Organizer</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --navbar-color: #41959D;
+            --hero-color: #C0DEE5;
+            --btn-color: #07575B;
+            --error-color: #dc3545;
+            --warning-color: #ffc107;
+            --info-color: #17a2b8;
+        }
+
+        /* Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Layout */
+        body {
+            display: grid;
+            grid-template-areas:
+                "header"
+                "main";
+            grid-template-rows: 5em 1fr;
+            width: 100%;
+            height: 100vh;
+            font-family: Arial, Helvetica, sans-serif;
+            overflow: hidden;
+            background-color: #F5F5F5;
+        }
+
+        /* Header/Navbar */
+        header {
+            grid-area: header;
+            position: sticky;
+            z-index: 1;
+            background-color: var(--navbar-color);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        nav {
+            margin: 0 20px;
+            padding: 5px;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            color: white;
+            height: 100%;
+        }
+
+        nav > img:first-of-type {
+            width: 4em;
+            height: 4em;
+        }
+
+        .nav-title {
+            font-size: 1.5em;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        /* Main Error Content */
+        .main-section {
+            grid-area: main;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2em;
+        }
+
+        .error-container {
+            width: 100%;
+            max-width: 600px;
+            background: white;
+            border-radius: 1em;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            padding: 2.5em;
+            text-align: center;
+        }
+
+        /* Error Icon */
+        .error-icon {
+            font-size: 80px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .error-icon span {
+            display: inline-block;
+            width: 100px;
+            height: 100px;
+            line-height: 100px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--hero-color) 0%, #C0DEE5 100%);
+            color: var(--navbar-color);
+            font-size: 50px;
+        }
+
+        /* Error Code */
+        .error-code {
+            font-size: 72px;
+            font-weight: 800;
+            color: var(--btn-color);
+            margin: 10px 0;
+            letter-spacing: 2px;
+        }
+
+        /* Error Title */
+        .error-title {
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        /* Error Message */
+        .error-message {
+            color: #555;
+            margin-bottom: 30px;
+            line-height: 1.6;
+            font-size: 18px;
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid var(--navbar-color);
+            text-align: left;
+        }
+
+        /* Session/Role Info */
+        .role-info {
+            background: #e8f4f8;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: left;
+            border: 1px solid var(--hero-color);
+        }
+
+        .role-info p {
+            margin-bottom: 8px;
+            color: #555;
+        }
+
+        .role-info strong {
+            color: var(--btn-color);
+        }
+
+        /* Solution Box */
+        .solution-box {
+            background: #e7f5ff;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: left;
+            border-left: 4px solid var(--info-color);
+        }
+
+        .solution-box h5 {
+            color: var(--btn-color);
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+
+        .solution-box ul {
+            padding-left: 20px;
+            margin-bottom: 0;
+        }
+
+        .solution-box li {
+            margin-bottom: 5px;
+            color: #555;
+        }
+
+        /* Button Group */
+        .btn-group {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 16px;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            min-width: 140px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #5a6268;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-danger {
+            background: var(--error-color);
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #c82333;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(220, 53, 69, 0.2);
+        }
+
+        .btn-primary {
+            background: var(--navbar-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #36b9c5;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(65, 149, 157, 0.2);
+        }
+
+        .btn-warning {
+            background: var(--warning-color);
+            color: #212529;
+        }
+
+        .btn-warning:hover {
+            background: #e0a800;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(255, 193, 7, 0.2);
+        }
+
+        /* Timestamp & Info */
+        .timestamp {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+            color: #777;
+            font-size: 14px;
+        }
+
+        .timestamp p {
+            margin-bottom: 5px;
+        }
+
+        /* Debug Details */
+        .debug-details {
+            margin-top: 20px;
+            text-align: left;
+        }
+
+        .debug-details summary {
+            cursor: pointer;
+            color: #666;
+            font-weight: 600;
+            font-size: 14px;
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 5px;
+            border: 1px solid #dee2e6;
+        }
+
+        .debug-details pre {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            font-size: 12px;
+            margin-top: 10px;
+            border: 1px solid #dee2e6;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .error-container {
+                padding: 1.5em;
+                margin: 1em;
+            }
+
+            .error-code {
+                font-size: 60px;
+            }
+
+            .error-title {
+                font-size: 20px;
+            }
+
+            .error-message {
+                font-size: 16px;
+                padding: 15px;
+            }
+
+            .btn-group {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .btn {
+                width: 100%;
+                min-width: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header/Navbar -->
+    <header>
+        <nav>
+            <img src="/img/selaras-logo.png" alt="Selaras Organizer Logo">
+            <div class="nav-title">Selaras Organizer</div>
+            <div style="width: 4em;"></div> <!-- Spacer untuk balance layout -->
+        </nav>
+    </header>
+
+    <!-- Main Error Content -->
+    <main class="main-section">
+        <div class="error-container">
+            <!-- Error Icon berdasarkan jenis error -->
+            <div class="error-icon">
+                <span th:switch="${statusCode}">
+                    <span th:case="404">🔍</span>
+                    <span th:case="403">🚫</span>
+                    <span th:case="409">⚠️</span>
+                    <span th:case="500">💥</span>
+                    <span th:case="401">🔒</span>
+                    <span th:case="*">❌</span>
+                </span>
+            </div>
+            
+            <!-- Error Code -->
+            <div class="error-code" th:text="${statusCode}">Error</div>
+            
+            <!-- Error Title -->
+            <div class="error-title" th:text="${errorType}">Terjadi Kesalahan</div>
+            
+            <!-- Error Message -->
+            <div class="error-message" th:text="${errorMessage}">
+                Terjadi kesalahan yang tidak terduga.
+            </div>
+            
+            <!-- Session/Role Info (jika ada) -->
+            <div class="role-info" th:if="${session != null && userRole != null}">
+                <p><strong>Role Anda:</strong> <span th:text="${userRole}"></span></p>
+                <p><strong>Halaman yang dicoba:</strong> <span th:text="${path}"></span></p>
+            </div>
+            
+            <!-- Solution khusus untuk constraint violation -->
+            <div class="solution-box" th:if="${statusCode == 409}">
+                <h5>Solusi:</h5>
+                <ul th:if="${errorMessage != null && errorMessage.contains('tidak dapat menghapus')}">
+                    <li>Data masih digunakan oleh transaksi/order lain</li>
+                    <li>Hapus data yang terkait terlebih dahulu</li>
+                    <li>Hubungi administrator untuk bantuan</li>
+                </ul>
+                <ul th:if="${errorMessage != null && errorMessage.contains('sudah ada')}">
+                    <li>Gunakan nilai/data yang berbeda</li>
+                    <li>Cari data yang sudah ada dengan nilai serupa</li>
+                    <li>Edit data yang sudah ada jika perlu</li>
+                </ul>
+            </div>
+            
+            <!-- Button Group -->
+            <div class="btn-group">
+                <button onclick="history.back()" class="btn btn-secondary">Kembali</button>
+                
+                <button onclick="window.location.href='/login'" 
+                        th:if="${statusCode == 401 || statusCode == 403}" 
+                        class="btn btn-danger">Login Ulang</button>
+                
+                <button onclick="window.location.href='/vendor/list'" 
+                        th:if="${path != null && path.contains('vendor') && statusCode == 409}" 
+                        class="btn btn-primary">Ke Vendor</button>
+                
+                <button onclick="window.location.href='/' + (${path} != null ? ${path}.split('/')[1] : '')"
+                        th:if="${path != null && path.split('/').length > 1 && statusCode != 409}"
+                        class="btn btn-warning">
+                    Kembali ke <span th:text="${path.split('/')[1]}"></span>
+                </button>
+                
+                <button onclick="window.location.href='/'" class="btn btn-primary">Beranda</button>
+            </div>
+            
+            <!-- Timestamp -->
+            <div class="timestamp">
+                <p th:text="'Waktu kejadian: ' + ${timestamp}"></p>
+                <p th:if="${path} != null" th:text="'URL: ' + ${path}"></p>
+                <p>Jika ini adalah kesalahan, hubungi administrator.</p>
+            </div>
+            
+            <!-- Debug Details (hanya untuk developer) -->
+            <div class="debug-details" th:if="${exception != null}">
+                <summary>Detail Teknis (Untuk Developer)</summary>
+                <div th:if="${exceptionMessage}">
+                    <strong>Exception:</strong> <span th:text="${exception}"></span><br>
+                    <strong>Pesan:</strong> <span th:text="${exceptionMessage}"></span>
+                </div>
+                <pre th:if="${stackTrace}" th:text="${stackTrace}"></pre>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Auto-hide debug details jika bukan developer
+        document.addEventListener('DOMContentLoaded', function() {
+            const debugDetails = document.querySelector('.debug-details');
+            if (debugDetails && !window.location.href.includes('localhost') && !window.location.href.includes('127.0.0.1')) {
+                debugDetails.style.display = 'none';
+            }
+            
+            // Highlight solution box jika ada
+            const solutionBox = document.querySelector('.solution-box');
+            if (solutionBox) {
+                solutionBox.style.animation = 'pulse 2s infinite';
+            }
+        });
+        
+        // Tambahkan animasi pulse
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes pulse {
+                0% { box-shadow: 0 0 0 0 rgba(65, 149, 157, 0.4); }
+                70% { box-shadow: 0 0 0 10px rgba(65, 149, 157, 0); }
+                100% { box-shadow: 0 0 0 0 rgba(65, 149, 157, 0); }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
